@@ -4,3 +4,4 @@ export const ANYTHING_UNDER_0_IN = "/ \b0\.[0-9]*\b /g";
 export const ANYTHING_UNDER_0_EX = "/ (?!\b0.[0][0]*\b)(\b0\.[0-9]*\b) /g";
 export const ANYTHING_UNDER_0_EX_TRUNC = "/ \b(0\.[0-9]*)(?!0*\b)[0-9]\b /g"
 export const ANYTHING_SCIENTIFIC="/ \b((0\.[0-9]*)|([1-9]*\.[0-9]*))(?!0*\b)[0-9]e(\+|-|)[1-9][0-9]*\b /g"
+export const DEWEY_DECIMAL="/ \b[0-9][0-9][0-9]\.?[0-9]?[0-9]?[0-9]? ([A-Z][a-z]{1,44} ?)([a-z]{1,45} ?)*\b/g"
