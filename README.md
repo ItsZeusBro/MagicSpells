@@ -4,4 +4,5 @@ These are Regex pattern matching spells for very specific tasks that are also pr
 
 ## For example:
 Grabbing anything in a string between 1% and 100% using word boundaries (grabs them all) 
-(?!\b[1][0-9][1-9]%)(?!(\b[2-9][0-9][0-9][0-9]*)%)\b[1-9][0-9]?[0-9]?%
+
+    (?!\b[1][0-9][1-9]%)(?!(\b[2-9][0-9][0-9][0-9]*)%)\b[1-9][0-9]?[0-9]?%
