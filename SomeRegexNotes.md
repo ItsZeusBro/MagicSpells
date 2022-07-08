@@ -1,3 +1,26 @@
+
+# Positive Look Ahead
+/foo(?=bar)/
+
+***foo***bar foobaz
+
+
+#### Notes:
+1. Grabs any foo only if before bar
+
+
+
+# Positive Look Behind
+/(?<=bar)foo/
+
+bar***foo*** fuubar
+
+#### Notes:
+1. Grabs any foo only if after bar
+
+
+
+
 # Negative Look Ahead
 /foo(?!bar)/
 
@@ -21,23 +44,3 @@ barfoo but***foo***
 
 
 
-# Positive Look Ahead
-/foo(?=bar)/
-
-***foo***bar foobaz
-
-
-#### Notes:
-1. Grabs any foo only if before bar
-
-
-
-
-
-# Positive Look Behind
-/(?<=bar)foo/
-
-bar***foo*** fuubar
-
-#### Notes:
-1. Grabs any foo only if after bar
