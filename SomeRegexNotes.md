@@ -6,7 +6,7 @@
 
 
 #### Notes:
-1. Grabs any foo only if before bar
+1. Grabs any foo ***only if before bar***
 
 
 
@@ -16,7 +16,7 @@
 bar***foo*** fuubar
 
 #### Notes:
-1. Grabs any foo only if after bar
+1. Grabs any foo ***only if after bar***
 
 
 
@@ -27,7 +27,7 @@ bar***foo*** fuubar
 foobar ***foo***baz
 
 #### Notes:
-  1. Grabs any foo, only if not before ‘bar’
+  1. Grabs any foo, ***only if not before ‘bar’***
 
 
 
@@ -39,7 +39,7 @@ foobar ***foo***baz
 barfoo but***foo***
 
 #### Notes:
-1. Grabs any foo only if not after bar
+1. Grabs any foo ***only if not after bar***
 
 
 
