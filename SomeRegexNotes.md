@@ -4,7 +4,7 @@
 foobar ***foo***baz
 
 #### Notes:
-  1. Grabs any ‘foo’, except for when coming before ‘bar’
+  1. Grabs any foo, only if not before ‘bar’
 
 
 
@@ -16,7 +16,7 @@ foobar ***foo***baz
 barfoo but***foo***
 
 #### Notes:
-1. Grabs any foo exept for when following bar
+1. Grabs any foo only if not after bar
 
 
 
@@ -28,17 +28,16 @@ barfoo but***foo***
 
 
 #### Notes:
-1. Grabs any foo only if bar is after it
+1. Grabs any foo only if before bar
 
 
 
 
 
 # Positive Look Behind
-/(?<=foo)bar/
+/(?<=bar)foo/
 
-foo***bar*** fuubar
+bar***foo*** fuubar
 
 #### Notes:
-1. Grabs any bar only if foo is before it
-    ***
+1. Grabs any foo only if after bar
