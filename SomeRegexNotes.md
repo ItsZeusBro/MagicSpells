@@ -1,6 +1,6 @@
 
 # Positive Look Ahead
-/foo(?=bar)/
+foo(?=bar)
 
 ***foo***bar foobaz
 
@@ -11,7 +11,7 @@
 
 
 # Positive Look Behind
-/(?<=bar)foo/
+(?<=bar)foo
 
 bar***foo*** fuubar
 
@@ -22,7 +22,7 @@ bar***foo*** fuubar
 
 
 # Negative Look Ahead
-/foo(?!bar)/
+foo(?!bar)
 
 foobar ***foo***baz
 
@@ -34,7 +34,7 @@ foobar ***foo***baz
 
 # Negative Look Behind
 
-/(?<!bar )foo/
+(?<!bar )foo
 
 barfoo but***foo***
 
