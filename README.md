@@ -1,5 +1,4 @@
 # Wild and Wonderful World of Magic Spells
-<img src="https://github.com/ItsZeusBro/MagicSpells/blob/0aad09ce01a08b6f81516c8d4337b0d044cf13b4/inwriting.gif" height="200" width="250"/>
 
 These are Regex pattern matching spells for very specific tasks that are also pretty general.
 
