@@ -1,4 +1,4 @@
-# Wild and Wonderful World of Magic Spells
+# Wild and Wonderful World of Matchic Spells
 
 These are Regex pattern matching spells for very specific tasks that are also pretty general.
 
