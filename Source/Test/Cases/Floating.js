@@ -1,4 +1,4 @@
-xport const FLOATING_CASS = {
+export const FLOATING_CASES = {
     
     "0.0000":"0.0000",
 
@@ -62,7 +62,7 @@ xport const FLOATING_CASS = {
     "-999.0999":"-999.0999"
 }
 
-xport const NOT_FLOATING_CASS = {
+export const NOT_FLOATING_CASES = {
 
     "o.0000":"o.0000",
 
