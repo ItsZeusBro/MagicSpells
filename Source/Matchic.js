@@ -1,4 +1,4 @@
-import { IS_SCIENTIFIC, IS_INTEGER, IS_FLOAT, IS_BINARY, IS_ALPHA_STRING, IS_ALPHA_NUMERIC_STRING, IS_SENTANCE } from "./Spells/Spells.js";
+import { SCIENTIFIC, SCIENTIFIC_G, INTEGER, FLOAT, BINARY, ALPHA_STRING, ALPHA_NUMERIC_STRING, SENTANCE } from "./Spells/Spells.js";
 import { Comet } from "../Comet/Comet.js";
 export class Matchic extends Comet{
     constructor(){
@@ -24,43 +24,31 @@ export class Matchic extends Comet{
 
     matches(string, regex){
         var matches = []
-        try{
-            var tokens = string.split(/(\s)/g);
-            tokens.forEach(token => {
-                try{
-                    match = token.match(reg)[0]
-                    this.matches.push(match)
-                }catch{
-                    this.comet("error", "problem getting next match from next() in MatchicSpells class", string, regex);
-                }
-            });
-        }catch{
-            return []
-        }
-
+        var reg = new RegExp(regex);
+        return string.match(reg)
     }
     
 
-    isInteger(string){return this.is(string, IS_INTEGER)}
-    hasInteger(string){return this.has(string, IS_INTEGER)}
+    isInteger(string){return this.is(string, INTEGER)}
+    matchIntegers(string){return this.matches(string, INTEGER)}
 
-    isFloat(string){return this.is(string, IS_FLOAT)}
-    hasFloat(string){return this.has(string, IS_FLOAT)}
+    isFloat(string){return this.is(string, FLOAT)}
+    matchFloats(string){return this.matches(string, FLOAT)}
 
-    isBinary(string){return this.is(string, IS_BINARY)}
-    hasBinary(string){return this.has(string, IS_BINARY)}
+    isBinary(string){return this.is(string, BINARY)}
+    matchBinarys(string){return this.matches(string, BINARY)}
 
-    isAlpha(string){return this.is(string, IS_ALPHA_STRING)}
-    hasAlpha(string){return this.has(string, IS_ALPHA_STRING)}
+    isAlpha(string){return this.is(string, ALPHA_STRING)}
+    matchAlphas(string){return this.matches(string, ALPHA_STRING)}
 
-    isAlphaNumeric(string){return this.is(string, IS_ALPHA_NUMERIC_STRING)}
-    hasAlphaNumeric(string){return this.has(string, IS_ALPHA_NUMERIC_STRING)}
+    isAlphaNumeric(string){return this.is(string, ALPHA_NUMERIC_STRING)}
+    matchAlphaNumerics(string){return this.matches(string, ALPHA_NUMERIC_STRING)}
 
-    isScientific(string){return this.is(string, IS_SCIENTIFIC)}
-    hasScientific(string){return this.has(string, IS_SCIENTIFIC)}
-
-    isSentance(string){return this.is(string, IS_SENTANCE)}
-    hasSentance(string){return this.has(string, IS_SENTANCE)}
+    isScientific(string){return this.is(string, SCIENTIFIC)}
+    matchScientifics(string){return this.matches(string, SCIENTIFIC_G)}
+    
+    isSentance(string){return this.is(string, SENTANCE)}
+    matchSentances(string){return this.matches(string, SENTANCE)}
 }
 
 class MatchicIter{

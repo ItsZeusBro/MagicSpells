@@ -1,8 +1,6 @@
 import {Matchic} from "../Matchic.js"
 import { Comet } from "../../Comet/Comet.js"
 import {IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES, SCIENTIFIC_ITER_CASES, HARD_SCIENTIFIC_ITER_CASES} from "./Cases/Scientific.js"
-import { IS_SCIENTIFIC, IS_INTEGER, IS_FLOAT, IS_BINARY, IS_ALPHA_STRING, IS_ALPHA_NUMERIC_STRING, IS_SENTANCE } from "../Spells/Spells.js";
-
 import { Verification } from "./Verification.js"
 import * as assert from "node:assert"
 
@@ -14,8 +12,8 @@ export class Test extends Comet{
         new Verification(IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES)
         this.isScientific(IS_SCIENTIFIC_CASES);
         this.notScientific(NOT_SCIENTIFIC_CASES);
-        this.matchScientific(SCIENTIFIC_ITER_CASES);
-        this.matchScientific(HARD_SCIENTIFIC_ITER_CASES);
+        this.matchScientifics(SCIENTIFIC_ITER_CASES);
+        this.matchScientifics(HARD_SCIENTIFIC_ITER_CASES);
     }
     
     isScientific(cases){
@@ -30,14 +28,20 @@ export class Test extends Comet{
         }
     }
 
-    matchScientific(cases){
+    matchScientifics(cases){
         //there are 6 cases in each iter test case for both regular strings containing scientific numbers and hard strings
         for (const [key, value] of Object.entries(cases)) {
-            var matches = this.Matchic.matchScientific(value)
+            var matches = this.Matchic.matchScientifics(value)
+            console.log(matches)
             var i=6;
             while(i!=1){
-                assert.equal(this.Matchic.isScientific(match.pop(0), true))
-                i-=1;
+                try{
+                    assert.equal(this.Matchic.isScientific(matches.pop(0)), true)
+                    i-=1;
+                }catch{
+                    this.comet("error", matches.pop(0), "is not a scientific number")
+                }
+
             }
         }
     }
