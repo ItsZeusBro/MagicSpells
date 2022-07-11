@@ -1,0 +1,11 @@
+There was an uncaught error Error: 0
+    at Verification.key_val_match (file:///Users/hassan/Projects/GitHub/MatchicSpells/Source/Tests/Verification.js:15:23)
+    at file:///Users/hassan/Projects/GitHub/MatchicSpells/Source/Tests/Verification.js:7:18
+    at Array.forEach (<anonymous>)
+    at Verification.verify (file:///Users/hassan/Projects/GitHub/MatchicSpells/Source/Tests/Verification.js:6:16)
+    at new Verification (file:///Users/hassan/Projects/GitHub/MatchicSpells/Source/Tests/Verification.js:3:14)
+    at new Spells (file:///Users/hassan/Projects/GitHub/MatchicSpells/Source/Tests/Spells.js:13:9)
+    at file:///Users/hassan/Projects/GitHub/MatchicSpells/Source/Tests/Spells.js:42:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:198:25)
+    at async Promise.all (index 0)
+    at async ESMLoader.import (node:internal/modules/esm/loader:385:24)
