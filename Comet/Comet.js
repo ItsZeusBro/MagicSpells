@@ -4,11 +4,11 @@ export class Comet{
     constructor(root, module){
         this.verbose;
         this.flags()
-        this.moduleDir=process.cwd().split(root)[0]+root+"Comet/"+module+"/"
+        this.moduleDir=process.cwd().split(root)[0]+root+"Comet/comets/"+module+"/"
         this.cometDir = this.moduleDir+"comets/"
         this.paths()
         this.instance = process.pid
-        this.cometFile = this.cometsDir+"comet_"+this.instance+'.comet'
+        this.cometFile = this.cometDir+"comet_"+this.instance+'.comet'
 
         process.on('uncaughtException', (err, origin) => {
             this.comet('There was an uncaught error', err.stack);
