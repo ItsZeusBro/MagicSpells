@@ -6,37 +6,23 @@ import { IS_SCIENTIFIC, IS_INTEGER, IS_FLOAT, IS_BINARY, IS_ALPHA_STRING, IS_ALP
 import { Verification } from "./Verification.js"
 import * as assert from "node:assert"
 
-export class Spells extends Comet{
+export class Test extends Comet{
     constructor(){
         super("MatchicSpells/", "TestSpells");
         this.comet("verifying")
+        this.Matchic = new Matchic()
         new Verification(IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES)
-        // this.testScientific(IS_SCIENTIFIC_CASES, IS_SCIENTIFIC);
+        this.IS_SCIENTIFIC(IS_SCIENTIFIC_CASES);
         // this.testScientific(NOT_SCIENTIFIC_CASES, IS_SCIENTIFIC);
-        // this.Matchic = new Matchic()
     }
     
-    testScientific(cases, pattern){
-        this.is(cases, pattern)
-        this.no(cases, pattern)
-        this.has(cases, pattern)
-    }
-
-    is(cases, pattern){
-        for (const [key, string] of Object.entries(cases)) {
-            this.Matchic.is(string, pattern)
+    IS_SCIENTIFIC(cases){
+        for (const [key, value] of Object.entries(cases)) {
+            assert.equal(this.Matchic.isScientific(value), true)
         }
     }
 
-    no(cases, pattern){
-
-
-    }
-
-    has(cases, pattern){
-
-
-    }
+   
 }
 
-new Spells()
+new Test()

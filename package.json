@@ -4,7 +4,8 @@
   "description": "These are Regex pattern matching spells for very specific tasks that are also pretty general.",
   "main": "MagicSpells.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test-verb": "node ./Source/Test/Test.js --verbose",
+    "test": "node ./Source/Test/Test.js"
   },
   "repository": {
     "type": "git",

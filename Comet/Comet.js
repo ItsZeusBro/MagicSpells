@@ -4,7 +4,8 @@ export class Comet{
     constructor(root, module){
         this.verbose;
         this.flags()
-        this.moduleDir=process.cwd().split(root)[0]+root+"Comet/comets/"+module+"/"
+        console.log(process.cwd())
+        this.moduleDir=process.cwd().split(root)[0]+"/Comet/comets/"+module+"/"
         this.cometDir = this.moduleDir+"comets/"
         this.paths()
         this.instance = process.pid
@@ -33,7 +34,6 @@ export class Comet{
         });
     }
     comet(...data){
-        console.log(this.cometFile)
         fs.writeFileSync(this.cometFile, data.join(' ')+'\n', {flag:'a'})
         if (this.verbose){
             console.log(data.join(' '))

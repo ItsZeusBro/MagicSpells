@@ -4,8 +4,19 @@ export class Matchic{
 
     is(string, regex){
         var reg = new RegExp(regex);
-        var match = string.match(reg);
-        return match;
+        var match;
+        try{
+            match = string.match(reg)[0];
+        }catch{
+            console.log("cannot find match ", string, regex)
+            return false
+        }
+        if (match[0]==string){
+            return true;
+        }else{
+            console.log("cannot find match ", string, regex)
+            return false;
+        }
     }
 
     no(string, regex){
