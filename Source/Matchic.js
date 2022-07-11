@@ -11,7 +11,8 @@ export class Matchic{
             console.log("cannot find match ", string, regex)
             return false
         }
-        if (match[0]==string){
+        if (match==string){
+            console.log(string)
             return true;
         }else{
             console.log("cannot find match ", string, regex)
