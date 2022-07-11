@@ -1,4 +1,5 @@
 # Matchic Spells
 
+<img src="https://github.com/ItsZeusBro/MatchicSpells/blob/273fc5851ec4b138ee9f2c31c3cf1979b6fd8b8a/WizardOfOZ.gif" />
 
-This is a place for one liners. Specifically Regex pattern matching spells for very specific tasks that are also pretty general.
+"Not so fast! Not so fast! I'd have to give the matter a little thought!"
