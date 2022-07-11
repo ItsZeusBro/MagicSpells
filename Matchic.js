@@ -8,7 +8,7 @@ export class Matchic{
 
     isInteger(){
         //returns true, the entire string is a single integer
-        
+
     }
     hasInteger(){
         //returns true, if anything in the string is an integer
@@ -16,9 +16,7 @@ export class Matchic{
     noInteger(){
         //returns true, if nothing in the string contains an integer
     }
-    notInteger(){
-        //returns true, if the string itself is not a single integer
-    }
+
 
     isFloat(){
         //returns true, the entire string is a single float
@@ -30,9 +28,7 @@ export class Matchic{
         //returns true, if nothing in the string contains a float
 
     }
-    notFloat(){
-        //returns true, if the string itself is not a single float
-    }
+
 
     isBinary(){
         //returns true, the entire string is a single binary number
@@ -45,9 +41,33 @@ export class Matchic{
         //returns true, if nothing in the string contains a binary
 
     }
-    notBinary(){
-        //returns true if the entire string is not a single binary
+
+
+    isAlpha(){
+        //returns true, the entire string is a single binary number
     }
+    hasAlpha(){
+        //returns true, if anything in the string is a binary number
+    }
+
+    noAlpha(){
+        //returns true, if nothing in the string contains a binary
+
+    }
+
+
+    isAlphaNumeric(){
+        //returns true, the entire string is an Alpha Numeric string
+    }
+    hasAlphaNumeric(){
+        //returns true, if any substring in the string is a Alpha Numeric substring
+    }
+
+    noAlphaNumeric(){
+        //returns true, if there does not exist an AlphaNumeric substring
+
+    }
+
 
     isScientific(){
         //returns true, the entire string is a single scientific number
@@ -60,16 +80,6 @@ export class Matchic{
     noScientific(){
         //returns true, if nothing in the string contains a scientific number
     }
-    notScientific(){
-        //returns true, if the entire string itself is NOT a scientific number
-
-    }
-    randomInterpolationScientific(sym1, range1, range2, e, range3){
-        //interpolate the general test pattern into some larger string
-        //match any regex in the string using a supported Meta Regex Pattern
-        //return a random instance of that pattern back to the original string
-        //then use this function to create test cases for your normal regex's 
-    }
 
 
     isSentance(){
@@ -81,9 +91,8 @@ export class Matchic{
     noSentance(){
         //returns true, if nothing in the string contains a sentance
     }
-    notSentance(){
-        //returns true if the entire string is not a single sentance
-    }
+
+
     isParagraph(){
         //returns true, the entire string is a single paragraph
     }
@@ -93,20 +102,7 @@ export class Matchic{
     noParagraph(){
         //returns true, if nothing in the string contains a paragraph
     }
-    notParagraph(){
-        //returns true if the entire string is not a single paragraph
-    }
+
     
-
-
 }
 var matchic = new Matchic()
-
-//If we wanted to test one of our regex patterns like scientific number matching
-//we would want to test the more general regex against concrete instances of scientific numbers
-//but instead of creating them by hand, we want to generate them using a generator that
-//uses regex parameters. For example if I wanted the following:
-// / "Anything whatsoever" + scientificNumber(sym1, range1, range2, e, range3) + "Anything whatsoever"
-// matchic.metaRegRand(/Anything whatsoever[0-9]*\.[0-9]*e\+?\-?[0-9]*Anything whatsoever/)
-// matchic.metaRegRand(/Anything whatsoever [0-9]*\.[0-9]*e\+?\-?[0-9]*Anything whatsoever/)
-// matchic.metaRegRand(/Anything whatsoever[0-9]*\.[0-9]*e\+?\-?[0-9]* Anything whatsoever/)
