@@ -3,7 +3,6 @@ import { Comet } from "../Comet/Comet.js";
 export class Matchic extends Comet{
     constructor(){
         super("MatchicSpells/", "MatchicJS")
-        this.matches=[]
     }
     is(string, regex){
         var reg = new RegExp(regex);
@@ -23,29 +22,26 @@ export class Matchic extends Comet{
         }
     }
 
-    next(string, regex){
-        var reg = new RegExp(regex);
-        var match;
-        if(this.matches.length){
-            return this.matches.pop(0)
-        }else{
-            try{
-                var tokens = string.split(/(\s)/g);
-                tokens.forEach(token => {
-                    try{
-                        match = token.match(reg)[0]
-                    }catch{
-                        this.comet(Error("problem getting next match from next() in MatchicSpells class"));
-                        throw Error()
-                    }
-                });
-                this.matches.push(match)
+    matches(string, regex){
+        var matches = []
+        try{
+            var tokens = string.split(/(\s)/g);
+            tokens.forEach(token => {
+                try{
+                    match = token.match(reg)[0]
+                }catch{
+                    this.comet("error", "problem getting next match from next() in MatchicSpells class");
+                    throw Error("problem getting next match from next() in MatchicSpells class")
+                }
+            });
+            this.matches.push(match)
 
-            }catch{
-                return
-            }
+        }catch{
+            return
         }
+
     }
+    
 
     isInteger(string){return this.is(string, IS_INTEGER)}
     hasInteger(string){return this.has(string, IS_INTEGER)}
@@ -67,4 +63,19 @@ export class Matchic extends Comet{
 
     isSentance(string){return this.is(string, IS_SENTANCE)}
     hasSentance(string){return this.has(string, IS_SENTANCE)}
+}
+
+class MatchicIter{
+    constructor(string, regex){
+        this.string=string;
+        this.regex=regex;
+        this.matches=new Matchic().matches(string, regex)
+    }
+    next(){
+        var reg = new RegExp(regex);
+        var match;
+        if(this.matches.length){
+            return this.matches.pop(0)
+        }
+    }
 }
