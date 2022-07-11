@@ -3,6 +3,7 @@ import { Comet } from "../Comet/Comet.js";
 export class Matchic extends Comet{
     constructor(){
         super("MatchicSpells/", "MatchicJS")
+        this.matches=[]
     }
     is(string, regex){
         var reg = new RegExp(regex);
@@ -22,19 +23,28 @@ export class Matchic extends Comet{
         }
     }
 
-    has(string, regex){
-        var tokens;
-        try{
-            tokens = string.split(/(\s)/g); //PROBABLY A BUG IN HERE
-        }catch{
-            return false
-        }
-        tokens.forEach(token => {
-            if(this.is(token, regex)){
-                return true;
+    next(string, regex){
+        var reg = new RegExp(regex);
+        var match;
+        if(this.matches.length){
+            return this.matches.pop(0)
+        }else{
+            try{
+                var tokens = string.split(/(\s)/g);
+                tokens.forEach(token => {
+                    try{
+                        match = token.match(reg)[0]
+                    }catch{
+                        this.comet(Error("problem getting next match from next() in MatchicSpells class"));
+                        throw Error()
+                    }
+                });
+                this.matches.push(match)
+
+            }catch{
+                return
             }
-        });
-        return false;
+        }
     }
 
     isInteger(string){return this.is(string, IS_INTEGER)}

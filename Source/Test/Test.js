@@ -29,6 +29,26 @@ export class Test extends Comet{
         }
     }
 
+    nextScientific(){
+
+    }
+
+    isInteger(cases){
+
+    }
+
+    notInteger(cases){
+
+    }
+
+    isFloat(cases){
+
+    }
+
+    notFloat(cases){
+
+    }
+
    
 }
 

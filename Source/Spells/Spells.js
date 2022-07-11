@@ -1,4 +1,4 @@
-export const IS_SCIENTIFIC=/^(\+|\-)?[0-9]+\.[0-9]+(e|E)(\+|\-)?[0-9]+$/
+export const IS_SCIENTIFIC=/(\+|\-)?[0-9]+\.[0-9]+(e|E)(\+|\-)?[0-9]+/g
 export const IS_INTEGER=/^((([1-9],)|([1-9][0-9],)|([1-9][0-9][0-9],))([0-9][0-9][0-9],)*([0-9][0-9][0-9]))($|\s)|^([0-9]*$)/
 export const IS_FLOAT=/^[0-9]+\.[0-9]+$/
 export const IS_BINARY=/^[0-1]+$/
