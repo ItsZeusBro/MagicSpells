@@ -18,6 +18,7 @@ export class Matchic{
         //returns true, if nothing in the string contains a scientific number
     }
     notScientific(){
+        //returns true, if the entire string itself is NOT a scientific number
 
     }
     isInteger(){
@@ -87,5 +88,25 @@ export class Matchic{
         //returns true if the entire string is not a single paragraph
     }
     
-    
+    metaScientific(pattern){
+        //basically we can use escape sequences to match regex patterns
+        //For scientific numbers, a meta Scientific Regex pattern would be
+        // /[\[0-9\]\-\[0-9\]]/
+    }
+    metaRandRange(range){
+        //returns a random number beteen some range specified by the regex range
+
+        return 
+    }
+
+    metaRandESignRange(ESignRange){
+
+    }
+
 }
+var matchic = new Matchic()
+
+matchic.metaRegRand(/Anything whatsoever [0-9]*\.[0-9]*e\+?\-?[0-9]* Anything whatsoever/)
+matchic.metaRegRand(/Anything whatsoever[0-9]*\.[0-9]*e\+?\-?[0-9]*Anything whatsoever/)
+matchic.metaRegRand(/Anything whatsoever [0-9]*\.[0-9]*e\+?\-?[0-9]*Anything whatsoever/)
+matchic.metaRegRand(/Anything whatsoever[0-9]*\.[0-9]*e\+?\-?[0-9]* Anything whatsoever/)
