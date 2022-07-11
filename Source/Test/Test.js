@@ -8,7 +8,6 @@ import * as assert from "node:assert"
 export class Test extends Comet{
     constructor(){
         super("MatchicSpells/", "TestSpells");
-        this.comet("verifying")
         this.Matchic = new Matchic()
         this.isScientific(SCIENTIFIC_CASES);
         this.notScientific(NOT_SCIENTIFIC_CASES);
@@ -16,15 +15,26 @@ export class Test extends Comet{
         this.matchScientifics(HARD_SCIENTIFIC_ITER_CASES);
     }
     
+    isFloat(cases){
+        new Verification().key_val_match(FLOATING_CASES)
+    }
+
+    notFloat(cases){
+        new Verification(NOT_FLOATING_CASES)
+
+    }
+
     isScientific(cases){
-        new Verification(SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES)
+        new Verification(SCIENTIFIC_CASES)
+        this.comet("verifying scientific cases")
         for (const [key, value] of Object.entries(cases)) {
             assert.equal(this.Matchic.isScientific(value), true)
         }
     }
 
     notScientific(cases){
-        new Verification(SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES)
+        new Verification(NOT_SCIENTIFIC_CASES)
+        this.comet("verifying scientific cases")
         for (const [key, value] of Object.entries(cases)) {
             assert.notEqual(this.Matchic.isScientific(value), true)
         }
@@ -61,13 +71,7 @@ export class Test extends Comet{
 
     }
 
-    isFloat(cases){
-        new Verification(FLOATING_CASES, NOT_FLOATING_CASES)
-    }
 
-    notFloat(cases){
-
-    }
 
    
 }
