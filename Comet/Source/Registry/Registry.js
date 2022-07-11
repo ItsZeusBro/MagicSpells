@@ -27,7 +27,7 @@ export class Registry{
     }
     get_reg(indexP, rType){
         //get the file registration object
-
+        //find registration file and create registration object with file and return it
     }
     reg(indexP, rType){
         if(this.reg_exist(indexP, rType)){
@@ -51,5 +51,11 @@ export class Registry{
         }
 
 
+    }
+}
+
+export class Registration{
+    constructor(path){
+        
     }
 }
