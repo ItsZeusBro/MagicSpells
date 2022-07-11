@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+import { Registry } from "./Verification/Registry.js";
 
 export class Comet{
     constructor(root, module){
@@ -52,6 +53,9 @@ export class Comet{
                 console.log(data.join(' '))
             }
         }
+
+    }
+    register(path){
 
     }
 }

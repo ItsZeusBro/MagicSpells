@@ -13,6 +13,7 @@ export class Test extends Comet{
         this.notScientific(NOT_SCIENTIFIC_CASES);
         this.matchScientifics(SCIENTIFIC_ITER_CASES);
         this.matchScientifics(HARD_SCIENTIFIC_ITER_CASES);
+        this.register()
     }
     
     isFloat(cases){

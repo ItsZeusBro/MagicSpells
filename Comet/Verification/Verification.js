@@ -1,7 +1,6 @@
-export class Tracker extends Comet{
+export class Registry{
     constructor(){
     }
-
     register(path){
         //register the path (could be a directory or file)
         //either way the path to the file must be created in the diff folder from
