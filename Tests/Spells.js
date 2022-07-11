@@ -1,19 +1,40 @@
 import {Matchic} from "../../Matchic/Matchic.js"
 import { Comet } from "../../Comet/Comet.js"
-import {SCIENTIFIC} from "./Cases.js"
+import {IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES} from "./Cases/Scientific.js"
+import { IS_SCIENTIFIC, IS_INTEGER, IS_FLOAT, IS_BINARY, IS_ALPHA_STRING, IS_ALPHA_NUMERIC_STRING, IS_SENTANCE } from "../Spells/Spells.js";
+
+import { Verification } from "./Verification.js"
 import * as assert from "node:assert"
 export class Spells extends Comet{
-    
     constructor(){
         super();
-        this.testScientific();
+        new Verification(casess)
+        this.testScientific(IS_SCIENTIFIC_CASES, IS_SCIENTIFIC);
+        this.testScientific(NOT_SCIENTIFIC_CASES, IS_SCIENTIFIC);
+        this.Matchic = new Matchic()
     }
     
-    testScientific(){
-        for (const [key, value] of Object.entries(SCIENTIFIC)) {
-            this.comet("Testing ", key, value);
-            assert.equal(TEST_CASES[key].match(MAGIC_SPELLS.SCIENTIFIC)[0], value);
-            this.comet("Result: ", TEST_CASES[key].match(MAGIC_SPELLS.SCIENTIFIC)[0], value, "\n");
+    testScientific(cases, pattern, ''){
+        this.is(cases, pattern)
+        this.no(cases, pattern)
+        this.has(cases, pattern)
+    }
+
+    is(cases, pattern){
+        for (const [key, string] of Object.entries(cases)) {
+            this.Matchic.is(string, pattern)
         }
     }
+
+    no(cases, pattern){
+
+
+    }
+
+    has(cases, pattern){
+
+
+    }
 }
+
+new Spells()
