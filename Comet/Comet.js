@@ -3,17 +3,27 @@ import { Registry } from "./Source/Registry/Registry.js";
 
 export class Comet{
     constructor(root){
-            //Comet only needs to be initilized once for an entire project
-            //so long as the project name is provided
-            this.root=root
-            this.Registry = new Registry(this.root)
-            this.index=process.cwd().split(this.root)[0]+this.root+"/Comet/index/";
-            process.on('uncaughtException', (err, origin) => {
-                var indexP = this.getCaller(err.stack.split('\n'))
-                this._comet(['There was an uncaught error '+ err.stack], indexP)            
-                process.exit(1);
-            });
-            
+        //Comet only needs to be initilized once for an entire project
+        //so long as the project name is provided
+        this.root=root
+        this.Registry = new Registry(this.root)
+        this.index=process.cwd().split(this.root)[0]+this.root+"/Comet/index/";
+        this.verbose;
+        this.flags()
+        process.on('uncaughtException', (err, origin) => {
+            var indexP = this.getCaller(err.stack.split('\n'))
+            this._comet(['There was an uncaught error '+ err.stack], indexP)            
+            process.exit(1);
+        });
+        
+    }
+    flags(){
+        var flags = process.argv
+        flags.forEach(element => {
+            if (element=='--verbose'){
+                this.verbose=true
+            }
+        });
     }
 
     comet(...data){
@@ -22,8 +32,11 @@ export class Comet{
         this._comet(data, indexP)
     }
     _comet(data, indexP){
-        //check if indexP exists, if not, create it and register it without diff behavior
-        //we only want to register things according to what functionality is required
+        var comLog = this.Registry.register(indexP, "log").get_logP(indexP);
+        fs.writeFileSync(comLog, data.join(' ')+'\n', {flag:'a'})
+        if (this.verbose){
+            console.log(data.join(' '))
+        }
     }
     getCaller(stack) {
         var abs = stack[2].slice(
@@ -31,7 +44,6 @@ export class Comet{
             stack[2].lastIndexOf('.js')+3
         )
         return abs.split(this.root)[0]+this.root+"/Comet/index"+abs.split(this.root)[1]
-
     }
 }
 
