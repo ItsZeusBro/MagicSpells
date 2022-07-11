@@ -1,6 +1,7 @@
 import {Matchic} from "../Matchic.js"
 import { Comet } from "../../Comet/Comet.js"
-import {IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES, SCIENTIFIC_ITER_CASES, HARD_SCIENTIFIC_ITER_CASES} from "./Cases/Scientific.js"
+import {SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES, SCIENTIFIC_ITER_CASES, HARD_SCIENTIFIC_ITER_CASES} from "./Cases/Scientific.js"
+import { FLOATING_CASES, NOT_FLOATING_CASES } from "./Cases/Floating.js"
 import { Verification } from "./Verification.js"
 import * as assert from "node:assert"
 
@@ -9,20 +10,21 @@ export class Test extends Comet{
         super("MatchicSpells/", "TestSpells");
         this.comet("verifying")
         this.Matchic = new Matchic()
-        new Verification(IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES)
-        this.isScientific(IS_SCIENTIFIC_CASES);
+        this.isScientific(SCIENTIFIC_CASES);
         this.notScientific(NOT_SCIENTIFIC_CASES);
         this.matchScientifics(SCIENTIFIC_ITER_CASES);
         this.matchScientifics(HARD_SCIENTIFIC_ITER_CASES);
     }
     
     isScientific(cases){
+        new Verification(SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES)
         for (const [key, value] of Object.entries(cases)) {
             assert.equal(this.Matchic.isScientific(value), true)
         }
     }
 
     notScientific(cases){
+        new Verification(SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES)
         for (const [key, value] of Object.entries(cases)) {
             assert.notEqual(this.Matchic.isScientific(value), true)
         }
@@ -60,7 +62,7 @@ export class Test extends Comet{
     }
 
     isFloat(cases){
-
+        new Verification(FLOATING_CASES, NOT_FLOATING_CASES)
     }
 
     notFloat(cases){

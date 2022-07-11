@@ -1,4 +1,4 @@
-export const IS_SCIENTIFIC_CASES = {
+export const SCIENTIFIC_CASES = {
     
     "0.0000e0":"0.0000e0",
     "0.0000e1":"0.0000e1",
@@ -409,10 +409,6 @@ export const NOT_SCIENTIFIC_CASES = {
     "b9.0099e99":"b9.0099e99",
     "i00.0100e100":"i00.0100e100",
     "b99.0999e999":"b99.0999e999",
-
-
-
-
 
     "o.0000e+0":"o.0000e+0",
     "o.0000e+1":"o.0000e+1",
