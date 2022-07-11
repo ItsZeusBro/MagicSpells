@@ -4,46 +4,39 @@ export class Matchic{
 
     is(string, regex){
         var reg = new RegExp(regex);
-        var match = string.match(reg)
-        return match
+        var match = string.match(reg);
+        return match;
     }
 
     no(string, regex){
         var tokens;
         try{
-            console.log("original:", string)
-            tokens = string.split(/(\s)/g)
-            console.log("tokens:", tokens)
+            tokens = string.split(/(\s)/g); //PROBABLY A BUG IN HERE
         }catch{
-            return true
+            return true;
         }
         tokens.forEach(token => {
-            var reg = new RegExp(regex);
-            var match = string.match(reg)
-            if(match.length){
-                return false
+            if(this.is(token, regex)){
+                return false;
             }
         });
-        return true
+        return true;
     }
 
     has(string, regex){
 
         var tokens;
         try{
-            console.log("original:", string)
-            tokens = string.split(/(\s)/g)
-            console.log("tokens:", tokens)
+            tokens = string.split(/(\s)/g); //PROBABLY A BUG IN HERE
         }catch{
-            throw Error("cannot tokenize integer strings")
+            return false
         }
         tokens.forEach(token => {
-            var reg = new RegExp(regex);
-            var match = string.match(reg)
-            if(match.length){
-                return match
+            if(this.is(token, regex)){
+                return true;
             }
         });
+        return false;
     }
 
     isInteger(string){return this.is(string, IS_INTEGER)}
