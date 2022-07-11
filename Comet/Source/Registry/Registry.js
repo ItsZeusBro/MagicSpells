@@ -15,13 +15,40 @@
 //This is not really intended to replace version control.
 //its designed to bring sanity to things you want to keep
 //an eye on. Like test cases. (things that shouldn't be removed unless its wholesale)
-        
+
+import {LOG, TRACK} from "./rTypes.js";
+import * as fs from "node:fs";
+
 export class Registry{
     constructor(root){
+        this.registry={}
         this.index=process.cwd().split(root)[0]+root+"/Comet/index/";
 
     }
-    register(){
+    get_reg(indexP, rType){
+        //get the file registration object
+
+    }
+    reg(indexP, rType){
+        if(this.reg_exist(indexP, rType)){
+            return this.get_reg(indexP, rType)
+        }else{
+
+            this.registry[rType][indexP.split('/').pop(indexP.split('/').length)+hash]
+
+            return this.get_reg(indexP, rType)
+        }
+    }
+    register(indexP, rType){
+        if((!indexP) && (!rType)){
+            throw Error("Registration path and type are needed for registration with comet")
+        }else if(this.get_reg(indexP, rType)){
+            //return existing registration object
+            return this.get_reg(indexP, rType)
+        }else{
+            //register
+            return this.reg(indexP, rType)
+        }
 
 
     }
