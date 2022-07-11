@@ -31,10 +31,11 @@ export class Test extends Comet{
     matchScientifics(cases){
         //there are 6 cases in each iter test case for both regular strings containing scientific numbers and hard strings
         for (const [key, value] of Object.entries(cases)) {
+            this.comet(key, value)
             var matches = this.Matchic.matchScientifics(value)
-            console.log(matches)
+            
             var i=6;
-            while(i!=1){
+            while(i!=0){
                 try{
                     assert.equal(this.Matchic.isScientific(matches.pop(0)), true)
                     i-=1;
