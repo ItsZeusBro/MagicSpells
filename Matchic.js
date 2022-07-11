@@ -1,108 +1,82 @@
-import { SCIENTIFIC } from "./Spells/Spells";
+import { IS_SCIENTIFIC, IS_INTEGER, IS_FLOAT, IS_BINARY, IS_ALPHA_STRING, IS_ALPHA_NUMERIC_STRING, IS_SENTANCE } from "./Spells/Spells";
 
 export class Matchic{
-    //Reverse tells us to make the whole corpus 
-    //string conform to a single instance of the 
-    //regex pattern. It basically checks if the match
-    //output matches the entire input (no flags should apply)
 
-    isInteger(){
-        //returns true, the entire string is a single integer
-
-    }
-    hasInteger(){
-        //returns true, if anything in the string is an integer
-    }
-    noInteger(){
-        //returns true, if nothing in the string contains an integer
+    is(string, regex){
+        var reg = new RegExp(regex);
+        var match = string.match(reg)
+        return match
     }
 
-
-    isFloat(){
-        //returns true, the entire string is a single float
-    }
-    hasFloat(){
-        //returns true, if anything in the string is a float
-    }
-    noFloat(){
-        //returns true, if nothing in the string contains a float
-
-    }
-
-
-    isBinary(){
-        //returns true, the entire string is a single binary number
-    }
-    hasBinary(){
-        //returns true, if anything in the string is a binary number
-    }
-
-    noBinary(){
-        //returns true, if nothing in the string contains a binary
-
+    no(string, regex){
+        var tokens;
+        try{
+            console.log("original:", string)
+            tokens = string.split(/(\s)/g)
+            console.log("tokens:", tokens)
+        }catch{
+            return true
+        }
+        tokens.forEach(token => {
+            var reg = new RegExp(regex);
+            var match = string.match(reg)
+            if(match.length){
+                return false
+            }
+        });
+        return true
     }
 
+    has(string, regex){
 
-    isAlpha(){
-        //returns true, the entire string is a single binary number
-    }
-    hasAlpha(){
-        //returns true, if anything in the string is a binary number
-    }
-
-    noAlpha(){
-        //returns true, if nothing in the string contains a binary
-
-    }
-
-
-    isAlphaNumeric(){
-        //returns true, the entire string is an Alpha Numeric string
-    }
-    hasAlphaNumeric(){
-        //returns true, if any substring in the string is a Alpha Numeric substring
+        var tokens;
+        try{
+            console.log("original:", string)
+            tokens = string.split(/(\s)/g)
+            console.log("tokens:", tokens)
+        }catch{
+            throw Error("cannot tokenize integer strings")
+        }
+        tokens.forEach(token => {
+            var reg = new RegExp(regex);
+            var match = string.match(reg)
+            if(match.length){
+                return match
+            }
+        });
     }
 
-    noAlphaNumeric(){
-        //returns true, if there does not exist an AlphaNumeric substring
+    isInteger(string){return this.is(string, IS_INTEGER)}
+    hasInteger(string){return this.has(string, IS_INTEGER)}
+    noInteger(string){return this.no(string, IS_INTEGER)}
 
-    }
+    isFloat(string){return this.is(string, IS_FLOAT)}
+    hasFloat(string){return this.has(string, IS_FLOAT)}
+    noFloat(string){return this.no(string, IS_FLOAT)}
 
-
-    isScientific(){
-        //returns true, the entire string is a single scientific number
-
-    }
-    hasScientific(){
-        //returns true, if anything in the string is a scientific number
-
-    }
-    noScientific(){
-        //returns true, if nothing in the string contains a scientific number
-    }
+    isBinary(string){return this.is(string, IS_BINARY)}
+    hasBinary(string){return this.has(string, IS_BINARY)}
+    noBinary(string){return this.no(string, IS_BINARY)}
 
 
-    isSentance(){
-        //returns true, the entire string is a single sentance
-    }
-    hasSentance(){
-        //returns true, if anything in the string is a sentance
-    }
-    noSentance(){
-        //returns true, if nothing in the string contains a sentance
-    }
+    isAlpha(string){return this.is(string, IS_ALPHA_STRING)}
+    hasAlpha(string){return this.has(string, IS_ALPHA_STRING)}
+    noAlpha(string){return this.no(string, IS_ALPHA_STRING)}
 
 
-    isParagraph(){
-        //returns true, the entire string is a single paragraph
-    }
-    hasParagraph(){
-        //returns true, if anything in the string is a paragraph
-    }
-    noParagraph(){
-        //returns true, if nothing in the string contains a paragraph
-    }
+    isAlphaNumeric(string){return this.is(string, IS_ALPHA_NUMERIC_STRING)}
+    hasAlphaNumeric(string){return this.has(string, IS_ALPHA_NUMERIC_STRING)}
+    noAlphaNumeric(string){return this.no(string, IS_ALPHA_NUMERIC_STRING)}
 
-    
+
+    isScientific(string){return this.is(string, IS_SCIENTIFIC)}
+    hasScientific(string){return this.has(string, IS_SCIENTIFIC)}
+    noScientific(string){return this.no(string, IS_SCIENTIFIC)}
+
+    isSentance(string){return this.is(string, IS_SENTANCE)}
+    hasSentance(string){return this.has(string, IS_SENTANCE)}
+    noSentance(string){return this.no(string, IS_SENTANCE)}    
+
+
 }
 var matchic = new Matchic()
