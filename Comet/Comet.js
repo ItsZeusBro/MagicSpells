@@ -40,12 +40,12 @@ export class Comet{
     }
     comet(...data){
         if(data[0]=="error"||data[0]=="Error"||data[0]=="ERROR"){
-            var error = new Error(data.pop(0))
+            data.pop(0);
             fs.writeFileSync(this.cometFile, data.join(' ')+'\n', {flag:'a'})
             if (this.verbose){
                 console.log(data.join(' '))
             }
-            throw error;
+            throw Error(data.join(' '));
         }else{
             fs.writeFileSync(this.cometFile, data.join(' ')+'\n', {flag:'a'})
             if (this.verbose){

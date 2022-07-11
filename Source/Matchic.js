@@ -29,15 +29,13 @@ export class Matchic extends Comet{
             tokens.forEach(token => {
                 try{
                     match = token.match(reg)[0]
+                    this.matches.push(match)
                 }catch{
-                    this.comet("error", "problem getting next match from next() in MatchicSpells class");
-                    throw Error("problem getting next match from next() in MatchicSpells class")
+                    this.comet("error", "problem getting next match from next() in MatchicSpells class", string, regex);
                 }
             });
-            this.matches.push(match)
-
         }catch{
-            return
+            return []
         }
 
     }
@@ -71,11 +69,5 @@ class MatchicIter{
         this.regex=regex;
         this.matches=new Matchic().matches(string, regex)
     }
-    next(){
-        var reg = new RegExp(regex);
-        var match;
-        if(this.matches.length){
-            return this.matches.pop(0)
-        }
-    }
+    next(){return this.matches.pop(0)}
 }
