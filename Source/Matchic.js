@@ -1,21 +1,23 @@
 import { IS_SCIENTIFIC, IS_INTEGER, IS_FLOAT, IS_BINARY, IS_ALPHA_STRING, IS_ALPHA_NUMERIC_STRING, IS_SENTANCE } from "./Spells/Spells.js";
-
-export class Matchic{
-
+import { Comet } from "../Comet/Comet.js";
+export class Matchic extends Comet{
+    constructor(){
+        super("MatchicSpells/", "MatchicJS")
+    }
     is(string, regex){
         var reg = new RegExp(regex);
         var match;
         try{
             match = string.match(reg)[0];
         }catch{
-            console.log("cannot find match ", string, regex)
+            this.comet("cannot find match ", string, regex)
             return false
         }
         if (match==string){
-            console.log(string)
+            this.comet("found match ", string, regex)
             return true;
         }else{
-            console.log("cannot find match ", string, regex)
+            this.comet("cannot find match ", string, regex)
             return false;
         }
     }

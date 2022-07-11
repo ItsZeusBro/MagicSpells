@@ -1,5 +1,5 @@
 export const IS_SCIENTIFIC_CASES = {
-
+    
     "0.0000e0":"0.0000e0",
     "0.0000e1":"0.0000e1",
     "0.0000e9":"0.0000e9",

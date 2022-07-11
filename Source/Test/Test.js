@@ -12,13 +12,20 @@ export class Test extends Comet{
         this.comet("verifying")
         this.Matchic = new Matchic()
         new Verification(IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES)
-        this.IS_SCIENTIFIC(IS_SCIENTIFIC_CASES);
+        this.isScientific(IS_SCIENTIFIC_CASES);
+        this.notScientific(NOT_SCIENTIFIC_CASES)
         // this.testScientific(NOT_SCIENTIFIC_CASES, IS_SCIENTIFIC);
     }
     
-    IS_SCIENTIFIC(cases){
+    isScientific(cases){
         for (const [key, value] of Object.entries(cases)) {
             assert.equal(this.Matchic.isScientific(value), true)
+        }
+    }
+
+    notScientific(cases){
+        for (const [key, value] of Object.entries(cases)) {
+            assert.notEqual(this.Matchic.isScientific(value), true)
         }
     }
 
