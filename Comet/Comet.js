@@ -1,61 +1,29 @@
 import * as fs from "node:fs";
-import { Registry } from "./Verification/Registry.js";
+import { Registry } from "./Source/Registry/Registry.js";
 
 export class Comet{
-    constructor(root, module){
-        this.verbose;
-        this.flags()
-        console.log(process.cwd())
-        this.logDir=process.cwd().split(root)[0]+"/Comet/comets/"
-        this.moduleDir=this.logDir+module+"/"
-        this.cometDir = this.moduleDir+"comets/"
-        this.paths()
-        this.instance = process.pid
-        this.cometFile = this.cometDir+"comet_"+this.instance+'.comet'
+   constructor(root){
+        //Comet only needs to be initilized once for an entire project
+        //so long as the project name is provided
+        this.root=root
+        this.Registry = new Registry(this.root)
+        this.index=process.cwd().split(this.root)[0]+this.root+"/Comet/index/";
+        
+   }
 
-        process.on('uncaughtException', (err, origin) => {
-            this.comet('There was an uncaught error', err.stack);
-            //this.comet('Origin of Error\n'+'\n',JSON.stringify(origin));
-            process.exit(1); // mandatory (as per the Node.js docs)
-        });
-    }
-    paths(){
-        if (!fs.existsSync(this.logDir)){
-            fs.mkdirSync(this.logDir)
-            fs.mkdirSync(this.moduleDir)
-            fs.mkdirSync(this.cometDir)
-        }else if(!fs.existsSync(this.moduleDir)){
-            fs.mkdirSync(this.moduleDir)
-            fs.mkdirSync(this.cometDir)
-        }else if(!fs.existsSync(this.cometDir)){
-            fs.mkdirSync(this.cometDir)
-        }
-    }
-    flags(){
-        var flags = process.argv
-        flags.forEach(element => {
-            if (element=='--verbose'){
-                this.verbose=true
-            }
-        });
-    }
-    comet(...data){
-        if(data[0]=="error"||data[0]=="Error"||data[0]=="ERROR"){
-            data.pop(0);
-            fs.writeFileSync(this.cometFile, data.join(' ')+'\n', {flag:'a'})
-            if (this.verbose){
-                console.log(data.join(' '))
-            }
-            throw Error(data.join(' '));
-        }else{
-            fs.writeFileSync(this.cometFile, data.join(' ')+'\n', {flag:'a'})
-            if (this.verbose){
-                console.log(data.join(' '))
-            }
-        }
-
-    }
-    register(path){
-
+   comet(...data){
+    //this should know the absolute path to the file from where comet() its called
+    var abs = this.getCaller(new Error().stack.split('\n'))
+    var indexP=abs.split(this.root)[0]+this.root+"/Comet/index"+abs.split(this.root)[1]
+    console.log(indexP)
+   }
+   getCaller(stack) {
+        return stack[2].slice(
+            stack[2].lastIndexOf('(')+1, 
+            stack[2].lastIndexOf('.js')+3
+        )
     }
 }
+
+var comet = new Comet("MatchicSpells")
+comet.comet("some log")
