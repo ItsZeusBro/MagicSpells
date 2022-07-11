@@ -24,7 +24,6 @@ export class Matchic{
     }
 
     has(string, regex){
-
         var tokens;
         try{
             tokens = string.split(/(\s)/g); //PROBABLY A BUG IN HERE
@@ -51,16 +50,13 @@ export class Matchic{
     hasBinary(string){return this.has(string, IS_BINARY)}
     noBinary(string){return this.no(string, IS_BINARY)}
 
-
     isAlpha(string){return this.is(string, IS_ALPHA_STRING)}
     hasAlpha(string){return this.has(string, IS_ALPHA_STRING)}
     noAlpha(string){return this.no(string, IS_ALPHA_STRING)}
 
-
     isAlphaNumeric(string){return this.is(string, IS_ALPHA_NUMERIC_STRING)}
     hasAlphaNumeric(string){return this.has(string, IS_ALPHA_NUMERIC_STRING)}
     noAlphaNumeric(string){return this.no(string, IS_ALPHA_NUMERIC_STRING)}
-
 
     isScientific(string){return this.is(string, IS_SCIENTIFIC)}
     hasScientific(string){return this.has(string, IS_SCIENTIFIC)}
@@ -69,7 +65,4 @@ export class Matchic{
     isSentance(string){return this.is(string, IS_SENTANCE)}
     hasSentance(string){return this.has(string, IS_SENTANCE)}
     noSentance(string){return this.no(string, IS_SENTANCE)}    
-
-
 }
-var matchic = new Matchic()
