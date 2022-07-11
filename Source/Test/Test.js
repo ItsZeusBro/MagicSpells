@@ -1,6 +1,6 @@
 import {Matchic} from "../Matchic.js"
 import { Comet } from "../../Comet/Comet.js"
-import {IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES} from "./Cases/Scientific.js"
+import {IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES, SCIENTIFIC_ITER_CASES} from "./Cases/Scientific.js"
 import { IS_SCIENTIFIC, IS_INTEGER, IS_FLOAT, IS_BINARY, IS_ALPHA_STRING, IS_ALPHA_NUMERIC_STRING, IS_SENTANCE } from "../Spells/Spells.js";
 
 import { Verification } from "./Verification.js"
@@ -14,7 +14,7 @@ export class Test extends Comet{
         new Verification(IS_SCIENTIFIC_CASES, NOT_SCIENTIFIC_CASES)
         this.isScientific(IS_SCIENTIFIC_CASES);
         this.notScientific(NOT_SCIENTIFIC_CASES)
-        // this.testScientific(NOT_SCIENTIFIC_CASES, IS_SCIENTIFIC);
+        this.iterScientific(IS)
     }
     
     isScientific(cases){
@@ -29,7 +29,7 @@ export class Test extends Comet{
         }
     }
 
-    nextScientific(){
+    iterScientific(){
 
     }
 

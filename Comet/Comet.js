@@ -5,7 +5,8 @@ export class Comet{
         this.verbose;
         this.flags()
         console.log(process.cwd())
-        this.moduleDir=process.cwd().split(root)[0]+"/Comet/comets/"+module+"/"
+        this.logDir=process.cwd().split(root)[0]+"/Comet/comets/"
+        this.moduleDir=this.logDir+module+"/"
         this.cometDir = this.moduleDir+"comets/"
         this.paths()
         this.instance = process.pid
@@ -18,7 +19,11 @@ export class Comet{
         });
     }
     paths(){
-        if (!fs.existsSync(this.moduleDir)){
+        if (!fs.existsSync(this.logDir)){
+            fs.mkdirSync(this.logDir)
+            fs.mkdirSync(this.moduleDir)
+            fs.mkdirSync(this.cometDir)
+        }else if(!fs.existsSync(this.moduleDir)){
             fs.mkdirSync(this.moduleDir)
             fs.mkdirSync(this.cometDir)
         }else if(!fs.existsSync(this.cometDir)){
