@@ -4,8 +4,7 @@ import { Registry } from "./Source/Registry/Registry.js";
 export class Comet{
     constructor(root){
         this.root=root
-        this.Registry = new Registry(this.root)
-        this.index=process.cwd().split(this.root)[0]+this.root+"/Comet/index/";
+        this.Registry = new Registry(root)
         this.verbose;
         this.flags()
         process.on('uncaughtException', (err, origin) => {
@@ -15,6 +14,7 @@ export class Comet{
         });
         
     }
+    
     flags(){
         var flags = process.argv
         flags.forEach(element => {
@@ -26,15 +26,14 @@ export class Comet{
 
     comet(...data){
         this._comet(data, this.getOriginP(new Error().stack.split('\n')))
-    }
-    _comet(data, origin){
-        new Registry().log(data, origin)
-
+        
+        this.Registry.log(data, origin)
         //this stays here regardless 
         if (this.verbose){
             console.log(data.join(' '))
         }
     }
+
     getOriginP(stack) {
         var abs = stack[2].slice(
             stack[2].lastIndexOf('(')+1, 
@@ -42,10 +41,11 @@ export class Comet{
         )
         return abs.split(this.root)[0]+this.root+"/Comet/index"+abs.split(this.root)[1]
     }
+
     register(path, type){
         this.Registry.register(path, type)
     }
 }
 
-var comet = new Comet("MatchicSpells")
-comet.comet("some log")
+// var comet = new Comet("MatchicSpells")
+// comet.comet("some log")

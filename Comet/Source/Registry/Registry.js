@@ -1,13 +1,16 @@
 import * as fs from "node:fs";
 
-export class Registration{
+export class Reg{
+    constructor(root){
+        this.index=process.cwd().split(root)[0]+this.root+"/Comet/index/";
 
-    get_Registration(logP){
+    }
+    get_reg(origin, type){
         //return this if registration exists
         //else return nothing
     }
 
-    _log(data){
+    log(data){
         fs.writeFileSync(this.logP, data.join(' ')+'\n', {flag:'a'})
     }
 
@@ -21,28 +24,25 @@ export class Registration{
 }
 
 export class Registry{
-
+    constructor(root){
+        this.Reg = new Reg(root)
+    }
+    
     //returns true or false if registration path and type exists
     exists(indexP, rType){
-        return new Registration().exists(indexP, rType)
+        return this.Reg.exists(indexP, rType)
     }
 
     log(data, origin){
-        new Registration()._log(data, this.registration(origin, 'log'))
+        this.Reg.log(data, this.Reg.get_reg(origin, 'log'))
     }
 
     //register if not registered
     register(indexP, rType){
         if((!indexP) && (!rType)){
             throw Error("Registration path and type are needed for registration with comet")
-        }else if(!new Registration().get_registration(indexP, rType)){
-            new Registration().register(indexP, rType);
+        }else if(!this.Reg.get_reg(indexP, rType)){
+            this.Reg.register(indexP, rType);
         }
     }
-    registration(origin, type){
-        //this gets the registration associated with 
-        //the file with the origin path
-
-    }
 }
-
