@@ -12,10 +12,16 @@ export class Reg{
         console.log("get_reg(origin, type)", origin, type)
     }
 
-    log(data){
-        //fs.writeFileSync(this.logP, data.join(' ')+'\n', {flag:'a'})
-        console.log("log(data)", data)
-
+    log(data, origin){
+        this.append(data.join(" ")+'\n', this.logFile(origin));
+    }
+    logFile(orign){
+        //this should look in the registry index for the file associated
+        //with origin. if it doesnt exist, create it and return the file
+        //path
+    }
+    append(data, path){
+        fs.writeFileSync(path, data, {flag:'a'})
     }
 
     register(indexP, rType){
