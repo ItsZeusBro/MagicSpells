@@ -1,21 +1,24 @@
 {
-  "name": "magicspells",
+  "name": "matchicspells",
   "version": "1.0.0",
   "description": "These are Regex pattern matching spells for very specific tasks that are also pretty general.",
-  "main": "MagicSpells.js",
+  "main": "Source/MatchicSpells.js",
   "scripts": {
     "test-verb": "node ./Source/Test/Test.js --verbose",
     "test": "node ./Source/Test/Test.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ItsZeusBro/MagicSpells.git"
+    "url": "git+https://github.com/ItsZeusBro/MatchicSpells.git"
+  },
+  "podules":{
+
   },
   "type":"module",
   "author": "Hassan Amad",
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
-    "url": "https://github.com/ItsZeusBro/MagicSpells/issues"
+    "url": "https://github.com/ItsZeusBro/MatchicSpells/issues"
   },
-  "homepage": "https://github.com/ItsZeusBro/MagicSpells#readme"
+  "homepage": "https://github.com/ItsZeusBro/MatchicSpells#readme"
 }
