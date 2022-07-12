@@ -25,8 +25,7 @@ export class Comet{
     }
 
     comet(...data){
-
-        this.Registry.log(data, this.getOriginP(new Error().stack.split('\n')))
+        this.Registry.log(data, this.getOriginP(new Error().stack))
         //this stays here regardless 
         if (this.verbose){
             console.log(data.join(' '))
@@ -34,11 +33,7 @@ export class Comet{
     }
 
     getOriginP(stack) {
-        var abs = stack[2].slice(
-            stack[2].lastIndexOf('(')+1, 
-            stack[2].lastIndexOf('.js')+3
-        )
-        return abs.split(this.root)[0]+this.root+"/Comet/index"+abs.split(this.root)[1]
+        return stack.split('\n')[2].split('file://')[1].split(":")[0]
     }
 
     register(path, type){
@@ -46,5 +41,3 @@ export class Comet{
     }
 }
 
-var comet = new Comet("MatchicSpells")
-comet.comet("some log")

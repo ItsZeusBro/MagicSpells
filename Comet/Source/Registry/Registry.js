@@ -4,7 +4,7 @@ export class Reg{
     constructor(root){
         this.index=process.cwd().split(root)[0]+this.root+"/Comet/index/";
         console.log("constructor().index", this.index)
-
+        //"/Comet/index"+abs.split(this.root)[1]
     }
     get_reg(origin, type){
         //return this if registration exists
@@ -26,7 +26,7 @@ export class Reg{
     }
     exists(indexP, rType){
         //returns true or false depending on existence
-        console.log("exists(indexP, rType)", indexP, rType)
+        console.log("exists(indexP, rType)", indexP, rType);
 
     }
 }
@@ -42,6 +42,7 @@ export class Registry{
     }
 
     log(data, origin){
+        console.log("Registry().log(data, origin)", data, origin)
         this.Reg.log(data, this.Reg.get_reg(origin, 'log'))
     }
 
