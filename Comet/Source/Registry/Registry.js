@@ -29,14 +29,6 @@ export class RegFile{
         this._walkwAppend(data.join(" ")+'\n', this.resolve(origin));
     }
     
-    exists(origin){
-        if(fs.existsSync(this.resolve(origin))){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     resolve(origin){
         return this.index+origin;
     }
@@ -58,13 +50,7 @@ export class Registry{
         }
     }
 
-    //returns true or false if registration path and type exists
-    exists(origin){
-        return this.RegFile.exists(origin)
-    }
-
     log(data, origin){
         this.RegFile.log(data, origin)
     }
-
 }

@@ -4,7 +4,6 @@ import { Registry } from "./Source/Registry/Registry.js";
 export class Comet{
     constructor(config){
         this.config = this.set_config(config)
-        //console.log(this.config)
         this.Registry = new Registry(this.config)
         process.on('uncaughtException', (err, origin) => {
             var indexP = this.getOriginFilePath(err.stack.split('\n'))
@@ -21,7 +20,6 @@ export class Comet{
             return JSON.parse(fs.readFileSync(config))
         }
     }
-    
 
     async comet(...data){
         this.Registry.log(data, this.getOriginFilePath(await this.getStack()))
@@ -49,4 +47,3 @@ export class Comet{
     }
 
 }
-
