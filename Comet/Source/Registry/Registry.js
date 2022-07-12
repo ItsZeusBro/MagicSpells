@@ -1,82 +1,81 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 export class Reg{
-    constructor(config){
-        
+    constructor(index){
+        this.index=index
     }
     
-    get_reg(origin, type){
+    get_reg(rType, origin){
         //return this if registration exists
         //else return nothing
         //console.log("get_reg(origin, type)", origin, type)
     }
 
     log(data, origin){
-        //console.log(data, process.cwd()+'/comet/', origin)
+        console.log(data, this.index+origin)
         //this.append(data.join(" ")+'\n', this.logFile(origin));
     }
 
-    logFile(orign){
-        //this should look in the registry index for the file associated
 
-        //with origin. if it doesnt exist, create it and return the file
-        //path
+
+    append(data, origin){
+        //if origin does not exist in registry, register origin
+        //fs.writeFileSync(path, data, {flag:'a'})
     }
 
-    append(data, path){
-        fs.writeFileSync(path, data, {flag:'a'})
-    }
-
-    register(indexP, rType){
+    register(rType, origin){
         //creates registration and
         //return this
-        //console.log("register(indexP, rType)", indexP, rType)
+        // console.log("register(indexP, rType)", indexP, rType)
     }
 
-    exists(indexP, rType){
+    exists(rType, origin){
         //returns true or false depending on existence
         //console.log("exists(indexP, rType)", indexP, rType);
+    }
+
+    resolve(origin){
+        //this just resolves the origin to its proper index path
+        //and returns the path that may or may not exist
+
     }
 
 }
 
 export class Registry{
     constructor(config){
-        this.config;
-        this.index=this.config['out']+'/comet/';
-        this.create_index();
+        this.index = this.create_index(config['root'])
+        console.log(this.index)
+        this.Reg = new Reg(this.index)
     }
 
-    create_index(){
-        if(!fs.existsSync(this.index)){
-            fs.mkdirSync(this.index)
-        }
-    }
-    set_config(config){
-        if(!fs.existsSync(config)){
-            throw Error("JSON config file does not exist at this location")
+    create_index(root){
+        var index = process.cwd().split(root)[0]+root+'/comet/'
+        if(!fs.existsSync(index)){
+            fs.mkdirSync(index)
+            return index;
         }else{
-            return JSON.parse(require(config))
+            return index;
         }
     }
+
 
     //returns true or false if registration path and type exists
     exists(indexP, rType){
-        return new Reg().exists(indexP, rType)
+        return this.Reg.exists(indexP, rType)
     }
 
     log(data, origin){
-        console.log(origin.split(process.cwd()+'/')[1])
-        console.log("Registry().log(data, origin)", data, this.index, origin)
-        //new Reg().log(data, new Reg().get_reg(origin, 'log'))
+        console.log(data, origin)
+        this.Reg.log(data, origin)
     }
 
     //register if not registered
     register(indexP, rType){
         if((!indexP) && (!rType)){
             throw Error("Registration path and type are needed for registration with comet")
-        }else if(!new Reg().get_reg(indexP, rType)){
-            new Reg().register(indexP, rType);
+        }else if(!this.Reg.get_reg(indexP, rType)){
+            this.Reg.register(indexP, rType);
         }
     }
 }
