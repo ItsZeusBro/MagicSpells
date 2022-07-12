@@ -12,15 +12,21 @@ export class Reg{
     }
 
     log(data, origin){
-        console.log(data, this.index+origin)
-        //this.append(data.join(" ")+'\n', this.logFile(origin));
+        this.wAppend(data.join(" ")+'\n', this.resolve(origin));
     }
 
 
 
-    append(data, origin){
-        //if origin does not exist in registry, register origin
-        //fs.writeFileSync(path, data, {flag:'a'})
+    wAppend(data, origin){
+        var tokens = origin.split('/')
+        while(tokens.length>1){
+            if(!fs.existsSync(tokens[0])){
+                fs.mkdirSync(tokens.pop(0))
+            }
+        }
+        if(!fs.existsSync(tokens[0])){
+            fs.writeFileSync(tokens[0], data, {flag:'a'})
+        }
     }
 
     register(rType, origin){
@@ -37,7 +43,7 @@ export class Reg{
     resolve(origin){
         //this just resolves the origin to its proper index path
         //and returns the path that may or may not exist
-
+        return this.index+origin;
     }
 
 }
@@ -45,7 +51,6 @@ export class Reg{
 export class Registry{
     constructor(config){
         this.index = this.create_index(config['root'])
-        console.log(this.index)
         this.Reg = new Reg(this.index)
     }
 
@@ -66,7 +71,6 @@ export class Registry{
     }
 
     log(data, origin){
-        console.log(data, origin)
         this.Reg.log(data, origin)
     }
 

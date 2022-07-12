@@ -23,19 +23,33 @@ export class Comet{
     }
     
 
-    comet(...data){
-        this.Registry.log(data, this.getOriginFilePath(new Error().stack))
-        //this stays here regardless 
-        if (this.config.verbose){
-            console.log(data.join(' '))
-        }
+    async comet(...data){
+        this.getOriginFilePath(await this.getStack())
+        //this.Registry.log(data, this.getOriginFilePath(await this.getStack()))
+
+        // if (this.config.verbose){
+        //     console.log(data.join(' '))
+        // }
+    }
+    async getStack(){
+        return new Error().stack
     }
 
     getOriginFilePath(stack) {
-        return stack.split('\n')[2]
-        .split('file://')[1]
-        .split(":")[0]
-        .split(this.config.root+'/')[1];
+        if (typeof stack === 'string' || stack instanceof String){
+            return stack.split('\n')[3]
+                    .split('file://')[1]
+                    .split(":")[0]
+                    .split(this.config.root+'/')[1];
+
+        }else{
+            return stack[3]
+                    .split('file://')[1]
+                    .split(":")[0]
+                    .split(this.config.root+'/')[1];
+        }
+        // return stack[3].split('\n')
+        
     }
 
     register(path, type){
