@@ -12,14 +12,13 @@ export class Reg{
     }
 
     log(data, origin){
-        this.wAppend(data.join(" ")+'\n', this.resolve(origin));
+        this.walkwAppend(data.join(" ")+'\n', this.resolve(origin));
     }
 
 
 
-    wAppend(data, origin){
+    walkwAppend(data, origin){
         var tokens = origin.split(this.index)[1].split('/')
-        console.log(tokens)
         var path = this.index;
         var i = 0;
         while(i!=tokens.length-1){
@@ -29,11 +28,11 @@ export class Reg{
             }
             i++;
         }
-        
-        path=path+tokens[tokens.length-1]
-        if(!fs.existsSync(path)){
-            fs.writeFileSync(path, data, {flag:'a'})
-        }
+        path=path+tokens[tokens.length-1];
+        this.wAppend(data, path);
+    }
+    wAppend(data, path){
+        fs.writeFileSync(path, data, {flag:'a'})
     }
 
     register(rType, origin){
