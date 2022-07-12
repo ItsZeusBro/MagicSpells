@@ -25,12 +25,20 @@ export class Registration{
     }
     get_Registration(logP){
 
+        //return this
     }
-    log(data){
+    _log(data){
         fs.writeFileSync(this.logP, data.join(' ')+'\n', {flag:'a'})
     }
-    create_log(path){
-        
+    _create_log(path){
+
+    }
+    register(indexP, rType){
+        //creates registration and
+        //return this
+    }
+    exists(indexP, rType){
+        //returns true or false depending on existence
     }
 }
 
@@ -39,28 +47,22 @@ export class Registry{
     }
     //TODO
     get_registration(indexP, rType){
-        //get the file registration object
-        //find registration file and create registration object with file and return it
+        return new Registration().get_Registration(indexP, rType)
+        
     }
-    _register(indexP, rType){
-        if(this.reg_exist(indexP, rType)){
-            return this.get_registration(indexP, rType)
-        }else{
-
-            this.registry[rType][indexP.split('/').pop(indexP.split('/').length)+hash]
-
-            return this.get_registration(indexP, rType)
-        }
+    exists(indexP, rType){
+        return new Registration().exists(indexP, rType)
     }
+    
     register(indexP, rType){
         if((!indexP) && (!rType)){
             throw Error("Registration path and type are needed for registration with comet")
         }else if(this.get_registration(indexP, rType)){
             //return existing registration object
-            return this.get_registration(indexP, rType)
+            return new Registration.register(indexP, rType)
         }else{
             //register
-            return this._register(indexP, rType)
+            return new Registration().register(indexP, rType);
         }
     }
     getLog(logP){
