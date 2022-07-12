@@ -1,8 +1,6 @@
 import { SCIENTIFIC, SCIENTIFIC_G, INTEGER, FLOAT, BINARY, ALPHA_STRING, ALPHA_NUMERIC_STRING, SENTANCE } from "./Spells/Spells.js";
-import { Comet } from "../Comet/Comet.js";
-export class Matchic extends Comet{
+export class Matchic{
     constructor(){
-        super("MatchicSpells/", "MatchicJS")
     }
     is(string, regex){
         var reg = new RegExp(regex);
@@ -10,14 +8,14 @@ export class Matchic extends Comet{
         try{
             match = string.match(reg)[0];
         }catch{
-            this.comet("cannot find match ", string, regex)
+            console.log("cannot find match ", string, regex)
             return false
         }
         if (match==string){
-            this.comet("found match ", string, regex)
+            console.log("found match ", string, regex)
             return true;
         }else{
-            this.comet("cannot find match ", string, regex)
+            console.log("cannot find match ", string, regex)
             return false;
         }
     }
