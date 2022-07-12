@@ -21,9 +21,10 @@ import * as fs from "node:fs";
 export class Registration{
 
     get_Registration(logP){
-
-        //return this
+        //return this if registration exists
+        //else return nothing
     }
+
     _log(data){
         fs.writeFileSync(this.logP, data.join(' ')+'\n', {flag:'a'})
     }
@@ -50,7 +51,7 @@ export class Registry{
     register(indexP, rType){
         if((!indexP) && (!rType)){
             throw Error("Registration path and type are needed for registration with comet")
-        }else if(!this.get_registration(indexP, rType)){
+        }else if(!new Registration().get_registration(indexP, rType)){
             new Registration().register(indexP, rType);
         }
     }
