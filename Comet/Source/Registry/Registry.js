@@ -1,23 +1,12 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-export class Reg{
+export class RegFile{
     constructor(index){
-        this.index=index
-    }
-    
-    get_reg(rType, origin){
-        //return this if registration exists
-        //else return nothing
-        //console.log("get_reg(origin, type)", origin, type)
+        this.index=index;
     }
 
-    log(data, origin){
-        this.walkwAppend(data.join(" ")+'\n', this.resolve(origin));
-    }
-
-
-
-    walkwAppend(data, origin){
+    _walkwAppend(data, origin){
+        //pop(0) was not working properly
         var tokens = origin.split(this.index)[1].split('/')
         var path = this.index;
         var i = 0;
@@ -31,33 +20,32 @@ export class Reg{
         path=path+tokens[tokens.length-1];
         this.wAppend(data, path);
     }
-    wAppend(data, path){
-        fs.writeFileSync(path, data, {flag:'a'})
+
+    _wAppend(data, path){
+        fs.writeFileSync(path, data, {flag:'a'});
     }
 
-    register(rType, origin){
-        //creates registration and
-        //return this
-        // console.log("register(indexP, rType)", indexP, rType)
+    log(data, origin){
+        this._walkwAppend(data.join(" ")+'\n', this.resolve(origin));
     }
-
-    exists(rType, origin){
-        //returns true or false depending on existence
-        //console.log("exists(indexP, rType)", indexP, rType);
+    
+    exists(origin){
+        if(fs.existsSync(this.resolve(origin))){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     resolve(origin){
-        //this just resolves the origin to its proper index path
-        //and returns the path that may or may not exist
         return this.index+origin;
     }
-
 }
 
 export class Registry{
     constructor(config){
         this.index = this.create_index(config['root'])
-        this.Reg = new Reg(this.index)
+        this.Reg = new RegFile(this.index)
     }
 
     create_index(root){
@@ -70,22 +58,13 @@ export class Registry{
         }
     }
 
-
     //returns true or false if registration path and type exists
-    exists(indexP, rType){
-        return this.Reg.exists(indexP, rType)
+    exists(origin){
+        return this.RegFile.exists(origin)
     }
 
     log(data, origin){
-        this.Reg.log(data, origin)
+        this.RegFile.log(data, origin)
     }
 
-    //register if not registered
-    register(indexP, rType){
-        if((!indexP) && (!rType)){
-            throw Error("Registration path and type are needed for registration with comet")
-        }else if(!this.Reg.get_reg(indexP, rType)){
-            this.Reg.register(indexP, rType);
-        }
-    }
 }

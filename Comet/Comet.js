@@ -48,8 +48,5 @@ export class Comet{
         }
     }
 
-    register(path, type){
-        this.Registry.register(path, type)
-    }
 }
 
