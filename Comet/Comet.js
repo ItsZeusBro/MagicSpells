@@ -2,10 +2,9 @@ import * as fs from "node:fs";
 import { Registry } from "./Source/Registry/Registry.js";
 
 export class Comet{
-    constructor(){
-        this.Registry = new Registry()
-        this.verbose;
-        this.flags()
+    constructor(config){
+        this.Registry = new Registry(config)
+        this.config = set_config(config)
         process.on('uncaughtException', (err, origin) => {
             var indexP = this.getOriginP(err.stack.split('\n'))
             this.comet(['There was an uncaught error '+ err.stack], indexP)            
@@ -13,20 +12,19 @@ export class Comet{
         });
         
     }
-    
-    flags(){
-        var flags = process.argv
-        flags.forEach(element => {
-            if (element=='--verbose'){
-                this.verbose=true
-            }
-        });
+    set_config(config){
+        if(!fs.existsSync(config)){
+            throw Error("JSON config file does not exist at this location")
+        }else{
+            return require(config)
+        }
     }
+    
 
     comet(...data){
         this.Registry.log(data, this.getOriginP(new Error().stack))
         //this stays here regardless 
-        if (this.verbose){
+        if (this.config.verbose){
             console.log(data.join(' '))
         }
     }
