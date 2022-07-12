@@ -3,23 +3,31 @@ import * as fs from "node:fs";
 export class Reg{
     constructor(root){
         this.index=process.cwd().split(root)[0]+this.root+"/Comet/index/";
+        console.log("constructor().index", this.index)
 
     }
     get_reg(origin, type){
         //return this if registration exists
         //else return nothing
+        console.log("get_reg(origin, type)", origin, type)
     }
 
     log(data){
-        fs.writeFileSync(this.logP, data.join(' ')+'\n', {flag:'a'})
+        //fs.writeFileSync(this.logP, data.join(' ')+'\n', {flag:'a'})
+        console.log("log(data)", data)
+
     }
 
     register(indexP, rType){
         //creates registration and
         //return this
+        console.log("register(indexP, rType)", indexP, rType)
+
     }
     exists(indexP, rType){
         //returns true or false depending on existence
+        console.log("exists(indexP, rType)", indexP, rType)
+
     }
 }
 

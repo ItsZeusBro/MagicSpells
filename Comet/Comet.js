@@ -8,8 +8,8 @@ export class Comet{
         this.verbose;
         this.flags()
         process.on('uncaughtException', (err, origin) => {
-            var indexP = this.getCaller(err.stack.split('\n'))
-            this._comet(['There was an uncaught error '+ err.stack], indexP)            
+            var indexP = this.getOriginP(err.stack.split('\n'))
+            this.comet(['There was an uncaught error '+ err.stack], indexP)            
             process.exit(1);
         });
         
@@ -25,9 +25,8 @@ export class Comet{
     }
 
     comet(...data){
-        this._comet(data, this.getOriginP(new Error().stack.split('\n')))
-        
-        this.Registry.log(data, origin)
+
+        this.Registry.log(data, this.getOriginP(new Error().stack.split('\n')))
         //this stays here regardless 
         if (this.verbose){
             console.log(data.join(' '))
@@ -47,5 +46,5 @@ export class Comet{
     }
 }
 
-// var comet = new Comet("MatchicSpells")
-// comet.comet("some log")
+var comet = new Comet("MatchicSpells")
+comet.comet("some log")
