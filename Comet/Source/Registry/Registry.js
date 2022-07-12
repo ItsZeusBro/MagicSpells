@@ -19,43 +19,46 @@
 import {LOG, TRACK} from "./rTypes.js";
 import * as fs from "node:fs";
 
-export class Registry{
-    constructor(root){
-        this.registry={}
-        this.index=process.cwd().split(root)[0]+root+"/Comet/index/";
+export class Registration{
+    constructor(path){
 
     }
-    get_reg(indexP, rType){
+    get_Registration(logP){
+
+    }
+}
+
+export class Registry{
+    constructor(){
+    }
+    //TODO
+    get_registration(indexP, rType){
         //get the file registration object
         //find registration file and create registration object with file and return it
     }
-    reg(indexP, rType){
+    _register(indexP, rType){
         if(this.reg_exist(indexP, rType)){
-            return this.get_reg(indexP, rType)
+            return this.get_registration(indexP, rType)
         }else{
 
             this.registry[rType][indexP.split('/').pop(indexP.split('/').length)+hash]
 
-            return this.get_reg(indexP, rType)
+            return this.get_registration(indexP, rType)
         }
     }
     register(indexP, rType){
         if((!indexP) && (!rType)){
             throw Error("Registration path and type are needed for registration with comet")
-        }else if(this.get_reg(indexP, rType)){
+        }else if(this.get_registration(indexP, rType)){
             //return existing registration object
-            return this.get_reg(indexP, rType)
+            return this.get_registration(indexP, rType)
         }else{
             //register
-            return this.reg(indexP, rType)
+            return this._register(indexP, rType)
         }
-
-
+    }
+    getLog(logP){
+        return new Registration().get_Registration(logP)
     }
 }
 
-export class Registration{
-    constructor(path){
-        
-    }
-}
