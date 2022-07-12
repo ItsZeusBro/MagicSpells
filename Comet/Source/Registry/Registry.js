@@ -1,11 +1,10 @@
 import * as fs from "node:fs";
 
 export class Reg{
-    constructor(root){
-        this.index=process.cwd().split(root)[0]+this.root+"/Comet/index/";
-        console.log("constructor().index", this.index)
-        //"/Comet/index"+abs.split(this.root)[1]
+    constructor(config){
+        
     }
+    
     get_reg(origin, type){
         //return this if registration exists
         //else return nothing
@@ -15,11 +14,14 @@ export class Reg{
     log(data, origin){
         this.append(data.join(" ")+'\n', this.logFile(origin));
     }
+
     logFile(orign){
         //this should look in the registry index for the file associated
+
         //with origin. if it doesnt exist, create it and return the file
         //path
     }
+
     append(data, path){
         fs.writeFileSync(path, data, {flag:'a'})
     }
@@ -28,36 +30,41 @@ export class Reg{
         //creates registration and
         //return this
         console.log("register(indexP, rType)", indexP, rType)
-
     }
+
     exists(indexP, rType){
         //returns true or false depending on existence
         console.log("exists(indexP, rType)", indexP, rType);
-
     }
+
 }
 
 export class Registry{
-    constructor(root){
-        this.Reg = new Reg(root)
+    constructor(config){
+        this.index=process.cwd()+'/comet/';
+        this.create_index();
     }
-    
+    create_index(){
+        if(!fs.existsSync(this.index)){
+            fs.mkdirSync(this.index)
+        }
+    }
     //returns true or false if registration path and type exists
     exists(indexP, rType){
-        return this.Reg.exists(indexP, rType)
+        return new Reg().exists(indexP, rType)
     }
 
     log(data, origin){
         console.log("Registry().log(data, origin)", data, origin)
-        this.Reg.log(data, this.Reg.get_reg(origin, 'log'))
+        new Reg().log(data, new Reg().get_reg(origin, 'log'))
     }
 
     //register if not registered
     register(indexP, rType){
         if((!indexP) && (!rType)){
             throw Error("Registration path and type are needed for registration with comet")
-        }else if(!this.Reg.get_reg(indexP, rType)){
-            this.Reg.register(indexP, rType);
+        }else if(!new Reg().get_reg(indexP, rType)){
+            new Reg().register(indexP, rType);
         }
     }
 }

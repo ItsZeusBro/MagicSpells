@@ -2,9 +2,8 @@ import * as fs from "node:fs";
 import { Registry } from "./Source/Registry/Registry.js";
 
 export class Comet{
-    constructor(root){
-        this.root=root
-        this.Registry = new Registry(root)
+    constructor(){
+        this.Registry = new Registry()
         this.verbose;
         this.flags()
         process.on('uncaughtException', (err, origin) => {

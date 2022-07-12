@@ -1,7 +1,7 @@
 # Logs
 logs
 *.log
-Comet/index/
+comet/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
