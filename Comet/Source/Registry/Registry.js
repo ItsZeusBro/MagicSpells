@@ -21,10 +21,16 @@ import * as fs from "node:fs";
 
 export class Registration{
     constructor(path){
-
+        this.logP = this.create_log(path)
     }
     get_Registration(logP){
 
+    }
+    log(data){
+        fs.writeFileSync(this.logP, data.join(' ')+'\n', {flag:'a'})
+    }
+    create_log(path){
+        
     }
 }
 

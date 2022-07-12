@@ -26,18 +26,20 @@ export class Comet{
         });
     }
 
-    // comet(...data){
-    //     //this should know the absolute path to the file from where comet() its called
-    //     var indexP = this.getCaller(new Error().stack.split('\n'))
-    //     this._comet(data, indexP)
-    // }
-    // _comet(data, indexP){
-    //     fs.writeFileSync(comLog, data.join(' ')+'\n', {flag:'a'})
-    //     if (this.verbose){
-    //         console.log(data.join(' '))
-    //     }
-    // }
-    getCaller(stack) {
+    comet(...data){
+        //this should know the absolute path to the file from where comet() its called
+        this._comet(data, this.getOriginP(new Error().stack.split('\n')))
+    }
+    _comet(data, origin){
+        //get Registration of the indexP, and use the Registration object to log to the log file
+        var registration = this.Registry.get_registration(origin, 'log');
+        registration.log(data)
+        //this stays here regardless 
+        if (this.verbose){
+            console.log(data.join(' '))
+        }
+    }
+    getOriginP(stack) {
         var abs = stack[2].slice(
             stack[2].lastIndexOf('(')+1, 
             stack[2].lastIndexOf('.js')+3
@@ -54,7 +56,8 @@ comet.comet("some log")
 
 //Functions
 //register(path, type)  //registers a file with the registry and type
-//comet(...data)    //gets the registered log file Registration if it exists, and log to it
+//comet(...data) uses _comet(data, origin) to log to a registered file
+//gets the registered log file Registration if it exists, and log to it
 //  if it doesn't exist, register the log file and log to it
 
 //getCaller takes the creates a new Error and gets the stack then returns the file from where 
