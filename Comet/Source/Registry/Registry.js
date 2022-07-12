@@ -18,14 +18,21 @@ export class Reg{
 
 
     wAppend(data, origin){
-        var tokens = origin.split('/')
-        while(tokens.length>1){
-            if(!fs.existsSync(tokens[0])){
-                fs.mkdirSync(tokens.pop(0))
+        var tokens = origin.split(this.index)[1].split('/')
+        console.log(tokens)
+        var path = this.index;
+        var i = 0;
+        while(i!=tokens.length-1){
+            path = path+tokens[i]+'/'
+            if(!fs.existsSync(path)){
+                fs.mkdirSync(path)
             }
+            i++;
         }
-        if(!fs.existsSync(tokens[0])){
-            fs.writeFileSync(tokens[0], data, {flag:'a'})
+        
+        path=path+tokens[tokens.length-1]
+        if(!fs.existsSync(path)){
+            fs.writeFileSync(path, data, {flag:'a'})
         }
     }
 

@@ -24,12 +24,10 @@ export class Comet{
     
 
     async comet(...data){
-        this.getOriginFilePath(await this.getStack())
-        //this.Registry.log(data, this.getOriginFilePath(await this.getStack()))
-
-        // if (this.config.verbose){
-        //     console.log(data.join(' '))
-        // }
+        this.Registry.log(data, this.getOriginFilePath(await this.getStack()))
+        if (this.config.verbose){
+            console.log(data.join(' '))
+        }
     }
     async getStack(){
         return new Error().stack
@@ -48,8 +46,6 @@ export class Comet{
                     .split(":")[0]
                     .split(this.config.root+'/')[1];
         }
-        // return stack[3].split('\n')
-        
     }
 
     register(path, type){
