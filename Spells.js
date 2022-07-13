@@ -17,9 +17,7 @@ class Spell{
         //from the lookahead
         this.globalState = {string: string}
         this.stateStack=[]
-        
         this.Matchic = new Matchic()
-
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
         Spell.prototype.nextSentance=this.nextSentance;
@@ -28,81 +26,82 @@ class Spell{
         Spell.prototype.nextScientific=this.nextScientific;
         Spell.prototype.nextOctet=this.nextOctet;
         Spell.prototype.nextHex=this.nextHex;
-        Spell.prototype.nextBlock=this.nextBlock;
+        Spell.prototype.nextCodeBlock=this.nextCodeBlock;
+        Spell.prototype.nextHTML = this.nextHTML;
         Spell.prototype.up=this.up;
 
     }
     _next(cb, currentState){
-        cb(this.globalState, this.stateStack)
+        cb(currentState, this.globalState)
         this.stateStack.push(currentState)
     }
 
     nextLine(cb){
         //separated by one newline
-        
-        this._next(cb, currentState)
+        this._next(cb, {subStr: new Matchic().nextLine(this.stateStack[0]['subStr'])})
         return this;
     }
 
     nextParagraph(cb){
         //separated by two newlines
 
-        this._next(cb, currentState)
+        this._next(cb, {subStr: new Matchic().nextParagraph(this.stateStack[0]['subStr'])})
         return this;
     }
 
     nextSentance(cb){
         //separated by a period
-
-        this._next(cb, currentState)
+        this._next(cb, {subStr: new Matchic().nextSentance(this.stateStack[0]['subStr'])})
         return this;
     }
 
     nextInteger(cb){
-
-
-        this._next(cb, currentState)
+        this._next(cb, {subStr: new Matchic().nextInteger(this.stateStack[0]['subStr'])})
         return this;
     }
 
     nextFloat(cb){
 
-        this._next(cb, currentState)
+        this._next(cb, {subStr: new Matchic().nextFloat(this.stateStack[0]['subStr'])})
         return this;
     }
 
     nextScientific(cb){
 
-        this._next(cb, currentState)
+        this._next(cb, {subStr: new Matchic().nextScientific(this.stateStack[0]['subStr'])})
         return this;
     }
 
     nextOctet(cb){
 
 
-        this._next(cb, currentState)
+        this._next(cb, {subStr: new Matchic().nextOctet(this.stateStack[0]['subStr'])})
         return this;
     }
 
     nextHex(cb){
 
-        this._next(cb, currentState)
+        this._next(cb, {subStr: new Matchic().nextHex(this.stateStack[0]['subStr'])})
         return this;
     }
 
-    nextBlock(cb){
-
-
-        this._next(cb, currentState)
+    nextCodeBlock(cb, type){
+        this._next(cb, {subStr: new Matchic().nextCodeBlock(this.stateStack[0]['subStr'], type)})
         return this;
+    }
+    nextFunction(cb, type){
+        this._next(cb, {subStr: new Matchic().nextFunction(this.stateStack[0]['subStr'], type)})
     }
 
     nextChar(cb){
+        this._next(cb, {subStr: new Matchic().nextChar(this.stateStack[0]['subStr'])})
+
         return this;
     }
 
-    nextHTMLTag(){
-
+    nextHTML(){
+        this._next(cb, {subStr: new Matchic().nextHTML(this.stateStack[0]['subStr'])})
+        return this;
     }
 
     up(cb){
@@ -116,4 +115,4 @@ class Spell{
 
 }
 
-new Spell(SCIENTIFIC_ITER_CASES).nextScientific()
+// new Spell(SCIENTIFIC_ITER_CASES).nextScientific()
