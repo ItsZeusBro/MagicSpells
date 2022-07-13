@@ -50,78 +50,80 @@ class Spell{
         }
 
     }
-
+    subStr(){
+        return this.pushPop["subStr"].split(match).slice(1).join(' ')
+    }
     nextLine(cb){
         //separated by one newline
         var match = new Matchic().nextLine(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextParagraph(cb){
         //separated by two newlines
         var match = new Matchic().nextParagraph(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextSentance(cb){
         //separated by a period
         var match = new Matchic().nextSentance(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextInteger(cb){
         var match = new Matchic().nextInteger(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextFloat(cb){
         var match = new Matchic().nextFloat(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextScientific(cb){
         var match = new Matchic().nextScientific(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextOctet(cb){
         var match = new Matchic().nextOctet(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextHex(cb){
         var match = new Matchic().nextHex(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextCodeBlock(cb, type){
         var match = new Matchic().nextCodeBlock(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
     nextFunction(cb, type){
         var match = new Matchic().nextFunction(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextChar(cb){
         var match = new Matchic().nextChar(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
     nextHTML(){
         var match = new Matchic().nextHTML(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        this._next(cb, {"match":match, "subStr": this.subStr(match)})
         return this;
     }
 
@@ -132,9 +134,9 @@ class Spell{
     nextMatchicOf(spells=[], cb){
         //takes an array of regex patterns and applies them ordinally, 
         //until it finds the first match
-        spell.forEach((spell)=>{
+        spells.forEach((spell)=>{
             var match = new Matchic.matchic(this.pushPop["subStr"], spell)
-            this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+            this._next(cb, {"match":match, "subStr": this.subStr(match)})
         })
 
     }
