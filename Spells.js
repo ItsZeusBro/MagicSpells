@@ -16,7 +16,8 @@ class Spell{
         //specific and go back to the previous quality (like a look ahead) step a state variable
         //from the lookahead
         this.globalState = {"subStr": string}
-        this.stateStack=[this.globalState]
+        this.stateStack=[]
+        this._next(()=>{}, this.globalState)
         this.Matchic = new Matchic();
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
@@ -35,6 +36,7 @@ class Spell{
     _next(cb, currentState){
         cb(currentState, this.globalState)
         this.stateStack.push(currentState)
+        console.log("STATE STACK====>", this.stateStack)
     }
 
     nextLine(cb){
