@@ -49,11 +49,11 @@ export class Matchic{
     matchSentances(string){return this.matches(string, SENTANCE)}
 }
 
-class MatchicIter{
-    constructor(string, regex){
-        this.string=string;
-        this.regex=regex;
-        this.matches=new Matchic().matches(string, regex)
-    }
-    next(){return this.matches.pop(0)}
-}
+// class MatchicIter{
+//     constructor(string, regex){
+//         this.string=string;
+//         this.regex=regex;
+//         this.matches=new Matchic().matches(string, regex)
+//     }
+//     next(){return this.matches.pop(0)}
+// }

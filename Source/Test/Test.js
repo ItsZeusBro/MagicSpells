@@ -13,6 +13,7 @@ export class Test{
     }
     
     isFloat(cases){
+
     }
 
     notFloat(cases){
