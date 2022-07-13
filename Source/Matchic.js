@@ -58,7 +58,7 @@ export class Matchic{
     isScientific(string){return this.is(string, SCIENTIFIC)}
     matchScientific(string){return this.matches(string, SCIENTIFIC)}
     nextScientific(string){return this.next(string, SCIENTIFIC)}
-    
+
     isFloat(string){return this.is(string, FLOAT)}
     matchFloats(string){return this.matches(string, FLOAT)}
     nextFloat(string){return this.next(string, FLOAT)}

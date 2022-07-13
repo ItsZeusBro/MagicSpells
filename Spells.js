@@ -3,6 +3,7 @@
 // var c = new Comet('./comfig.json')
 // c.comet('some log')
 import {SCIENTIFIC_STR_CASE} from "./Source/Test/Cases/Scientific.js"
+import {FLOAT_STR_CASE} from "./Source/Test/Cases/Floating.js"
 import {Matchic} from "./Source/Matchic.js"
 
 class Spell{
@@ -122,23 +123,29 @@ class Spell{
         return this;
     }
 
+    iter(n, fn, cb){
+        //n is number of iterations
+        //fn is function name
+        //cb is callback to pass to function name
+        for(var i = 0; i<n; i++){
+            if(fn=='nextLine'){this.nextLine(cb)}
+            else if(fn=='nextParagraph'){this.nextParagraph(cb)}
+            else if(fn=='nextSentance'){this.nextSentance(cb)}
+            else if(fn=='nextInteger'){this.nextInteger(cb)}
+            else if(fn=='nextFloat'){this.nextFloat(cb)}
+            else if(fn=='nextScientific'){this.nextScientific(cb)}
+            else if(fn=='nextOctet'){this.nextOctet(cb)}
+            else if(fn=='nextHex'){this.nextHex(cb)}
+            else if(fn=='nextCodeBlock'){this.nextCodeBlock(cb)}
+            else if(fn=='nextFunction'){this.nextFunction(cb)}
+            else if(fn=='nextHTML'){this.nextHTML(cb)}
+        }
+    }
+
 
 }
-var i =0;
-// while(true){
-//     console.log(i)
-//     new Spell(SCIENTIFIC_STR_CASE)
-//     .nextScientific((match, cs, gs)=>{console.log(match)})
-//     .nextScientific((match, cs, gs)=>{console.log(match)})
-//     .nextScientific((match, cs, gs)=>{console.log(match)})
-//     .nextScientific((match, cs, gs)=>{console.log(match)})
-//     .nextScientific((match, cs, gs)=>{console.log(match)})
-//     .nextScientific((match, cs, gs)=>{console.log(match)})
-//     .up()
-//     .up()
-//     .up()
-//     .up()
-//     .up()
-//     .up()
-//     i++;
-// }
+
+
+
+var results = new Spell(FLOAT_STR_CASE).iter(44, 'nextScientific', (match, cs, gs)=>{console.log(match)})
+
