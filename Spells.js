@@ -22,7 +22,7 @@ class Spell{
         Spell.prototype.up=this.up;
         Spell.prototype.iter=this.iter;
         Spell.prototype.matchic=this.matchic;
-        
+
         this.globalState = {"subStr": string};
         this.results=[];
         this._batch=[];
@@ -32,7 +32,7 @@ class Spell{
         this.Matchic = new Matchic();
 
     }
-    _next(cb, match){
+    _next(match, cb){
         this.currentState={"match":match, "subStr": this.subStr(match)}
         if(cb){
             cb(match, this.currentState, this.globalState)
@@ -59,74 +59,74 @@ class Spell{
     nextLine(cb){
         //separated by one newline
         var match = new Matchic().nextLine(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
     nextParagraph(cb){
         //separated by two newlines
         var match = new Matchic().nextParagraph(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
     nextSentance(cb){
         //separated by a period
         var match = new Matchic().nextSentance(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
     nextInteger(cb){
         var match = new Matchic().nextInteger(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
     nextFloat(cb){
         var match = new Matchic().nextFloat(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
     nextScientific(cb){
         var match = new Matchic().nextScientific(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
     nextOctet(cb){
         var match = new Matchic().nextOctet(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
     nextHex(cb){
         var match = new Matchic().nextHex(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
-    nextCodeBlock(cb, type){
+    nextCodeBlock(type, cb){
         var match = new Matchic().nextCodeBlock(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
-    nextFunction(cb, type){
+    nextFunction(type, cb){
         var match = new Matchic().nextFunction(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
     nextChar(cb){
         var match = new Matchic().nextChar(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
     nextHTML(){
         var match = new Matchic().nextHTML(this.currentState["subStr"])
-        this._next(cb, match)
+        this._next(match, cb)
         return this;
     }
 
@@ -139,12 +139,12 @@ class Spell{
         //until it finds the first match
         spells.forEach((spell)=>{
             var match = new Matchic.matchic(this.currentState["subStr"], spell)
-            this._next(cb, match)
+            this._next(match, cb)
         })
 
     }
 
-    iter(n, fn, cb){
+    iter(n, fn, type="js", cb=(match, cs, gs)=>{}){
         this.ugly_itr=n;
         for(var i = 0; i<n; i++){
             if(fn=='nextLine'){this.nextLine(cb)}
@@ -155,8 +155,8 @@ class Spell{
             else if(fn=='nextScientific'){this.nextScientific(cb)}
             else if(fn=='nextOctet'){this.nextOctet(cb)}
             else if(fn=='nextHex'){this.nextHex(cb)}
-            else if(fn=='nextCodeBlock'){this.nextCodeBlock(cb)}
-            else if(fn=='nextFunction'){this.nextFunction(cb)}
+            else if(fn=='nextCodeBlock'){this.nextCodeBlock(type, cb)}
+            else if(fn=='nextFunction'){this.nextFunction(type, cb)}
             else if(fn=='nextHTML'){this.nextHTML(cb)}
         }
         return this;
