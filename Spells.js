@@ -15,9 +15,9 @@ class Spell{
         //When you change the quality of the next step, you should be able to get something
         //specific and go back to the previous quality (like a look ahead) step a state variable
         //from the lookahead
-        this.globalState = {"subStr": string}
-        this.stateStack=[]
-        this._next(()=>{}, this.globalState)
+        this.globalState = {"subStr": string};
+        this.stateStack=[];
+        this._next(()=>{}, this.globalState);
         this.Matchic = new Matchic();
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
@@ -34,7 +34,7 @@ class Spell{
 
     }
     _next(cb, currentState){
-        cb(currentState, this.globalState)
+        cb(currentState['match'], currentState, this.globalState)
         this.stateStack.push(currentState)
         console.log("STATE STACK====>", this.stateStack)
     }
@@ -118,16 +118,27 @@ class Spell{
         //(it basically erases the previous nextSomething() 
         //but allows you to keep a global variable)
         this.stateStack.pop()
+        console.log("STATE STACK====>", this.stateStack)
         return this;
     }
 
 
 }
-
-new Spell(SCIENTIFIC_STR_CASE)
-    .nextScientific((cs, gs)=>{console.log(cs['subStr'])})
-    .nextScientific((cs, gs)=>{console.log(cs['subStr'])})
-    .up()
-    .up()
-    .nextScientific((cs, gs)=>{console.log(cs['subStr'])})
-    .nextScientific((cs, gs)=>{console.log(cs['subStr'])})
+var i =0;
+// while(true){
+//     console.log(i)
+//     new Spell(SCIENTIFIC_STR_CASE)
+//     .nextScientific((match, cs, gs)=>{console.log(match)})
+//     .nextScientific((match, cs, gs)=>{console.log(match)})
+//     .nextScientific((match, cs, gs)=>{console.log(match)})
+//     .nextScientific((match, cs, gs)=>{console.log(match)})
+//     .nextScientific((match, cs, gs)=>{console.log(match)})
+//     .nextScientific((match, cs, gs)=>{console.log(match)})
+//     .up()
+//     .up()
+//     .up()
+//     .up()
+//     .up()
+//     .up()
+//     i++;
+// }

@@ -55,6 +55,13 @@ export class Matchic{
         
     }
 
+    isScientific(string){return this.is(string, SCIENTIFIC)}
+    matchScientific(string){return this.matches(string, SCIENTIFIC)}
+    nextScientific(string){return this.next(string, SCIENTIFIC)}
+    
+    isFloat(string){return this.is(string, FLOAT)}
+    matchFloats(string){return this.matches(string, FLOAT)}
+    nextFloat(string){return this.next(string, FLOAT)}
 
     
 
@@ -79,13 +86,7 @@ export class Matchic{
     matchIntegers(string){return this.matches(string, INTEGER)}
     nextInteger(string){return this.next(string, INTEGER)}
 
-    isFloat(string){return this.is(string, FLOAT)}
-    matchFloats(string){return this.matches(string, FLOAT)}
-    nextFloat(string){return this.next(string, FLOAT)}
 
-    isScientific(string){return this.is(string, SCIENTIFIC)}
-    matchScientific(string){return this.matches(string, SCIENTIFIC)}
-    nextScientific(string){return this.next(string, SCIENTIFIC)}
 
     isOctet(string){return this.is(string, OCTET)}
     matchOctet(string){return this.matches(string, OCTET)}
