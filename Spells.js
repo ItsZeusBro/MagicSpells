@@ -124,4 +124,10 @@ class Spell{
 
 }
 
-new Spell(SCIENTIFIC_STR_CASE).nextScientific((cs, gs)=>{console.log(cs['subStr'])}).nextScientific((cs, gs)=>{console.log(cs['subStr'])})
+new Spell(SCIENTIFIC_STR_CASE)
+    .nextScientific((cs, gs)=>{console.log(cs['subStr'])})
+    .nextScientific((cs, gs)=>{console.log(cs['subStr'])})
+    .up()
+    .up()
+    .nextScientific((cs, gs)=>{console.log(cs['subStr'])})
+    .nextScientific((cs, gs)=>{console.log(cs['subStr'])})
