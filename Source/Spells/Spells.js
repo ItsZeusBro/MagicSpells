@@ -1,15 +1,15 @@
-export const SCIENTIFIC=/(\+|\-)?[0-9]+\.[0-9]+(e|E)(\+|\-)?[0-9]+/
-export const INTEGER=/((([1-9],)|([1-9][0-9],)|([1-9][0-9][0-9],))([0-9][0-9][0-9],)*([0-9][0-9][0-9]))($|\s)|^([0-9]*)/
-export const FLOAT=/[^\.\?\;\,\>\<\/\\%\$\#\@\!\(\)\{\}\:\"\'\~\`\|\*\&\^\_\-](\+?|-?|)[0-9]+\.[0-9]+[^\.\?\;\,\>\<\/\\\%\$\#\@\!\(\)\{\}\:\"\'\~\`\|\*\&\^\_\-]/
-export const BINARY=/[0-1]+/
+export const SCIENTIFIC=/(\+|-| |^)?[0-9]+\.[0-9]+(e|E)(\+|\-)?[0-9]+\b/
+export const INTEGER=/(\+|-| |^)((([1-9],)|([1-9][0-9],)|([1-9][0-9][0-9],))([0-9][0-9][0-9],)*([0-9][0-9][0-9]))($|\s)|^([0-9]*)\b/
+export const FLOAT=/(\+|-| |^)[0-9]+\.[0-9]+\b/
+export const BINARY=/(\+|-| |^)[0-1]+\b/
 export const OCTET=""
 export const HEX=""
 
 export const CHAR=""
-export const ALPHA_STRING=/^[a-zA-Z]+/
-export const ALPHA_NUMERIC_STRING= /^[a-zA-Z0-9]+/
-export const SENTANCE=/^[A-Z][a-z]*( |, |; )?([a-z]+(')?( |, |; )?)*((\.\.\.)|\?|\!|\.)/
-export const PARAGRAPH=""
+export const ALPHA_STRING=/( |^)[a-zA-Z]+\b/
+export const ALPHA_NUMERIC_STRING= /( |^)[a-zA-Z0-9]+\b/
+export const SENTANCE=/( |^)[A-Z][a-z]*( |, |; )?([a-z]+(')?( |, |; )?)*((\.\.\.)|\?|\!|\.)\b/
+export const PARAGRAPH="/( |^)/"
 export const LINE=""
 
 export const JAVAFUNCTION=""
