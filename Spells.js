@@ -41,69 +41,75 @@ class Spell{
 
     nextLine(cb){
         //separated by one newline
-        this._next(cb, {"subStr": new Matchic().nextLine(this.stateStack[this.stateStack.length-1]["subStr"])})
+        var match = new Matchic().nextLine(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
     nextParagraph(cb){
         //separated by two newlines
-
-        this._next(cb, {"subStr": new Matchic().nextParagraph(this.stateStack[this.stateStack.length-1]["subStr"])})
+        var match = new Matchic().nextParagraph(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
     nextSentance(cb){
         //separated by a period
-        this._next(cb, {"subStr": new Matchic().nextSentance(this.stateStack[this.stateStack.length-1]["subStr"])})
+        var match = new Matchic().nextSentance(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
     nextInteger(cb){
-        this._next(cb, {"subStr": new Matchic().nextInteger(this.stateStack[this.stateStack.length-1]["subStr"])})
+        var match = new Matchic().nextInteger(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
     nextFloat(cb){
-
-        this._next(cb, {"subStr": new Matchic().nextFloat(this.stateStack[this.stateStack.length-1]["subStr"])})
+        var match = new Matchic().nextFloat(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
     nextScientific(cb){
-
-        this._next(cb, {"subStr": new Matchic().nextScientific(this.stateStack[this.stateStack.length-1]["subStr"])})
+        var match = new Matchic().nextScientific(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
     nextOctet(cb){
-
-
-        this._next(cb, {"subStr": new Matchic().nextOctet(this.stateStack[this.stateStack.length-1]["subStr"])})
+        var match = new Matchic().nextOctet(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
     nextHex(cb){
-
-        this._next(cb, {"subStr": new Matchic().nextHex(this.stateStack[this.stateStack.length-1]["subStr"])})
+        var match = new Matchic().nextHex(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
     nextCodeBlock(cb, type){
-        this._next(cb, {"subStr": new Matchic().nextCodeBlock(this.stateStack[this.stateStack.length-1]["subStr"], type)})
+        var match = new Matchic().nextCodeBlock(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
     nextFunction(cb, type){
-        this._next(cb, {"subStr": new Matchic().nextFunction(this.stateStack[this.stateStack.length-1]["subStr"], type)})
+        var match = new Matchic().nextFunction(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
+        return this;
     }
 
     nextChar(cb){
-        this._next(cb, {"subStr": new Matchic().nextChar(this.stateStack[this.stateStack.length-1]["subStr"])})
-
+        var match = new Matchic().nextChar(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
     nextHTML(){
-        this._next(cb, {"subStr": new Matchic().nextHTML(this.stateStack[this.stateStack.length-1]["subStr"])})
+        var match = new Matchic().nextHTML(this.stateStack[this.stateStack.length-1]["subStr"])
+        this._next(cb, {"match":match, "subStr": this.stateStack[this.stateStack.length-1]["subStr"].replace(match, "")})
         return this;
     }
 
