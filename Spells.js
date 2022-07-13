@@ -16,12 +16,6 @@ class Spell{
         //When you change the quality of the next step, you should be able to get something
         //specific and go back to the previous quality (like a look ahead) step a state variable
         //from the lookahead
-        this.globalState = {"subStr": string};
-        this.stateStack=[];
-        this._next(()=>{}, this.globalState);
-        this.Matchic = new Matchic();
-        this.iter;
-        this.batch=[];
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
         Spell.prototype.nextSentance=this.nextSentance;
@@ -34,19 +28,25 @@ class Spell{
         Spell.prototype.nextFunction=this.nextFunction;
         Spell.prototype.nextHTML = this.nextHTML;
         Spell.prototype.up=this.up;
+        Spell.prototype.iter=this.iter;
+
+        this.globalState = {"subStr": string};
+        this.stateStack=[];
+        this.batch=[];
+        this.itr=0;
+        this._next(()=>{}, this.globalState);
+        this.Matchic = new Matchic();
 
     }
     _next(cb, currentState){
         cb(currentState['match'], currentState, this.globalState)
-        if(this.iter){
-            this.iter--;
+        if(this.itr){
+            this.itr--;
             this.batch.push(currentState)
-            if (this.iter){
+            if (this.itr){
                 this.stateStack.push({"batch":this.batch, 'subStr':currentState['subStr']})
                 console.log("STATE STACK====>", this.stateStack)
             }
-            this.batch=[];
-            this.iter=0;
         }else{
             this.stateStack.push(currentState)
             console.log("STATE STACK====>", this.stateStack)
@@ -142,7 +142,7 @@ class Spell{
         //fn is function name
         //cb is callback to pass to function name
         
-        this.iter=n;
+        this.itr=n;
         for(var i = 0; i<n; i++){
             if(fn=='nextLine'){this.nextLine(cb)}
             else if(fn=='nextParagraph'){this.nextParagraph(cb)}
@@ -155,9 +155,11 @@ class Spell{
             else if(fn=='nextCodeBlock'){this.nextCodeBlock(cb)}
             else if(fn=='nextFunction'){this.nextFunction(cb)}
             else if(fn=='nextHTML'){this.nextHTML(cb)}
-            this.iter--;
+            this.itr--;
         }
-        this.iter=0;
+        this.batch=[];
+        this.itr=0;
+        return this;
     }
 
 
