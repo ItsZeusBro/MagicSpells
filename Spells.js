@@ -41,6 +41,9 @@ class Spell{
 
     }
     _next(cb, currentState){
+        if(cb){
+            cb(currentState['match'], currentState, this.globalState)
+        }
         this.pushPop={"batch":this.ugly_batch, 'subStr':currentState['subStr']}
         if(this.ugly_itr){
             this.ugly_itr--;
@@ -49,12 +52,10 @@ class Spell{
                 this.stateStack.push({"batch":this.ugly_batch, 'subStr':currentState['subStr']})
                 this.ugly_itr=0;
                 this.ugly_batch=[];
-                console.log("STATE STACK====>", this.stateStack)
+                //console.log("STATE STACK====>", this.stateStack)
             }
         }else{
-            if(cb){
-                cb(currentState['match'], currentState, this.globalState)
-            }
+            
             this.stateStack.push(this.pushPop)
         }
 
@@ -170,5 +171,5 @@ class Spell{
 
 
 
-var results = new Spell(FLOAT_STR_CASE).iter(2, 'nextFloat')
+var results = new Spell(FLOAT_STR_CASE).iter(44, 'nextFloat', (match, cs, gs)=>{console.log(match)})
 
