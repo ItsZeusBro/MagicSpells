@@ -11,9 +11,6 @@
     "type": "git",
     "url": "git+https://github.com/ItsZeusBro/MatchicSpells.git"
   },
-  "podules":{
-
-  },
   "type":"module",
   "author": "Hassan Amad",
   "license": "SEE LICENSE IN LICENSE",
