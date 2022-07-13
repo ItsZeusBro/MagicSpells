@@ -32,98 +32,99 @@ class Spell{
         this.Matchic = new Matchic();
 
     }
-    _next(cb, currentState){
+    _next(cb, match){
+        var currentState={"match":match, "subStr": this.subStr(match)}
         if(cb){
-            cb(currentState['match'], currentState, this.globalState)
+            cb(match, currentState, this.globalState)
         }
-        this.pushPop={"batch":this.ugly_batch, 'subStr':currentState['subStr']}
+        this.pushPop={"match":this.ugly_batch, 'subStr':currentState['subStr']}
         if(this.ugly_itr){
             this.ugly_itr--;
             this.ugly_batch.push(this.pushPop)
             if (!this.ugly_itr){
-                this.resultStack.push({"batch":this.ugly_batch, 'subStr':currentState['subStr']})
+                this.resultStack.push({"match":this.ugly_batch, 'subStr':currentState['subStr']})
                 this.ugly_itr=0;
                 this.ugly_batch=[];
             }
         }else{
             this.resultStack.push(this.pushPop)
         }
-
     }
+
     subStr(){
         return this.pushPop["subStr"].split(match).slice(1).join(' ')
     }
     nextLine(cb){
         //separated by one newline
         var match = new Matchic().nextLine(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextParagraph(cb){
         //separated by two newlines
         var match = new Matchic().nextParagraph(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextSentance(cb){
         //separated by a period
         var match = new Matchic().nextSentance(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextInteger(cb){
         var match = new Matchic().nextInteger(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextFloat(cb){
         var match = new Matchic().nextFloat(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextScientific(cb){
         var match = new Matchic().nextScientific(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextOctet(cb){
         var match = new Matchic().nextOctet(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextHex(cb){
         var match = new Matchic().nextHex(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextCodeBlock(cb, type){
         var match = new Matchic().nextCodeBlock(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
     nextFunction(cb, type){
         var match = new Matchic().nextFunction(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextChar(cb){
         var match = new Matchic().nextChar(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
     nextHTML(){
         var match = new Matchic().nextHTML(this.pushPop["subStr"])
-        this._next(cb, {"match":match, "subStr": this.subStr(match)})
+        this._next(cb, match)
         return this;
     }
 
@@ -136,10 +137,11 @@ class Spell{
         //until it finds the first match
         spells.forEach((spell)=>{
             var match = new Matchic.matchic(this.pushPop["subStr"], spell)
-            this._next(cb, {"match":match, "subStr": this.subStr(match)})
+            this._next(cb, match)
         })
 
     }
+    
     iter(n, fn, cb){
         this.ugly_itr=n;
         for(var i = 0; i<n; i++){
