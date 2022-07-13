@@ -11,7 +11,7 @@ class Spell{
         this.string=string;
         this.location=0;
         this.Matchic = new Matchic()
-        
+
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
         Spell.prototype.nextSentance=this.nextSentance;
@@ -65,7 +65,10 @@ class Spell{
     }
 
     up(cb){
-        //
+        //when you iterate over a string, it is either qualititative or quantititative
+        //When you change the quality of the next step, you should be able to get something
+        //specific and go back to the previous quality (like a look ahead) step a state variable
+        //from the lookahead
         return this;
     }
     nextChar(cb){
