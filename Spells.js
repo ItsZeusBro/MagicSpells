@@ -8,14 +8,6 @@ import {Matchic} from "./Source/Matchic.js"
 
 class Spell{
     constructor(string){
-        //you can access the global state at anytime, but it won't be on the stack so that you can
-        //use the variables predicitably. You can have local variables in each iterative state
-        //that you can reaccess when it is popped off the stack.
-
-        //when you iterate over a string, it is either qualititative or quantititative
-        //When you change the quality of the next step, you should be able to get something
-        //specific and go back to the previous quality (like a look ahead) step a state variable
-        //from the lookahead
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
         Spell.prototype.nextSentance=this.nextSentance;
@@ -29,10 +21,10 @@ class Spell{
         Spell.prototype.nextHTML = this.nextHTML;
         Spell.prototype.up=this.up;
         Spell.prototype.iter=this.iter;
-
+        Spell.prototype.matchic=this.matchic;
         this.globalState = {"subStr": string};
         this.buffer=[];
-        this.stateStack=[];
+        this.resultStack=[];
         this.ugly_batch=[];
         this.pushPop;
         this.ugly_itr=0;
@@ -49,14 +41,12 @@ class Spell{
             this.ugly_itr--;
             this.ugly_batch.push(this.pushPop)
             if (!this.ugly_itr){
-                this.stateStack.push({"batch":this.ugly_batch, 'subStr':currentState['subStr']})
+                this.resultStack.push({"batch":this.ugly_batch, 'subStr':currentState['subStr']})
                 this.ugly_itr=0;
                 this.ugly_batch=[];
-                //console.log("STATE STACK====>", this.stateStack)
             }
         }else{
-            
-            this.stateStack.push(this.pushPop)
+            this.resultStack.push(this.pushPop)
         }
 
     }
@@ -136,19 +126,19 @@ class Spell{
     }
 
     up(cb){
-        //this just pops the currentState off of the stack 
-        //(it basically erases the previous nextSomething() 
-        //but allows you to keep a global variable)
-        this.stateStack.pop()
-        console.log("STATE STACK====>", this.stateStack)
+        this.resultStack.pop()
         return this;
     }
+    nextMatchicOf(spells=[], cb){
+        //takes an array of regex patterns and applies them ordinally, 
+        //until it finds the first match
+        spell.forEach((spell)=>{
+            var match = new Matchic.matchic(this.pushPop["subStr"], spell)
+            this._next(cb, {"match":match, "subStr": this.pushPop["subStr"].replace(match, "")})
+        })
 
+    }
     iter(n, fn, cb){
-        //n is number of iterations
-        //fn is function name
-        //cb is callback to pass to function name
-        
         this.ugly_itr=n;
         for(var i = 0; i<n; i++){
             if(fn=='nextLine'){this.nextLine(cb)}
@@ -165,11 +155,9 @@ class Spell{
         }
         return this;
     }
-
-
 }
 
 
+var resultStack = new Spell(FLOAT_STR_CASE).iter(44, 'nextFloat', (match, cs, gs)=>{}).resultStack
 
-var results = new Spell(FLOAT_STR_CASE).iter(44, 'nextFloat', (match, cs, gs)=>{console.log(match)})
-
+console.log(resultStack)
