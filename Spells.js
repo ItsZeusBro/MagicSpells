@@ -17,7 +17,7 @@ class Spell{
         //from the lookahead
         this.globalState = {string: string}
         this.stateStack=[]
-        this.Matchic = new Matchic()
+        this.Matchic = new Matchic();
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
         Spell.prototype.nextSentance=this.nextSentance;
@@ -27,6 +27,7 @@ class Spell{
         Spell.prototype.nextOctet=this.nextOctet;
         Spell.prototype.nextHex=this.nextHex;
         Spell.prototype.nextCodeBlock=this.nextCodeBlock;
+        Spell.prototype.nextFunction=this.nextFunction;
         Spell.prototype.nextHTML = this.nextHTML;
         Spell.prototype.up=this.up;
 
