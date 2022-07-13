@@ -8,6 +8,7 @@ import {Matchic} from "./Source/Matchic.js"
 
 class Spell{
     constructor(string){
+        this.string=string
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
         Spell.prototype.nextSentance=this.nextSentance;
@@ -28,12 +29,12 @@ class Spell{
         this._batch=[];
         this.currentState;
         this.ugly_itr=0;
-        this._next(()=>{}, this.globalState);
+        this.currentState = {'subStr':string}
         this.Matchic = new Matchic();
 
     }
     _next(match, cb){
-        this.currentState={"match":match, "subStr": this.subStr(match)}
+        this.currentState={"match":match, "subStr": this.subStr(this.currentState['subStr'], match)}
         if(cb){
             cb(match, this.currentState, this.globalState)
         }
@@ -47,15 +48,16 @@ class Spell{
         this.ugly_itr--;
         this._batch.push(this.currentState)
         if (!this.ugly_itr){
-            this.results.push({"match":this._batch, 'subStr':currentState['subStr']})
+            this.results.push({"match":this._batch, 'subStr':this.currentState['subStr']})
             this.ugly_itr=0;
             this._batch=[];
         }
     }
 
-    subStr(){
-        return this.currentState["subStr"].split(match).slice(1).join(' ')
+    subStr(string, match){
+        return string.split(match).slice(1).join(' ')
     }
+
     nextLine(cb){
         //separated by one newline
         var match = new Matchic().nextLine(this.currentState["subStr"])
@@ -134,6 +136,7 @@ class Spell{
         this.results.pop()
         return this;
     }
+
     nextMatchicOf(spells=[], cb){
         //takes an array of regex patterns and applies them ordinally, 
         //until it finds the first match
@@ -141,7 +144,6 @@ class Spell{
             var match = new Matchic.matchic(this.currentState["subStr"], spell)
             this._next(match, cb)
         })
-
     }
 
     iter(n, fn, type="js", cb=(match, cs, gs)=>{}){
@@ -164,6 +166,7 @@ class Spell{
 }
 
 
-var resultStack = new Spell(FLOAT_STR_CASE).iter(44, 'nextFloat', (match, cs, gs)=>{}).resultStack
+var results = new Spell(FLOAT_STR_CASE).iter(44), 'nextFloat', (match, cs, gs)=>{}).results
+console.log(results[0]['match'])
 
-console.log(resultStack)
+
