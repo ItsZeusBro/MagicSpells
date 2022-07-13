@@ -2,7 +2,7 @@
 
 // var c = new Comet('./comfig.json')
 // c.comet('some log')
-import {SCIENTIFIC_ITER_CASES} from "./Source/Test/Cases/Scientific.js"
+import {SCIENTIFIC_STR_CASE} from "./Source/Test/Cases/Scientific.js"
 import {Matchic} from "./Source/Matchic.js"
 
 class Spell{
@@ -15,8 +15,8 @@ class Spell{
         //When you change the quality of the next step, you should be able to get something
         //specific and go back to the previous quality (like a look ahead) step a state variable
         //from the lookahead
-        this.globalState = {string: string}
-        this.stateStack=[]
+        this.globalState = {"subStr": string}
+        this.stateStack=[this.globalState]
         this.Matchic = new Matchic();
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
@@ -39,69 +39,69 @@ class Spell{
 
     nextLine(cb){
         //separated by one newline
-        this._next(cb, {subStr: new Matchic().nextLine(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextLine(this.stateStack[0]["subStr"])})
         return this;
     }
 
     nextParagraph(cb){
         //separated by two newlines
 
-        this._next(cb, {subStr: new Matchic().nextParagraph(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextParagraph(this.stateStack[0]["subStr"])})
         return this;
     }
 
     nextSentance(cb){
         //separated by a period
-        this._next(cb, {subStr: new Matchic().nextSentance(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextSentance(this.stateStack[0]["subStr"])})
         return this;
     }
 
     nextInteger(cb){
-        this._next(cb, {subStr: new Matchic().nextInteger(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextInteger(this.stateStack[0]["subStr"])})
         return this;
     }
 
     nextFloat(cb){
 
-        this._next(cb, {subStr: new Matchic().nextFloat(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextFloat(this.stateStack[0]["subStr"])})
         return this;
     }
 
     nextScientific(cb){
 
-        this._next(cb, {subStr: new Matchic().nextScientific(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextScientific(this.stateStack[0]["subStr"])})
         return this;
     }
 
     nextOctet(cb){
 
 
-        this._next(cb, {subStr: new Matchic().nextOctet(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextOctet(this.stateStack[0]["subStr"])})
         return this;
     }
 
     nextHex(cb){
 
-        this._next(cb, {subStr: new Matchic().nextHex(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextHex(this.stateStack[0]["subStr"])})
         return this;
     }
 
     nextCodeBlock(cb, type){
-        this._next(cb, {subStr: new Matchic().nextCodeBlock(this.stateStack[0]['subStr'], type)})
+        this._next(cb, {"subStr": new Matchic().nextCodeBlock(this.stateStack[0]["subStr"], type)})
         return this;
     }
     nextFunction(cb, type){
-        this._next(cb, {subStr: new Matchic().nextFunction(this.stateStack[0]['subStr'], type)})
+        this._next(cb, {"subStr": new Matchic().nextFunction(this.stateStack[0]["subStr"], type)})
     }
 
     nextChar(cb){
-        this._next(cb, {subStr: new Matchic().nextChar(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextChar(this.stateStack[0]["subStr"])})
 
         return this;
     }
 
     nextHTML(){
-        this._next(cb, {subStr: new Matchic().nextHTML(this.stateStack[0]['subStr'])})
+        this._next(cb, {"subStr": new Matchic().nextHTML(this.stateStack[0]["subStr"])})
         return this;
     }
 
@@ -116,4 +116,4 @@ class Spell{
 
 }
 
-// new Spell(SCIENTIFIC_ITER_CASES).nextScientific()
+new Spell(SCIENTIFIC_STR_CASE).nextScientific((cs, gs)=>{console.log(cs['subStr'])}).nextScientific((cs, gs)=>{console.log(cs['subStr'])})

@@ -2,7 +2,7 @@ import {
     SCIENTIFIC, INTEGER, FLOAT, OCTET, HEX,
     LINE, PARAGRAPH, SENTANCE, CHAR,
     JAVAFUNCTION, JSFUNCTION, CPPFUNCTION, PYFUNCTION, GOFUNCTION, PHPFUNCTION,
-    JAVABLOCK, JSBLOCK, CPPBLOCK, PYBLOCK, GOBLOCK, PHPBLOCK
+    JAVABLOCK, JSBLOCK, CPPBLOCK, PYBLOCK, GOBLOCK, PHPBLOCK,
     HTML, XML
 } from "./Spells/Spells.js";
 export class Matchic{
@@ -25,6 +25,15 @@ export class Matchic{
             return false;
         }
     }
+    matches(string, regex){
+        var matches = []
+        var reg = new RegExp(regex);
+        return string.match(reg)
+    }
+    next(string, regex){
+
+        return this.matches(string, regex)[0]
+    }
 
     _isCodeBlock(string, type){
 
@@ -46,11 +55,7 @@ export class Matchic{
         
     }
 
-    matches(string, regex){
-        var matches = []
-        var reg = new RegExp(regex);
-        return string.match(reg)
-    }
+
     
 
     isLine(string){return this.is(string, LINE)}
