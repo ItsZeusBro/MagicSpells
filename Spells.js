@@ -20,6 +20,8 @@ class Spell{
         this.stateStack=[];
         this._next(()=>{}, this.globalState);
         this.Matchic = new Matchic();
+        this.iter;
+        this.batch=[];
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
         Spell.prototype.nextSentance=this.nextSentance;
@@ -36,8 +38,20 @@ class Spell{
     }
     _next(cb, currentState){
         cb(currentState['match'], currentState, this.globalState)
-        this.stateStack.push(currentState)
-        console.log("STATE STACK====>", this.stateStack)
+        if(this.iter){
+            this.iter--;
+            this.batch.push(currentState)
+            if (this.iter){
+                this.stateStack.push({"batch":this.batch, 'subStr':currentState['subStr']})
+                console.log("STATE STACK====>", this.stateStack)
+            }
+            this.batch=[];
+            this.iter=0;
+        }else{
+            this.stateStack.push(currentState)
+            console.log("STATE STACK====>", this.stateStack)
+        }
+
     }
 
     nextLine(cb){
@@ -127,6 +141,8 @@ class Spell{
         //n is number of iterations
         //fn is function name
         //cb is callback to pass to function name
+        
+        this.iter=n;
         for(var i = 0; i<n; i++){
             if(fn=='nextLine'){this.nextLine(cb)}
             else if(fn=='nextParagraph'){this.nextParagraph(cb)}
@@ -139,7 +155,9 @@ class Spell{
             else if(fn=='nextCodeBlock'){this.nextCodeBlock(cb)}
             else if(fn=='nextFunction'){this.nextFunction(cb)}
             else if(fn=='nextHTML'){this.nextHTML(cb)}
+            this.iter--;
         }
+        this.iter=0;
     }
 
 
@@ -147,5 +165,5 @@ class Spell{
 
 
 
-var results = new Spell(FLOAT_STR_CASE).iter(44, 'nextScientific', (match, cs, gs)=>{console.log(match)})
+var results = new Spell(FLOAT_STR_CASE).iter(44, 'nextFloat', (match, cs, gs)=>{console.log(match)})
 

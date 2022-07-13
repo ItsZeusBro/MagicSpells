@@ -31,7 +31,7 @@ export class Matchic{
         return string.match(reg)
     }
     next(string, regex){
-
+        console.log(regex)
         return this.matches(string, regex)[0]
     }
 
