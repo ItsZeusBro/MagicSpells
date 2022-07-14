@@ -185,6 +185,7 @@ class Spell{
             if(fn=='nextLine'){this.nextLine(cb)}
             else if(fn=='nextParagraph'){this.nextParagraph(cb, tions)}
             else if(fn=='nextSentance'){this.nextSentance(cb, tions)}
+            else if(fn=='nextChar'){this.nextChar(cb, tions)}
             else if(fn=='nextInteger'){this.nextInteger(cb, tions)}
             else if(fn=='nextFloat'){this.nextFloat(cb, tions)}
             else if(fn=='nextScientific'){this.nextScientific(cb, tions)}
@@ -201,7 +202,7 @@ class Spell{
 
 
 var opStack = new Spell(FLOAT_STR_CASE)
-    .iter('inf', 'nextMatchic', (match, cs, gs)=>{}, {'spells':[CHAR]})
+    .iter('inf', 'nextChar', (match, cs, gs)=>{})
     .opStack
 console.log(util.inspect(opStack, false, null, true))
 

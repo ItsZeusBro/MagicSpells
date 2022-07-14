@@ -68,7 +68,10 @@ export class Matchic{
     nextFloat(string){return this.next(string, FLOAT)}
 
     
-
+    isChar(string){return this.is(string, CHAR)}
+    matchChar(string){return this._matchic(string, CHAR)}
+    nextChar(string){return this.next(string, CHAR)}
+    
     isLine(string){return this.is(string, LINE)}
     matchLines(string){return this._matchic(string, LINE)}
     nextLine(string){return this.next(string, LINE)}
@@ -81,9 +84,7 @@ export class Matchic{
     matchSentance(string){return this._matchic(string, SENTANCE)}
     nextSentance(string){return this.next(string, SENTANCE)}
 
-    isChar(string){return this.is(string, CHAR)}
-    matchChar(string){return this._matchic(string, CHAR)}
-    nextChar(string){return this.next(string, CHAR)}
+
 
 
     isInteger(string){return this.is(string, INTEGER)}
