@@ -11,8 +11,10 @@ import * as util from "node:util"
 
 class Spell{
     constructor(string, tions){
-        this.buffers=this.buffers(string, tions['bufferSize'], tions['bufferOn'])
-
+		if(tions['bufferSize']&&tions['bufferOn']){
+			this.buffers=this.buffers(string, tions['bufferSize'], tions['bufferOn'])
+		}
+        
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
         Spell.prototype.nextSentance=this.nextSentance;
@@ -42,7 +44,10 @@ class Spell{
     }
 
 	buffers(string, bufferSize, bufferOn){
-		//dont remove newlines, just count 
+		//bufferOn is just a literal string match (otherwise we have the same RegX scaleability problem)
+		//bufferSize is the number of times we pass over the bufferOn
+		//use next nextMatchic internally to create the buffer stack
+
 	}
 
     subStr(string, match){
