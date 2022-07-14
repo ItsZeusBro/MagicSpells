@@ -5,7 +5,8 @@ import {
     JAVABLOCK, JSBLOCK, CPPBLOCK, PYBLOCK, GOBLOCK, PHPBLOCK,
     HTML, XML
 } from "./Spells/Spells.js";
-export class _matchic{
+
+export class Matchic{
     constructor(){
     }
     is(string, regex){
@@ -31,7 +32,6 @@ export class _matchic{
         return string.match(reg);
     }
     next(string, regex){
-        //console.log(regex)
         if(this._matchic(string, regex)){
             if(this._matchic(string, regex).length){
                 return this._matchic(string, regex)[0]

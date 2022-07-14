@@ -3,6 +3,7 @@
 // var c = new Comet('./comfig.json')
 // c.comet('some log')
 import {SCIENTIFIC_STR_CASE} from "./Source/Test/Cases/Scientific.js"
+import { FLOAT } from "./Source/Spells/Spells.js"
 import {FLOAT_STR_CASE} from "./Source/Test/Cases/Floating.js"
 import {Matchic} from "./Source/Matchic.js"
 
@@ -147,7 +148,7 @@ class Spell{
         //takes an array of regex patterns and applies them ordinally, 
         //until it finds the first match, and pushes to the stack, then returns
         spells.forEach((spell)=>{
-            var match = new Matchic.next(this.currentState["subStr"], spell)
+            var match = new Matchic().next(this.currentState["subStr"], spell)
             if (match){
                 this._next(match, cb)
                 return this;
@@ -177,7 +178,7 @@ class Spell{
 }
 
 
-var results = new Spell(FLOAT_STR_CASE).iter(50, 'nextFloat', (match, cs, gs)=>{}).results
+var results = new Spell(FLOAT_STR_CASE).iter(10, 'nextMatchic', (match, cs, gs)=>{}, {'spells':[FLOAT]}).results
 console.log(results[0]['match'])
 
 
