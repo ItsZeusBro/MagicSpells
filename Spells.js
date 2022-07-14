@@ -39,7 +39,7 @@ class Spell{
             currentState={
                 "match":match, 
                 "subStr": this.subStr(
-                    this.gs['opStack'][this.gs.length-1]['subStr'], 
+                    this.gs['opStack'][this.gs['opStack'].length-1]['subStr'], 
                     match
                 )
             }
@@ -51,7 +51,7 @@ class Spell{
             
             currentState={
                 "match": undefined,
-                "subStr": this.gs['opStack'][this.gs.length-1]['subStr']
+                "subStr": this.gs['opStack'][this.gs['opStack'].length-1]['subStr']
             }
             this.gs['opStack'].push(currentState)
             if(cb){cb(match, currentState, this.gs)}
@@ -61,7 +61,7 @@ class Spell{
 
     nextLine(cb){
         //separated by one newline
-        var match = new Matchic().nextLine(this.currentState["subStr"])
+        var match = new Matchic().nextLine(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same functino
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
@@ -69,7 +69,7 @@ class Spell{
 
     nextParagraph(cb){
         //separated by two newlines
-        var match = new Matchic().nextParagraph(this.currentState["subStr"])
+        var match = new Matchic().nextParagraph(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
@@ -77,70 +77,70 @@ class Spell{
 
     nextSentance(cb){
         //separated by a period
-        var match = new Matchic().nextSentance(this.currentState["subStr"])
+        var match = new Matchic().nextSentance(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextInteger(cb){
-        var match = new Matchic().nextInteger(this.currentState["subStr"])
+        var match = new Matchic().nextInteger(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextFloat(cb){
-        var match = new Matchic().nextFloat(this.currentState["subStr"])
+        var match = new Matchic().nextFloat(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextScientific(cb){
-        var match = new Matchic().nextScientific(this.currentState["subStr"])
+        var match = new Matchic().nextScientific(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextOctet(cb){
-        var match = new Matchic().nextOctet(this.currentState["subStr"])
+        var match = new Matchic().nextOctet(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextHex(cb){
-        var match = new Matchic().nextHex(this.currentState["subStr"])
+        var match = new Matchic().nextHex(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextCodeBlock(type, cb){
-        var match = new Matchic().nextCodeBlock(this.currentState["subStr"])
+        var match = new Matchic().nextCodeBlock(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextFunction(type, cb){
-        var match = new Matchic().nextFunction(this.currentState["subStr"])
+        var match = new Matchic().nextFunction(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextChar(cb){
-        var match = new Matchic().nextChar(this.currentState["subStr"])
+        var match = new Matchic().nextChar(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextHTML(){
-        var match = new Matchic().nextHTML(this.currentState["subStr"])
+        var match = new Matchic().nextHTML(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
@@ -150,7 +150,7 @@ class Spell{
         //takes an array of regex patterns and applies them ordinally, 
         //until it finds the first match, and pushes to the stack, then returns
         spells.forEach((spell)=>{
-            var match = new Matchic().next(this.currentState["subStr"], spell)
+            var match = new Matchic().next(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'], spell)
             //if there is no match there is no reason to iterate the same function
             if (!this._next(match, cb)){this.ugly_itr=0;}
         })
@@ -182,7 +182,7 @@ class Spell{
 }
 
 
-var results = new Spell(FLOAT_STR_CASE).iter(50, 'nextMatchic', (match, cs, gs)=>{}, {'spells':[FLOAT]}).results
-console.log(results[0]['match'])
+var gs = new Spell(FLOAT_STR_CASE).iter(50, 'nextMatchic', (match, cs, gs)=>{}, {'spells':[FLOAT]}).gs
+console.log(gs)
 
 
