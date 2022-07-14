@@ -35,11 +35,14 @@ class Spell{
 
     }
     _next(match, cb){
-        this.currentState={"match":match, "subStr": this.subStr(this.currentState['subStr'], match)}
+        if(match){
+            this.currentState={"match":match, "subStr": this.subStr(this.currentState['subStr'], match)}
+        }
         if(cb){
             cb(match, this.currentState, this.globalState)
         }
         if(!match){
+            this.currentState={"match":match, "subStr": this.currentState['subStr']}
             this.ugly_itr=0;
             this.batch()
             return
