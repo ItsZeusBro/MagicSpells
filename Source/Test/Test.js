@@ -2,7 +2,7 @@ import {Matchic} from "../Matchic.js"
 import {Spell} from "../../Spell.js"
 import * as util from "node:util"
 import * as assert from "node:assert"
-import {SHERLOCKHOLMES} from "./Cases/SherlockHolmes.js"
+import {SHERLOCKHOLMES} from "./Cases/Books/SherlockHolmes.js"
 
 class Test{
 	constructor(){
@@ -22,6 +22,7 @@ class Test{
 		})
 		assert.equal(sherlockBook.length, SHERLOCKHOLMES.length)
 		assert.equal(sherlockBook, SHERLOCKHOLMES)
+		
 
 	}
 }
