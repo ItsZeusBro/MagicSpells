@@ -38,14 +38,20 @@ class Spell{
         if(cb){
             cb(match, this.currentState, this.globalState)
         }
-        if(this.ugly_itr){
+        if(!match){
+            this.ugly_itr=0;
             this.batch()
-        }else{
+        }else if(this.ugly_itr){
+            this.ugly_itr--;
+            this.batch()
+        }
+        else{
             this.results.push(this.currentState)
         }
+        
+    
     }
     batch(){
-        this.ugly_itr--;
         this._batch.push(this.currentState)
         if (!this.ugly_itr){
             this.results.push({"match":this._batch, 'subStr':this.currentState['subStr']})
@@ -166,7 +172,7 @@ class Spell{
 }
 
 
-var results = new Spell(FLOAT_STR_CASE).iter(39, 'nextFloat', (match, cs, gs)=>{}).results
+var results = new Spell(FLOAT_STR_CASE).iter(50, 'nextFloat', (match, cs, gs)=>{}).results
 console.log(results[0]['match'])
 
 

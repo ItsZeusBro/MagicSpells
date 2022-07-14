@@ -36,8 +36,6 @@ export class Matchic{
             if(this.matchic(string, regex).length){
                 return this.matchic(string, regex)[0]
             }
-        }else{
-            return ""
         }
     }
 
