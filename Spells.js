@@ -3,12 +3,13 @@
 // var c = new Comet('./comfig.json')
 // c.comet('some log')
 import {SCIENTIFIC_STR_CASE} from "./Source/Test/Cases/Scientific.js"
-import { FLOAT } from "./Source/Spells/Spells.js"
+import { FLOAT, INTEGER} from "./Source/Spells/Spells.js"
 import {FLOAT_STR_CASE} from "./Source/Test/Cases/Floating.js"
 import {Matchic} from "./Source/Matchic.js"
+import * as util from "node:util"
 
 class Spell{
-    constructor(string){
+    constructor(string, tions){
         this.string=string
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
@@ -25,7 +26,7 @@ class Spell{
         Spell.prototype.iter=this.iter;
         Spell.prototype.matchic=this.matchic;
 
-        this.gs = {"string": string, 'opStack':[{'match':undefined,'subStr':string}]};
+        this.opStack = [{'match':undefined, 'op': 'Spell', 'tions':tions, 'subStr':string}];
         this.ugly_itr=0;
         this.Matchic = new Matchic();
 
@@ -33,126 +34,129 @@ class Spell{
     subStr(string, match){
         return string.split(match).slice(1).join('')
     }
-    _next(match, cb){
+    _next(match, cb, fn, tions){
         var currentState;
         if(match){
             currentState={
-                "match":match, 
+                "match":match,
+                "op": fn, 
+                "tions": tions,
                 "subStr": this.subStr(
-                    this.gs['opStack'][this.gs['opStack'].length-1]['subStr'], 
+                    this.opStack[this.opStack.length-1]['subStr'], 
                     match
                 )
             }
-            this.gs['opStack'].push(currentState)
-            if(cb){cb(match, currentState, this.gs)}
+            this.opStack.push(currentState)
+            if(cb){cb(match, fn, currentState, this.opStack)}
             return true
 
         }else{
-            
             currentState={
                 "match": undefined,
-                "subStr": this.gs['opStack'][this.gs['opStack'].length-1]['subStr']
+                "op": fn, 
+                "tions": tions,
+                "subStr": this.opStack[this.opStack.length-1]['subStr']
             }
-            this.gs['opStack'].push(currentState)
-            if(cb){cb(match, currentState, this.gs)}
+            this.opStack.push(currentState)
+            if(cb){cb(match, fn, currentState, this.opStack)}
             return
         }
     }
-
-    nextLine(cb){
+    
+    nextLine(cb, tions){
         //separated by one newline
-        var match = new Matchic().nextLine(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+        var match = new Matchic().nextLine(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same functino
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextLine', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextParagraph(cb){
+    nextParagraph(cb, tions){
         //separated by two newlines
-        var match = new Matchic().nextParagraph(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+        var match = new Matchic().nextParagraph(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextParagraph', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextSentance(cb){
+    nextSentance(cb, tions){
         //separated by a period
-        var match = new Matchic().nextSentance(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+        var match = new Matchic().nextSentance(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextSentance', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextInteger(cb){
-        var match = new Matchic().nextInteger(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+    nextInteger(cb, tions){
+        var match = new Matchic().nextInteger(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextInteger', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextFloat(cb){
-        var match = new Matchic().nextFloat(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+    nextFloat(cb, tions){
+        var match = new Matchic().nextFloat(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextFloat', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextScientific(cb){
-        var match = new Matchic().nextScientific(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+    nextScientific(cb, tions){
+        var match = new Matchic().nextScientific(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextScientific', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextOctet(cb){
-        var match = new Matchic().nextOctet(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+    nextOctet(cb, tions){
+        var match = new Matchic().nextOctet(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextOctet', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextHex(cb){
-        var match = new Matchic().nextHex(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+    nextHex(cb, tions){
+        var match = new Matchic().nextHex(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextHex', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextCodeBlock(type, cb){
-        var match = new Matchic().nextCodeBlock(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+    nextCodeBlock(type, cb, tions){
+        var match = new Matchic().nextCodeBlock(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextCodeBlock', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextFunction(type, cb){
-        var match = new Matchic().nextFunction(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+    nextFunction(type, cb, tions){
+        var match = new Matchic().nextFunction(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextFunction', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextChar(cb){
-        var match = new Matchic().nextChar(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+    nextChar(cb, tions){
+        var match = new Matchic().nextChar(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextChar', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextHTML(){
-        var match = new Matchic().nextHTML(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'])
+    nextHTML(cb, tions){
+        var match = new Matchic().nextHTML(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
-        if (!this._next(match, cb)){this.ugly_itr=0;}
+        if (!this._next(match, cb, 'nextHTML', tions)){this.ugly_itr=0;}
         return this;
     }
 
-    nextMatchic(spells=[], cb){
+    nextMatchic(cb, tions){
         //takes an array of regex patterns and applies them ordinally, 
         //until it finds the first match, and pushes to the stack, then returns
-        spells.forEach((spell)=>{
-            var match = new Matchic().next(this.gs['opStack'][this.gs['opStack'].length-1]['subStr'], spell)
+        tions['spells'].forEach((spell)=>{
+            var match = new Matchic().next(this.opStack[this.opStack.length-1]['subStr'], spell)
             //if there is no match there is no reason to iterate the same function
-            if (!this._next(match, cb)){this.ugly_itr=0;}
+            if (!this._next(match, cb, 'nextMatchic', tions)){this.ugly_itr=0;}
         })
     }
 
@@ -161,28 +165,32 @@ class Spell{
         return this;
     }
 
-    iter(n, fn, cb, options){
+    iter(n, fn, cb, tions){
         this.ugly_itr=n;
         for(var i = 0; i<this.ugly_itr; i++){
             if(fn=='nextLine'){this.nextLine(cb)}
-            else if(fn=='nextParagraph'){this.nextParagraph(cb)}
-            else if(fn=='nextSentance'){this.nextSentance(cb)}
-            else if(fn=='nextInteger'){this.nextInteger(cb)}
-            else if(fn=='nextFloat'){this.nextFloat(cb)}
-            else if(fn=='nextScientific'){this.nextScientific(cb)}
-            else if(fn=='nextOctet'){this.nextOctet(cb)}
-            else if(fn=='nextHex'){this.nextHex(cb)}
-            else if(fn=='nextCodeBlock'){this.nextCodeBlock(options['type'], cb)}
-            else if(fn=='nextFunction'){this.nextFunction(options['type'], cb)}
-            else if(fn=='nextHTML'){this.nextHTML(cb)}
-            else if(fn=='nextMatchic'){this.nextMatchic(options['spells'], cb)}
+            else if(fn=='nextParagraph'){this.nextParagraph(cb, tions)}
+            else if(fn=='nextSentance'){this.nextSentance(cb, tions)}
+            else if(fn=='nextInteger'){this.nextInteger(cb, tions)}
+            else if(fn=='nextFloat'){this.nextFloat(cb, tions)}
+            else if(fn=='nextScientific'){this.nextScientific(cb, tions)}
+            else if(fn=='nextOctet'){this.nextOctet(cb, tions)}
+            else if(fn=='nextHex'){this.nextHex(cb, tions)}
+            else if(fn=='nextCodeBlock'){this.nextCodeBlock(cb, tions)}
+            else if(fn=='nextFunction'){this.nextFunction(cb, tions)}
+            else if(fn=='nextHTML'){this.nextHTML(cb, tions)}
+            else if(fn=='nextMatchic'){this.nextMatchic(cb, tions)}
         }
         return this;
     }
 }
 
 
-var gs = new Spell(FLOAT_STR_CASE).iter(50, 'nextMatchic', (match, cs, gs)=>{}, {'spells':[FLOAT]}).gs
-console.log(gs)
+var opStack = new Spell(FLOAT_STR_CASE)
+    .iter(50, 'nextMatchic', (match, cs, gs)=>{}, {'spells':[FLOAT]})
+    // .Spell(FLOAT_STR_CASE)
+    // .iter(50, 'nextMatchic', (match,cs,gs)=>{}, {'spells':INTEGER})
+    .opStack
+console.log(util.inspect(opStack, false, null, true))
 
 
