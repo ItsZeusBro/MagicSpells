@@ -11,48 +11,70 @@ import * as util from "node:util"
 
 class Spell{
     constructor(string, tions){
-		if(tions['bufferSize']&&tions['bufferOn']){
-			this.buffers=this.buffers(string, tions['bufferSize'], tions['bufferOn'])
+		this.pageQueue=[]
+		if(tions['pageSize']&&tions['pageOn']){
+			this.pagination(string, tions['pageSize'], tions['pageOn'])
 		}
         
-        Spell.prototype.nextLine= this.nextLine;
-        Spell.prototype.nextParagraph= this.nextParagraph;
-        Spell.prototype.nextSentance=this.nextSentance;
-        Spell.prototype.nextInteger=this.nextInteger;
-        Spell.prototype.nextFloat=this.nextFloat;
-        Spell.prototype.nextScientific=this.nextScientific;
-        Spell.prototype.nextOctet=this.nextOctet;
-        Spell.prototype.nextHex=this.nextHex;
-        Spell.prototype.nextCodeBlock=this.nextCodeBlock;
-        Spell.prototype.nextFunction=this.nextFunction;
-        Spell.prototype.nextHTML = this.nextHTML;
-        Spell.prototype.up=this.up;
-        Spell.prototype.iter=this.iter;
-        Spell.prototype.init=this.init;
-        Spell.prototype.matchic=this.matchic;
+        // Spell.prototype.nextLine= this.nextLine;
+        // Spell.prototype.nextParagraph= this.nextParagraph;
+        // Spell.prototype.nextSentance=this.nextSentance;
+        // Spell.prototype.nextInteger=this.nextInteger;
+        // Spell.prototype.nextFloat=this.nextFloat;
+        // Spell.prototype.nextScientific=this.nextScientific;
+        // Spell.prototype.nextOctet=this.nextOctet;
+        // Spell.prototype.nextHex=this.nextHex;
+        // Spell.prototype.nextCodeBlock=this.nextCodeBlock;
+        // Spell.prototype.nextFunction=this.nextFunction;
+        // Spell.prototype.nextHTML = this.nextHTML;
+        // Spell.prototype.up=this.up;
+        // Spell.prototype.iter=this.iter;
+        // Spell.prototype.init=this.init;
+        // Spell.prototype.matchic=this.matchic;
 
-        this.opStack = [{'match':undefined, 'op': 'Spell', 'tions':tions, 'buffer':buffers[0]}];
-        this.ugly_itr=0;
-        this.Matchic = new Matchic();
+        // this.opStack = [{'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]}];
+        // this.ugly_itr=0;
+        // this.Matchic = new Matchic();
 
     }
     init(string, tions){
         this.string=string;
-        this.opStack.push({'match':undefined, 'op': 'Spell', 'tions':tions, 'buffer':string});
+        this.opStack.push({'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]});
         this.ugly_itr=0;
         return this;
     }
 
-	buffers(string, bufferSize, bufferOn){
-		//bufferOn is just a literal string match (otherwise we have the same RegX scaleability problem)
-		//bufferSize is the number of times we pass over the bufferOn
-		//use next nextMatchic internally to create the buffer stack
+	pagination(string, pageSize, pageOn){
+		//pageOn is just a literal string match (otherwise we have the same RegX scaleability problem)
+		//pageSize is the number of times we pass over the pageOn
+		//use next nextMatchic internally to create the page stack
+		var n = string.length;
+		var pageCounter=0;
+		var pageString="";
+		for(var i = 0; i<n; i++){
+			if((string[i]==pageOn) && (pageCounter!=pageSize-1)){
+				//not the end of the page, but the counter goes up
+				pageCounter+=1;
+				pageString+=string[i];
+			}else if((string[i]==pageOn) && (pageCounter==pageSize-1)){
+				//end of the page, append to pageString, push page to pageQueue, clear pageString, reset pageCounter
+				pageString+=string[i];
+				//pageCounter+=1; //leave this here even though it doesnt matter, because we need to print it out sometimes to check pageCounter
+				//console.log(pageCounter)
+				this.pageQueue.push(pageString);
+				pageString="";
+				pageCounter=0;
+			}else{
+				//not the end of the page, just append to the pageString
+				pageString+=string[i];
+			}
+		}
 
 	}
 
     subStr(string, match){
         //this function should remove everything up until the match but nothing else
-        return string.replace(match, '')
+        return string.replace(match, '');
     }
     _next(match, cb, fn, tions){
         var currentState;
@@ -61,8 +83,8 @@ class Spell{
                 "match":match,
                 "op": fn, 
                 "tions": tions,
-                "subStr": this.subStr(
-                    this.opStack[this.opStack.length-1]['buffer'], 
+                'page': this.subStr(
+                    this.opStack[this.opStack.length-1]['page'], 
                     match
                 )
             }
@@ -75,7 +97,7 @@ class Spell{
                 "match": undefined,
                 "op": fn, 
                 "tions": tions,
-                "subStr": this.opStack[this.opStack.length-1]['buffer']
+                'page': this.opStack[this.opStack.length-1]['page']
             }
             this.opStack.push(currentState)
             if(cb){cb(match, fn, currentState, this.opStack)}
@@ -85,7 +107,7 @@ class Spell{
     
     nextLine(cb, tions){
         //separated by one newline
-        var match = new Matchic().nextLine(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextLine(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same functino
         if (!this._next(match, cb, 'nextLine', tions)){this.ugly_itr=0;}
         return this;
@@ -93,7 +115,7 @@ class Spell{
 
     nextParagraph(cb, tions){
         //separated by two newlines
-        var match = new Matchic().nextParagraph(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextParagraph(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextParagraph', tions)){this.ugly_itr=0;}
         return this;
@@ -101,83 +123,83 @@ class Spell{
 
     nextSentance(cb, tions){
         //separated by a period
-        var match = new Matchic().nextSentance(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextSentance(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextSentance', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextInteger(cb, tions){
-        var match = new Matchic().nextInteger(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextInteger(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextInteger', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextFloat(cb, tions){
-        var match = new Matchic().nextFloat(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextFloat(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextFloat', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextScientific(cb, tions){
-        var match = new Matchic().nextScientific(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextScientific(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextScientific', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextOctet(cb, tions){
-        var match = new Matchic().nextOctet(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextOctet(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextOctet', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextHex(cb, tions){
-        var match = new Matchic().nextHex(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextHex(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextHex', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextCodeBlock(type, cb, tions){
-        var match = new Matchic().nextCodeBlock(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextCodeBlock(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextCodeBlock', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextFunction(type, cb, tions){
-        var match = new Matchic().nextFunction(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextFunction(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextFunction', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextLiteral(cb, tions){
-        var match = new Matchic().nextLiteral(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextLiteral(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextLiteral', tions)){this.ugly_itr=0;}
         return this;
     }
     nextChar(cb, tions){
-        var match = new Matchic().nextChar(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextChar(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextChar', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextWord(cb, tions){
-        var match = new Matchic().nextWord(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextWord(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextWord', tions)){this.ugly_itr=0;}
         return this;
     }
 
     nextHTML(cb, tions){
-        var match = new Matchic().nextHTML(this.opStack[this.opStack.length-1]['buffer'])
+        var match = new Matchic().nextHTML(this.opStack[this.opStack.length-1]['page'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextHTML', tions)){this.ugly_itr=0;}
         return this;
@@ -187,7 +209,7 @@ class Spell{
         //takes an array of regex patterns and applies them ordinally, 
         //until it finds the first match, and pushes to the stack, then returns
         tions['spells'].forEach((spell)=>{
-            var match = new Matchic().next(this.opStack[this.opStack.length-1]['buffer'], spell)
+            var match = new Matchic().next(this.opStack[this.opStack.length-1]['page'], spell)
             //if there is no match there is no reason to iterate the same function
             if (!this._next(match, cb, 'nextMatchic', tions)){this.ugly_itr=0;}
         })
@@ -228,9 +250,9 @@ class Spell{
 }
 
 
-var opStack = new Spell(SHERLOCKHOLMES, {'bufferSize':100, 'bufferOn': '\n'})
-    .iter(10, 'nextSentance', (match, cs, gs)=>{})
-    .opStack
-console.log(util.inspect(opStack, false, null, true))
+var pageQueue = new Spell(SHERLOCKHOLMES, {'pageSize':100, 'pageOn': '\n'}).pageQueue
+    // .iter(10, 'nextSentance', (match, cs, gs)=>{})
+    // .opStack
+//console.log(util.inspect(pageQueue, false, null, true))
 
 
