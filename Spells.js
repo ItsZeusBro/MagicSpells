@@ -25,134 +25,124 @@ class Spell{
         Spell.prototype.iter=this.iter;
         Spell.prototype.matchic=this.matchic;
 
-        this.globalState = {"subStr": string};
-        this.results=[];
-        this._batch=[];
-        this.currentState;
+        this.gs = {"string": string, 'opStack':[{'match':undefined,'subStr':string}]};
         this.ugly_itr=0;
-        this.currentState = {'subStr':string}
         this.Matchic = new Matchic();
 
     }
-    _next(match, cb){
-        if(match){
-            this.currentState={"match":match, "subStr": this.subStr(this.currentState['subStr'], match)}
-        }
-        if(cb){
-            cb(match, this.currentState, this.globalState)
-        }
-        if(!match){
-            this.currentState={"match":match, "subStr": this.currentState['subStr']}
-            this.ugly_itr=0;
-            this.batch()
-            return
-        }else if(this.ugly_itr){
-            this.ugly_itr--;
-            if (this.batch()){
-                return true
-            }else{
-                return
-            }
-        }
-        else{
-            this.results.push(this.currentState)
-            return true
-        }
-        
-    
-    }
-    batch(){
-        this._batch.push(this.currentState)
-        if (!this.ugly_itr){
-            this.results.push({"match":this._batch, 'subStr':this.currentState['subStr']})
-            this.ugly_itr=0;
-            this._batch=[];
-            return
-        }else{
-            return true
-        }
-    }
-
     subStr(string, match){
         return string.split(match).slice(1).join('')
+    }
+    _next(match, cb){
+        var currentState;
+        if(match){
+            currentState={
+                "match":match, 
+                "subStr": this.subStr(
+                    this.gs['opStack'][this.gs.length-1]['subStr'], 
+                    match
+                )
+            }
+            this.gs['opStack'].push(currentState)
+            if(cb){cb(match, currentState, this.gs)}
+            return true
+
+        }else{
+            
+            currentState={
+                "match": undefined,
+                "subStr": this.gs['opStack'][this.gs.length-1]['subStr']
+            }
+            this.gs['opStack'].push(currentState)
+            if(cb){cb(match, currentState, this.gs)}
+            return
+        }
     }
 
     nextLine(cb){
         //separated by one newline
         var match = new Matchic().nextLine(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same functino
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextParagraph(cb){
         //separated by two newlines
         var match = new Matchic().nextParagraph(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextSentance(cb){
         //separated by a period
         var match = new Matchic().nextSentance(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextInteger(cb){
         var match = new Matchic().nextInteger(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextFloat(cb){
         var match = new Matchic().nextFloat(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextScientific(cb){
         var match = new Matchic().nextScientific(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextOctet(cb){
         var match = new Matchic().nextOctet(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextHex(cb){
         var match = new Matchic().nextHex(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextCodeBlock(type, cb){
         var match = new Matchic().nextCodeBlock(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
+
     nextFunction(type, cb){
         var match = new Matchic().nextFunction(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextChar(cb){
         var match = new Matchic().nextChar(this.currentState["subStr"])
-        this._next(match, cb)
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
     nextHTML(){
         var match = new Matchic().nextHTML(this.currentState["subStr"])
-        if(this._next(match, cb))
-        return this;
-    }
-
-    up(cb){
-        this.results.pop()
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb)){this.ugly_itr=0;}
         return this;
     }
 
@@ -161,15 +151,19 @@ class Spell{
         //until it finds the first match, and pushes to the stack, then returns
         spells.forEach((spell)=>{
             var match = new Matchic().next(this.currentState["subStr"], spell)
-            if(this._next(match, cb)){
-                return this;
-            }
+            //if there is no match there is no reason to iterate the same function
+            if (!this._next(match, cb)){this.ugly_itr=0;}
         })
+    }
+
+    up(cb){
+        this.results.pop()
+        return this;
     }
 
     iter(n, fn, cb, options){
         this.ugly_itr=n;
-        for(var i = 0; i<n; i++){
+        for(var i = 0; i<this.ugly_itr; i++){
             if(fn=='nextLine'){this.nextLine(cb)}
             else if(fn=='nextParagraph'){this.nextParagraph(cb)}
             else if(fn=='nextSentance'){this.nextSentance(cb)}
