@@ -41,12 +41,12 @@ class Spell{
     }
     init(string, tions){
         this.string=string;
-        this.opStack.push({'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0], 'op#':this.opStack.length-1});
+        this.opStack.push({'op#':this.opStack.length-1, 'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]});
         this.ugly_itr=0;
         return this;
     }
 	nextPage(){
-		if(!((this.pageNumber+1) > (this.pageQueue.length-1))){
+		if(this.pageNumber < this.pageQueue.length-1){
 			this.pageNumber+=1;
 			return this.pageQueue[this.pageNumber]
 		}
@@ -119,13 +119,15 @@ class Spell{
 				}
 				this.opStack.push(currentState)
 				if(cb){cb(match, fn, currentState, this.opStack)}
+				return true
 			}else{
 				currentState={
+					'op#':this.opStack.length-1,
 					"match": undefined,
 					"op": fn, 
 					"tions": tions,
-					'page': this.opStack[this.opStack.length-1]['page'],
-					'op#':this.opStack.length-1
+					'page': undefined
+
 				}
 				this.opStack.push(currentState)
 				if(cb){cb(match, fn, currentState, this.opStack)}
