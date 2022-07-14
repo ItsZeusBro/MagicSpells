@@ -11,7 +11,7 @@ import * as util from "node:util"
 
 class Spell{
     constructor(string, tions){
-        this.buffers=this.buffers(string)
+        this.buffers=this.buffers(string, tions['bufferSize'], tions['bufferOn'])
 
         Spell.prototype.nextLine= this.nextLine;
         Spell.prototype.nextParagraph= this.nextParagraph;
@@ -41,8 +41,8 @@ class Spell{
         return this;
     }
 
-	buffers(string){
-
+	buffers(string, bufferSize, bufferOn){
+		//dont remove newlines, just count 
 	}
 
     subStr(string, match){
@@ -223,7 +223,7 @@ class Spell{
 }
 
 
-var opStack = new Spell(SHERLOCKHOLMES)
+var opStack = new Spell(SHERLOCKHOLMES, {'bufferSize':100, 'bufferOn': '\n'})
     .iter(10, 'nextSentance', (match, cs, gs)=>{})
     .opStack
 console.log(util.inspect(opStack, false, null, true))
