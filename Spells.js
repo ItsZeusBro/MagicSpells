@@ -33,7 +33,7 @@ class Spell{
         Spell.prototype.init=this.init;
         Spell.prototype.matchic=this.matchic;
 
-        this.opStack = [{'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]}];
+        this.opStack = [{'op#':0,'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]}];
 		this.pageNumber=0;
         this.ugly_itr=0;
         this.Matchic = new Matchic();
@@ -41,7 +41,7 @@ class Spell{
     }
     init(string, tions){
         this.string=string;
-        this.opStack.push({'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]});
+        this.opStack.push({'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0], 'op#':this.opStack.length-1});
         this.ugly_itr=0;
         return this;
     }
@@ -79,7 +79,8 @@ class Spell{
 				pageString+=string[i];//
 			}
 		}
-		console.log(pageString)
+
+		//THIS PUSHES THE LAST (HIDDEN) PAGE ON THE QUEUE
 		this.pageQueue.push(pageString);
 
 	}
@@ -92,6 +93,7 @@ class Spell{
         var currentState;
         if(match){
             currentState={
+				'op#':this.opStack.length-1,
                 "match":match,
                 "op": fn, 
                 "tions": tions,
@@ -99,6 +101,7 @@ class Spell{
                     this.opStack[this.opStack.length-1]['page'], 
                     match
                 )
+
             }
             this.opStack.push(currentState)
             if(cb){cb(match, fn, currentState, this.opStack)}
@@ -108,10 +111,11 @@ class Spell{
 			var nextPage= this.nextPage()
 			if (nextPage){
 				currentState={
+					'op#':this.opStack.length-1,
 					"match": undefined,
 					"op": fn, 
 					"tions": tions,
-					'page': nextPage
+					'page': nextPage,
 				}
 				this.opStack.push(currentState)
 				if(cb){cb(match, fn, currentState, this.opStack)}
@@ -120,7 +124,8 @@ class Spell{
 					"match": undefined,
 					"op": fn, 
 					"tions": tions,
-					'page': this.opStack[this.opStack.length-1]['page']
+					'page': this.opStack[this.opStack.length-1]['page'],
+					'op#':this.opStack.length-1
 				}
 				this.opStack.push(currentState)
 				if(cb){cb(match, fn, currentState, this.opStack)}
@@ -275,11 +280,9 @@ class Spell{
 }
 
 
-var spell = new Spell(SHERLOCKHOLMES, {'pageSize':100, 'pageOn': '\n'})
-console.log(spell.newlines)
-console.log(spell.pageQueue.length)
-    // .iter(10, 'nextSentance', (match, cs, gs)=>{})
-    // .opStack
-//console.log(util.inspect(pageQueue, false, null, true))
+var opStack = new Spell(SHERLOCKHOLMES, {'pageSize':50, 'pageOn': '\n'})
+	.iter('inf', 'nextLine', (match, cs, gs)=>{})
+	.opStack
+console.log(util.inspect(opStack, false, null, true))
 
 

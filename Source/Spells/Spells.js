@@ -8,11 +8,11 @@ export const HEX=""
 export const LITERAL=/(.|\s)/u
 export const CHAR=/[^\n\t\r]/u
 export const WORD=/[^\n\t\r ]+/u
-export const ALPHA_STRING=/( |^)[a-zA-Z]+\b/
-export const ALPHA_NUMERIC_STRING= /( |^)[a-zA-Z0-9]+\b/
-export const SENTANCE=/([^\n\t\r ]+)+\./
-export const PARAGRAPH="/( |^)/"
-export const LINE=""
+export const ALPHA_STRING=""
+export const ALPHA_NUMERIC_STRING=""
+export const SENTANCE=""
+export const PARAGRAPH=""
+export const LINE=/.*\n/
 
 export const JAVAFUNCTION=""
 export const JSFUNCTION=""
