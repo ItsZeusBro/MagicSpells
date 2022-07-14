@@ -113,7 +113,7 @@ class Spell{
 				currentState={
 					'op#':this.opStack.length-1,
 					"match": undefined,
-					"op": fn, 
+					"op": 'nextPage', 
 					"tions": tions,
 					'page': nextPage,
 				}
