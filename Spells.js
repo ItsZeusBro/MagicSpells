@@ -143,16 +143,20 @@ class Spell{
         return this;
     }
 
-    nextMatchicOf(spells=[], cb){
+    nextMatchic(spells=[], cb){
         //takes an array of regex patterns and applies them ordinally, 
-        //until it finds the first match
+        //until it finds the first match, and pushes to the stack, then returns
         spells.forEach((spell)=>{
-            var match = new Matchic.matchic(this.currentState["subStr"], spell)
-            this._next(match, cb)
+            var match = new Matchic.next(this.currentState["subStr"], spell)
+            if (match){
+                this._next(match, cb)
+                return this;
+            }
         })
+        return this;
     }
 
-    iter(n, fn, type="js", cb=(match, cs, gs)=>{}){
+    iter(n, fn, cb, options){
         this.ugly_itr=n;
         for(var i = 0; i<n; i++){
             if(fn=='nextLine'){this.nextLine(cb)}
@@ -163,9 +167,10 @@ class Spell{
             else if(fn=='nextScientific'){this.nextScientific(cb)}
             else if(fn=='nextOctet'){this.nextOctet(cb)}
             else if(fn=='nextHex'){this.nextHex(cb)}
-            else if(fn=='nextCodeBlock'){this.nextCodeBlock(type, cb)}
-            else if(fn=='nextFunction'){this.nextFunction(type, cb)}
+            else if(fn=='nextCodeBlock'){this.nextCodeBlock(options['type'], cb)}
+            else if(fn=='nextFunction'){this.nextFunction(options['type'], cb)}
             else if(fn=='nextHTML'){this.nextHTML(cb)}
+            else if(fn=='nextMatchic'){this.nextMatchic(options['spells'], cb)}
         }
         return this;
     }
