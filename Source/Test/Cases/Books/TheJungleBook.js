@@ -1201,7 +1201,7 @@ our people.” Bagheera licked one forepaw thoughtfully.
 
 “Fool that I am! Oh, fat, brown, root-digging fool that I am,” said
 Baloo, uncoiling himself with a jerk, “it is true what Hathi the Wild
-Elephant says: `To each his own fear’; and they, the Bandar-log, fear
+Elephant says: 'To each his own fear’; and they, the Bandar-log, fear
 Kaa the Rock Snake. He can climb as well as they can. He steals the
 young monkeys in the night. The whisper of his name makes their wicked
 tails cold. Let us go to Kaa.”
@@ -1319,7 +1319,7 @@ foolish, vain--vain, foolish, and chattering, are the monkeys. But a
 man-thing in their hands is in no good luck. They grow tired of the nuts
 they pick, and throw them down. They carry a branch half a day, meaning
 to do great things with it, and then they snap it in two. That man-thing
-is not to be envied. They called me also--`yellow fish’ was it not?”
+is not to be envied. They called me also--'yellow fish’ was it not?”
 
 “Worm--worm--earth-worm,” said Bagheera, “as well as other things which
 I cannot now say for shame.”
@@ -4079,7 +4079,7 @@ to do but to carry gold earrings in thy ears, and a gold howdah on thy
 back, and a red cloth covered with gold on thy sides, and walk at the
 head of the processions of the King. Then I shall sit on thy neck, O
 Kala Nag, with a silver ankus, and men will run before us with golden
-sticks, crying, `Room for the King’s elephant!’ That will be good, Kala
+sticks, crying, 'Room for the King’s elephant!’ That will be good, Kala
 Nag, but not so good as this hunting in the jungles.”
 
 “Umph!” said Big Toomai. “Thou art a boy, and as wild as a buffalo-calf.
@@ -4770,7 +4770,7 @@ morning. But I may as well give you something on account now.”
 I heard the harness jingle as the mule backed and caught the camel
 two kicks in the ribs that rang like a drum. “Another time,” he said,
 “you’ll know better than to run through a mule battery at night,
-shouting `Thieves and fire!’ Sit down, and keep your silly neck quiet.”
+shouting 'Thieves and fire!’ Sit down, and keep your silly neck quiet.”
 
 The camel doubled up camel-fashion, like a two-foot rule, and sat down
 whimpering. There was a regular beat of hoofs in the darkness, and a big

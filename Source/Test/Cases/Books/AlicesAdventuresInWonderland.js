@@ -3756,6 +3756,4 @@ facility: www.gutenberg.org
 This website includes information about Project Gutenberg-tm,
 including how to make donations to the Project Gutenberg Literary
 Archive Foundation, how to help produce our new eBooks, and how to
-subscribe to our email newsletter to hear about new eBooks.
-
-`
+subscribe to our email newsletter to hear about new eBooks.`
