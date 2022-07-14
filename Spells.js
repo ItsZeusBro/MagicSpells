@@ -42,12 +42,18 @@ class Spell{
         if(!match){
             this.ugly_itr=0;
             this.batch()
+            return
         }else if(this.ugly_itr){
             this.ugly_itr--;
-            this.batch()
+            if (this.batch()){
+                return true
+            }else{
+                return
+            }
         }
         else{
             this.results.push(this.currentState)
+            return true
         }
         
     
@@ -58,6 +64,9 @@ class Spell{
             this.results.push({"match":this._batch, 'subStr':this.currentState['subStr']})
             this.ugly_itr=0;
             this._batch=[];
+            return
+        }else{
+            return true
         }
     }
 
@@ -135,7 +144,7 @@ class Spell{
 
     nextHTML(){
         var match = new Matchic().nextHTML(this.currentState["subStr"])
-        this._next(match, cb)
+        if(this._next(match, cb))
         return this;
     }
 
@@ -149,12 +158,10 @@ class Spell{
         //until it finds the first match, and pushes to the stack, then returns
         spells.forEach((spell)=>{
             var match = new Matchic().next(this.currentState["subStr"], spell)
-            if (match){
-                this._next(match, cb)
+            if(this._next(match, cb)){
                 return this;
             }
         })
-        return this;
     }
 
     iter(n, fn, cb, options){
@@ -178,7 +185,7 @@ class Spell{
 }
 
 
-var results = new Spell(FLOAT_STR_CASE).iter(10, 'nextMatchic', (match, cs, gs)=>{}, {'spells':[FLOAT]}).results
+var results = new Spell(FLOAT_STR_CASE).iter(50, 'nextMatchic', (match, cs, gs)=>{}, {'spells':[FLOAT]}).results
 console.log(results[0]['match'])
 
 
