@@ -3,6 +3,7 @@
 // var c = new Comet('./comfig.json')
 // c.comet('some log')
 import {SCIENTIFIC_STR_CASE} from "./Source/Test/Cases/Scientific.js"
+import {SHERLOCKHOLMES} from "./Source/Test/Cases/SherlockHolmes.js"
 import { FLOAT, INTEGER, CHAR} from "./Source/Spells/Spells.js"
 import {FLOAT_STR_CASE} from "./Source/Test/Cases/Floating.js"
 import {Matchic} from "./Source/Matchic.js"
@@ -216,7 +217,7 @@ class Spell{
 }
 
 
-var opStack = new Spell(FLOAT_STR_CASE)
+var opStack = new Spell(SHERLOCKHOLMES)
     .iter('inf', 'nextWord', (match, cs, gs)=>{})
     .opStack
 console.log(util.inspect(opStack, false, null, true))
