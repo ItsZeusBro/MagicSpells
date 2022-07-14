@@ -27,13 +27,18 @@ export class Matchic{
     }
 
     matchic(string, regex){
-        var matchic = []
         var reg = new RegExp(regex);
         return string.match(reg)
     }
     next(string, regex){
         //console.log(regex)
-        return this.matchic(string, regex)[0]
+        if(this.matchic(string, regex)){
+            if(this.matchic(string, regex).length){
+                return this.matchic(string, regex)[0]
+            }
+        }else{
+            return ""
+        }
     }
 
     _isCodeBlock(string, type){

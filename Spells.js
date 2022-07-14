@@ -55,7 +55,7 @@ class Spell{
     }
 
     subStr(string, match){
-        return string.split(match).slice(1).join(' ')
+        return string.split(match).slice(1).join('')
     }
 
     nextLine(cb){
@@ -166,7 +166,7 @@ class Spell{
 }
 
 
-var results = new Spell(FLOAT_STR_CASE).iter(44), 'nextFloat', (match, cs, gs)=>{}).results
+var results = new Spell(FLOAT_STR_CASE).iter(39, 'nextFloat', (match, cs, gs)=>{}).results
 console.log(results[0]['match'])
 
 
