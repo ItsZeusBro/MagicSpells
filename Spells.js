@@ -66,7 +66,7 @@ class Spell{
 				pageCounter=0;
 			}else{
 				//not the end of the page, just append to the pageString
-				pageString+=string[i];
+				pageString+=string[i];//
 			}
 		}
 
