@@ -1,15 +1,6 @@
-// import {Comet} from "comet/Comet.js";
-
-// var c = new Comet('./comfig.json')
-// c.comet('some log')
-import {SCIENTIFIC_STR_CASE} from "./Source/Test/Cases/Scientific.js"
-import {SHERLOCKHOLMES} from "./Source/Test/Cases/SherlockHolmes.js"
-import { FLOAT, INTEGER, CHAR} from "./Source/Spells/Spells.js"
-import {FLOAT_STR_CASE} from "./Source/Test/Cases/Floating.js"
 import {Matchic} from "./Source/Matchic.js"
-import * as util from "node:util"
 
-class Spell{
+export class Spell{
     constructor(string, tions){
 		this.pageQueue=[]
 		this.newlines=0;
@@ -277,13 +268,3 @@ class Spell{
         return this;
     }
 }
-
-
-var opStack = new Spell(SHERLOCKHOLMES, {'pageSize':50, 'pageOn': '\n'})
-	.iter('inf', 'nextLine', (match, cs, gs)=>{})
-	.opStack
-//console.log(util.inspect(opStack[opStack.length-2], false, null, true))
-
-opStack.forEach((element)=>{
-	console.log(util.inspect(element, false, null, true))
-})
