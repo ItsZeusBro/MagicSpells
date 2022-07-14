@@ -124,7 +124,7 @@ export const NOT_FLOATING_CASES = {
 }
 
 export const FLOAT_STR_CASE=`
-    0.0000 alsdjkfhadskjfhaskdjh 0.0001 aslgjihajsgoarihgjreognibe 0.0009 asouahsdiauewrngweafu  
+    0.0000 1 alsdjkfhadskjfhaskdjh 2 0.0001 aslgjihajsgoarihgjreognibe 3 0.0009 asouahsdiauewrngweafu  
     0.0010  akjhgflaskdjghaliwef 0.0099 asdoiuehgaoiweuhgsd 0.0100  asdgkjhagareg.s,kfmsda.fg 0.0999  
     1.0000  aspoguihrewgamv /.Afl;klrgknasglkjn 9.0000 lkajbhgaukwrhybfsDfn wedfkasjfba 10.0000  
     99.0000 '.];[/34324fdgsdg shsgljhnsdfvm 100.0000  23432.';.[.[sdfpglk[pl;345 999.0000  

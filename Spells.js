@@ -24,12 +24,19 @@ class Spell{
         Spell.prototype.nextHTML = this.nextHTML;
         Spell.prototype.up=this.up;
         Spell.prototype.iter=this.iter;
+        Spell.prototype.init=this.init;
         Spell.prototype.matchic=this.matchic;
 
         this.opStack = [{'match':undefined, 'op': 'Spell', 'tions':tions, 'subStr':string}];
         this.ugly_itr=0;
         this.Matchic = new Matchic();
 
+    }
+    init(string, tions){
+        this.string=string;
+        this.opStack.push({'match':undefined, 'op': 'Spell', 'tions':tions, 'subStr':string});
+        this.ugly_itr=0;
+        return this;
     }
     subStr(string, match){
         return string.split(match).slice(1).join('')
@@ -188,8 +195,8 @@ class Spell{
 
 var opStack = new Spell(FLOAT_STR_CASE)
     .iter(50, 'nextMatchic', (match, cs, gs)=>{}, {'spells':[FLOAT]})
-    // .Spell(FLOAT_STR_CASE)
-    // .iter(50, 'nextMatchic', (match,cs,gs)=>{}, {'spells':INTEGER})
+    .init(FLOAT_STR_CASE)
+    .iter(50, 'nextMatchic', (match,cs,gs)=>{}, {'spells':[INTEGER]})
     .opStack
 console.log(util.inspect(opStack, false, null, true))
 

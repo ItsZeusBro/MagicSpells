@@ -1,5 +1,5 @@
 export const SCIENTIFIC=/(\+|-| |^)?[0-9]+\.[0-9]+(e|E)(\+|\-)?[0-9]+\b/
-export const INTEGER=/(\+|-| |^)((([1-9],)|([1-9][0-9],)|([1-9][0-9][0-9],))([0-9][0-9][0-9],)*([0-9][0-9][0-9]))($|\s)|^([0-9]*)\b/
+export const INTEGER=/(\+|-| |^)[0-9]+\b/
 export const FLOAT=/(\+|-| |^)[0-9]+\.[0-9]+\b/
 export const BINARY=/(\+|-| |^)[0-1]+\b/
 export const OCTET=""
