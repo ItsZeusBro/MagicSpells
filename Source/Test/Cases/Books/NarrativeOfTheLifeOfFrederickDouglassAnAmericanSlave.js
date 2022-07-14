@@ -1,4 +1,4 @@
-NARRATIVE_OF_THE_LIFE_OF_FREDERICK_DOUGLASS_AN_AMERICAN_SLAVE=`The Project Gutenberg eBook of Narrative of the Life of Frederick Douglass, by Frederick Douglass
+export const NARRATIVE_OF_THE_LIFE_OF_FREDERICK_DOUGLASS_AN_AMERICAN_SLAVE=`The Project Gutenberg eBook of Narrative of the Life of Frederick Douglass, by Frederick Douglass
 
 This eBook is for the use of anyone anywhere in the United States and
 most other parts of the world at no cost and with almost no restrictions
