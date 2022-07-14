@@ -53,9 +53,6 @@ class Spell{
 		return
 	}
 	pagination(string, pageSize, pageOn){
-		//pageOn is just a literal string match (otherwise we have the same RegX scaleability problem)
-		//pageSize is the number of times we pass over the pageOn
-		//use next nextMatchic internally to create the page stack
 		var n = string.length;
 		var pageCounter=0;
 		var pageString="";
@@ -285,6 +282,8 @@ class Spell{
 var opStack = new Spell(SHERLOCKHOLMES, {'pageSize':50, 'pageOn': '\n'})
 	.iter('inf', 'nextLine', (match, cs, gs)=>{})
 	.opStack
-console.log(util.inspect(opStack, false, null, true))
+//console.log(util.inspect(opStack[opStack.length-2], false, null, true))
 
-
+opStack.forEach((element)=>{
+	console.log(util.inspect(element, false, null, true))
+})

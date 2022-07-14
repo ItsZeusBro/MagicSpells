@@ -1,6 +1,4 @@
-export const SHERLOCKHOLMES =
-`
-The Adventures of Sherlock Holmes
+export const SHERLOCKHOLMES =`The Adventures of Sherlock Holmes
 
 by Arthur Conan Doyle
 

@@ -39,26 +39,32 @@ export class Matchic{
         }
     }
 
-    _isCodeBlock(string, type){
+	//Parsing Code
+    _isCodeBlock(string, type){}
+    _matchCodeBlock(string, type){}
+    _nextCodeBlock(string, type){}
 
-    }
-    _matchCodeBlock(string, type){
+    _isFunction(string, type){}
+    _matchFunction(string, type){}
+    _nextFunction(string, type){}
 
-    }
-    _nextCodeBlock(string, type){
+    isCodeBlock(string, type){return this._isCodeBlock(string, type)}
+    matchCodeBlock(string, type){return this._matchCodeBlock(string, type)}
+    nextCodeBlock(string, type){return this._nextCodeBlock(string, type)}
 
-    }
+    isHTML(string){return this.is(string, HTML)}
+    matchHTML(string){return this._matchic(string, HTML)}
+    nextHTML(string){return this.next(string, HTML)}
 
-    _isFunction(string, type){
+    isXML(string){return this.is(string, XML)}
+    matchXML(string){return this._matchic(string, XML)}
+    nextXML(string){return this.next(string, XML)}
 
-    }
-    _matchFunction(string, type){
+    isJSON(string){return this.is(string, JSON)}
+    matchJSON(string){return this._matchic(string, JSON)}
+    nextJSON(string){return this.next(string, JSON)}
 
-    }
-    _nextFunction(string, type){
-        
-    }
-
+	//Parsing Numbers
     isScientific(string){return this.is(string, SCIENTIFIC)}
     matchScientific(string){return this._matchic(string, SCIENTIFIC)}
     nextScientific(string){return this.next(string, SCIENTIFIC)}
@@ -67,6 +73,19 @@ export class Matchic{
     matchFloats(string){return this._matchic(string, FLOAT)}
     nextFloat(string){return this.next(string, FLOAT)}
 
+    isInteger(string){return this.is(string, INTEGER)}
+    matchIntegers(string){return this._matchic(string, INTEGER)}
+    nextInteger(string){return this.next(string, INTEGER)}
+
+    isOctet(string){return this.is(string, OCTET)}
+    matchOctet(string){return this._matchic(string, OCTET)}
+    nextOctet(string){return this.next(string, OCTET)}
+
+    isHex(string){return this.is(string, HEX)}
+    matchHex(string){return this._matchic(string, HEX)}
+    nextHex(string){return this.next(string, HEX)}
+
+	//Parsing Chars
     isLiteral(string){return this.is(string, LITERAL)}
     matchLiteral(string){return this._matchic(string, LITERAL)}
     nextLiteral(string){return this.next(string, LITERAL)}
@@ -92,47 +111,4 @@ export class Matchic{
     nextSentance(string){return this.next(string, SENTANCE)}
 
 
-
-
-    isInteger(string){return this.is(string, INTEGER)}
-    matchIntegers(string){return this._matchic(string, INTEGER)}
-    nextInteger(string){return this.next(string, INTEGER)}
-
-
-
-    isOctet(string){return this.is(string, OCTET)}
-    matchOctet(string){return this._matchic(string, OCTET)}
-    nextOctet(string){return this.next(string, OCTET)}
-
-    isHex(string){return this.is(string, HEX)}
-    matchHex(string){return this._matchic(string, HEX)}
-    nextHex(string){return this.next(string, HEX)}
-
-
-    isCodeBlock(string, type){return this._isCodeBlock(string, type)}
-    matchCodeBlock(string, type){return this._matchCodeBlock(string, type)}
-    nextCodeBlock(string, type){return this._nextCodeBlock(string, type)}
-
-    isHTML(string){return this.is(string, HTML)}
-    matchHTML(string){return this._matchic(string, HTML)}
-    nextHTML(string){return this.next(string, HTML)}
-
-    isXML(string){return this.is(string, XML)}
-    matchXML(string){return this._matchic(string, XML)}
-    nextXML(string){return this.next(string, XML)}
-
-    isJSON(string){return this.is(string, JSON)}
-    matchJSON(string){return this._matchic(string, JSON)}
-    nextJSON(string){return this.next(string, JSON)}
 }
-
-
-
-// class _matchicIter{
-//     constructor(string, regex){
-//         this.string=string;
-//         this.regex=regex;
-//         this._matchic=new _matchic()._matchic(string, regex)
-//     }
-//     next(){return this._matchic.pop(0)}
-// }
