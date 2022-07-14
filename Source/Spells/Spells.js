@@ -5,7 +5,7 @@ export const BINARY=/(\+|-| |^)[0-1]+\b/
 export const OCTET=""
 export const HEX=""
 
-export const CHAR=""
+export const CHAR="."
 export const ALPHA_STRING=/( |^)[a-zA-Z]+\b/
 export const ALPHA_NUMERIC_STRING= /( |^)[a-zA-Z0-9]+\b/
 export const SENTANCE=/( |^)[A-Z][a-z]*( |, |; )?([a-z]+(')?( |, |; )?)*((\.\.\.)|\?|\!|\.)\b/

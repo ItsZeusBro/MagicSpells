@@ -3,7 +3,7 @@
 // var c = new Comet('./comfig.json')
 // c.comet('some log')
 import {SCIENTIFIC_STR_CASE} from "./Source/Test/Cases/Scientific.js"
-import { FLOAT, INTEGER} from "./Source/Spells/Spells.js"
+import { FLOAT, INTEGER, CHAR} from "./Source/Spells/Spells.js"
 import {FLOAT_STR_CASE} from "./Source/Test/Cases/Floating.js"
 import {Matchic} from "./Source/Matchic.js"
 import * as util from "node:util"
@@ -39,7 +39,8 @@ class Spell{
         return this;
     }
     subStr(string, match){
-        return string.split(match).slice(1).join('')
+        //this function should remove everything up until the match but nothing else
+        return string.replace(match, '')
     }
     _next(match, cb, fn, tions){
         var currentState;
@@ -173,7 +174,13 @@ class Spell{
     }
 
     iter(n, fn, cb, tions){
-        this.ugly_itr=n;
+        if(n=='inf'){
+            this.ugly_itr=Infinity
+        }else if(Number.isInteger(n)){
+            this.ugly_itr=n;
+        }else{
+            throw Error("n must be of type int or string value 'inf'")
+        }
         for(var i = 0; i<this.ugly_itr; i++){
             if(fn=='nextLine'){this.nextLine(cb)}
             else if(fn=='nextParagraph'){this.nextParagraph(cb, tions)}
@@ -194,9 +201,7 @@ class Spell{
 
 
 var opStack = new Spell(FLOAT_STR_CASE)
-    .iter(50, 'nextMatchic', (match, cs, gs)=>{}, {'spells':[FLOAT]})
-    .init(FLOAT_STR_CASE)
-    .iter(50, 'nextMatchic', (match,cs,gs)=>{}, {'spells':[INTEGER]})
+    .iter('inf', 'nextMatchic', (match, cs, gs)=>{}, {'spells':[CHAR]})
     .opStack
 console.log(util.inspect(opStack, false, null, true))
 
