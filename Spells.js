@@ -12,29 +12,31 @@ import * as util from "node:util"
 class Spell{
     constructor(string, tions){
 		this.pageQueue=[]
+		this.newlines=0;
 		if(tions['pageSize']&&tions['pageOn']){
 			this.pagination(string, tions['pageSize'], tions['pageOn'])
 		}
         
-        // Spell.prototype.nextLine= this.nextLine;
-        // Spell.prototype.nextParagraph= this.nextParagraph;
-        // Spell.prototype.nextSentance=this.nextSentance;
-        // Spell.prototype.nextInteger=this.nextInteger;
-        // Spell.prototype.nextFloat=this.nextFloat;
-        // Spell.prototype.nextScientific=this.nextScientific;
-        // Spell.prototype.nextOctet=this.nextOctet;
-        // Spell.prototype.nextHex=this.nextHex;
-        // Spell.prototype.nextCodeBlock=this.nextCodeBlock;
-        // Spell.prototype.nextFunction=this.nextFunction;
-        // Spell.prototype.nextHTML = this.nextHTML;
-        // Spell.prototype.up=this.up;
-        // Spell.prototype.iter=this.iter;
-        // Spell.prototype.init=this.init;
-        // Spell.prototype.matchic=this.matchic;
+        Spell.prototype.nextLine= this.nextLine;
+        Spell.prototype.nextParagraph= this.nextParagraph;
+        Spell.prototype.nextSentance=this.nextSentance;
+        Spell.prototype.nextInteger=this.nextInteger;
+        Spell.prototype.nextFloat=this.nextFloat;
+        Spell.prototype.nextScientific=this.nextScientific;
+        Spell.prototype.nextOctet=this.nextOctet;
+        Spell.prototype.nextHex=this.nextHex;
+        Spell.prototype.nextCodeBlock=this.nextCodeBlock;
+        Spell.prototype.nextFunction=this.nextFunction;
+        Spell.prototype.nextHTML = this.nextHTML;
+        Spell.prototype.up=this.up;
+        Spell.prototype.iter=this.iter;
+        Spell.prototype.init=this.init;
+        Spell.prototype.matchic=this.matchic;
 
-        // this.opStack = [{'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]}];
-        // this.ugly_itr=0;
-        // this.Matchic = new Matchic();
+        this.opStack = [{'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]}];
+		this.pageNumber=0;
+        this.ugly_itr=0;
+        this.Matchic = new Matchic();
 
     }
     init(string, tions){
@@ -43,7 +45,13 @@ class Spell{
         this.ugly_itr=0;
         return this;
     }
-
+	nextPage(){
+		if(!((this.pageNumber+1) > (this.pageQueue.length-1))){
+			this.pageNumber+=1;
+			return this.pageQueue[this.pageNumber]
+		}
+		return
+	}
 	pagination(string, pageSize, pageOn){
 		//pageOn is just a literal string match (otherwise we have the same RegX scaleability problem)
 		//pageSize is the number of times we pass over the pageOn
@@ -54,10 +62,12 @@ class Spell{
 		for(var i = 0; i<n; i++){
 			if((string[i]==pageOn) && (pageCounter!=pageSize-1)){
 				//not the end of the page, but the counter goes up
+				this.newlines+=1
 				pageCounter+=1;
 				pageString+=string[i];
 			}else if((string[i]==pageOn) && (pageCounter==pageSize-1)){
 				//end of the page, append to pageString, push page to pageQueue, clear pageString, reset pageCounter
+				this.newlines+=1
 				pageString+=string[i];
 				//pageCounter+=1; //leave this here even though it doesnt matter, because we need to print it out sometimes to check pageCounter
 				//console.log(pageCounter)
@@ -69,6 +79,8 @@ class Spell{
 				pageString+=string[i];//
 			}
 		}
+		console.log(pageString)
+		this.pageQueue.push(pageString);
 
 	}
 
@@ -93,14 +105,27 @@ class Spell{
             return true
 
         }else{
-            currentState={
-                "match": undefined,
-                "op": fn, 
-                "tions": tions,
-                'page': this.opStack[this.opStack.length-1]['page']
-            }
-            this.opStack.push(currentState)
-            if(cb){cb(match, fn, currentState, this.opStack)}
+			var nextPage= this.nextPage()
+			if (nextPage){
+				currentState={
+					"match": undefined,
+					"op": fn, 
+					"tions": tions,
+					'page': nextPage
+				}
+				this.opStack.push(currentState)
+				if(cb){cb(match, fn, currentState, this.opStack)}
+			}else{
+				currentState={
+					"match": undefined,
+					"op": fn, 
+					"tions": tions,
+					'page': this.opStack[this.opStack.length-1]['page']
+				}
+				this.opStack.push(currentState)
+				if(cb){cb(match, fn, currentState, this.opStack)}
+			}
+            
             return
         }
     }
@@ -250,7 +275,9 @@ class Spell{
 }
 
 
-var pageQueue = new Spell(SHERLOCKHOLMES, {'pageSize':100, 'pageOn': '\n'}).pageQueue
+var spell = new Spell(SHERLOCKHOLMES, {'pageSize':100, 'pageOn': '\n'})
+console.log(spell.newlines)
+console.log(spell.pageQueue.length)
     // .iter(10, 'nextSentance', (match, cs, gs)=>{})
     // .opStack
 //console.log(util.inspect(pageQueue, false, null, true))
