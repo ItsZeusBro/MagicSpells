@@ -1,6 +1,6 @@
 import { 
     SCIENTIFIC, INTEGER, FLOAT, OCTET, HEX,
-    LINE, PARAGRAPH, SENTANCE, CHAR,
+    LINE, PARAGRAPH, SENTANCE, CHAR, LITERAL, WORD, 
     JAVAFUNCTION, JSFUNCTION, CPPFUNCTION, PYFUNCTION, GOFUNCTION, PHPFUNCTION,
     JAVABLOCK, JSBLOCK, CPPBLOCK, PYBLOCK, GOBLOCK, PHPBLOCK,
     HTML, XML
@@ -67,11 +67,18 @@ export class Matchic{
     matchFloats(string){return this._matchic(string, FLOAT)}
     nextFloat(string){return this.next(string, FLOAT)}
 
-    
+    isLiteral(string){return this.is(string, LITERAL)}
+    matchLiteral(string){return this._matchic(string, LITERAL)}
+    nextLiteral(string){return this.next(string, LITERAL)}
+
     isChar(string){return this.is(string, CHAR)}
     matchChar(string){return this._matchic(string, CHAR)}
     nextChar(string){return this.next(string, CHAR)}
-    
+
+    isWord(string){return this.is(string, WORD)}
+    matchWord(string){return this._matchic(string, WORD)}
+    nextWord(string){return this.next(string, WORD)}
+
     isLine(string){return this.is(string, LINE)}
     matchLines(string){return this._matchic(string, LINE)}
     nextLine(string){return this.next(string, LINE)}

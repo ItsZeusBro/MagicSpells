@@ -144,10 +144,23 @@ class Spell{
         return this;
     }
 
+    nextLiteral(cb, tions){
+        var match = new Matchic().nextLiteral(this.opStack[this.opStack.length-1]['subStr'])
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb, 'nextLiteral', tions)){this.ugly_itr=0;}
+        return this;
+    }
     nextChar(cb, tions){
         var match = new Matchic().nextChar(this.opStack[this.opStack.length-1]['subStr'])
         //if there is no match there is no reason to iterate the same function
         if (!this._next(match, cb, 'nextChar', tions)){this.ugly_itr=0;}
+        return this;
+    }
+
+    nextWord(cb, tions){
+        var match = new Matchic().nextWord(this.opStack[this.opStack.length-1]['subStr'])
+        //if there is no match there is no reason to iterate the same function
+        if (!this._next(match, cb, 'nextWord', tions)){this.ugly_itr=0;}
         return this;
     }
 
@@ -186,6 +199,8 @@ class Spell{
             else if(fn=='nextParagraph'){this.nextParagraph(cb, tions)}
             else if(fn=='nextSentance'){this.nextSentance(cb, tions)}
             else if(fn=='nextChar'){this.nextChar(cb, tions)}
+            else if(fn=='nextWord'){this.nextWord(cb, tions)}
+            else if(fn=='nextLiteral'){this.nextLiteral(cb, tions)}
             else if(fn=='nextInteger'){this.nextInteger(cb, tions)}
             else if(fn=='nextFloat'){this.nextFloat(cb, tions)}
             else if(fn=='nextScientific'){this.nextScientific(cb, tions)}
@@ -202,7 +217,7 @@ class Spell{
 
 
 var opStack = new Spell(FLOAT_STR_CASE)
-    .iter('inf', 'nextChar', (match, cs, gs)=>{})
+    .iter('inf', 'nextWord', (match, cs, gs)=>{})
     .opStack
 console.log(util.inspect(opStack, false, null, true))
 

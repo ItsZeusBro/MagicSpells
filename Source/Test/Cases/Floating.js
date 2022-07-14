@@ -123,14 +123,14 @@ export const NOT_FLOATING_CASES = {
     
 }
 
-export const FLOAT_STR_CASE=`
-    0.0000 1 alsdjkfhadskjfhaskdjh 2 0.0001 aslgjihajsgoarihgjreognibe 3 0.0009 asouahsdiauewrngweafu  
+export const FLOAT_STR_CASE=`		
+0.0000 1 alsdjkfhadskjfhaskdjh 2 0.0001 aslgjihajsgoarihgjreognibe 3 0.0009 asouahsdiauewrngweafu  
     0.0010  akjhgflaskdjghaliwef 0.0099 asdoiuehgaoiweuhgsd 0.0100  asdgkjhagareg.s,kfmsda.fg 0.0999  
     1.0000  aspoguihrewgamv /.Afl;klrgknasglkjn 9.0000 lkajbhgaukwrhybfsDfn wedfkasjfba 10.0000  
     99.0000 '.];[/34324fdgsdg shsgljhnsdfvm 100.0000  23432.';.[.[sdfpglk[pl;345 999.0000  
     1.0001 1234876sdf;.[';.][pl. 9.0009 345i76yijn342r.,4r';,'; 10.0010 ';;[;df[bsdfp 99.0099  
     100.0100 dflsgih923485/.2?4.5#$@?5.4#?5. 999.0999 ';l'.4/253'4;,43l5k 35;k3';.4 -0.0001  
-    -0.0009 '[;.[];.1345';,.'342;5l234'5;,dfs'gb -0.0010 ';.12';2.34'23;.4 23';4. -0.0099  
+    -0.0009 '[;.[];.1345';,.    '342;5l234'5;,dfs'gb -0.0010 ';.12';2.34'23;.4 23';4. -0.0099  
     -0.0100 25345435 34dfsbdlfgk,; lmsdf;hm lsdfkjn -0.0999 rlkqjn34lk5 j34b -1.0000  
     ';l'a;gfl a';gf ads; l -9.0000  ';l1'23;4l 23'4k jklgdsf;gl,se';tl 34 -10.0000  
     -99.0000  lkmnrfgoirhje93845 43on -100.0000 asdjfhasdiurhb34kr5 jb3k -999.0000  -1.0001  
