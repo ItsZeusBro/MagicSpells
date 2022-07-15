@@ -4,7 +4,7 @@ import {
     JAVAFUNCTION, JSFUNCTION, CPPFUNCTION, PYFUNCTION, GOFUNCTION, PHPFUNCTION,
     JAVABLOCK, JSBLOCK, CPPBLOCK, PYBLOCK, GOBLOCK, PHPBLOCK,
     HTML, XML
-} from "./Spells/Spells.js";
+} from "./Patterns/Patterns.js";
 
 export class Finding{
     constructor(){
