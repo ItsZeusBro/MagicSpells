@@ -2,26 +2,26 @@ import {Matchic} from "../Matchic.js"
 import {Spell} from "../../Spell.js"
 import * as util from "node:util"
 import * as assert from "node:assert"
-import {SHERLOCKHOLMES} from "./Cases/Books/SherlockHolmes.js"
+import {BOOKS} from "./Cases/Books/Books.js"
 
 class Test{
 	constructor(){
 		
-		this.Sherlock()
+		this.Books()
 	}
 
-	Sherlock(){
-		var opStack = new Spell(SHERLOCKHOLMES, {'pageSize':50, 'pageOn': '\n'})
+	Books(){
+		var opStack = new Spell(BOOKS, {'pageSize':50, 'pageOn': '\n'})
 		.iter('inf', 'nextLine', (match, cs, gs)=>{}).opStack
-		var sherlockBook=``
+		var bookStr=``
 		opStack.forEach((element)=>{
 			if(element['match']){
-				sherlockBook+=element['match']
+				bookStr+=element['match']
 			}
 			//console.log(util.inspect(element, false, null, true))
 		})
-		assert.equal(sherlockBook.length, SHERLOCKHOLMES.length)
-		assert.equal(sherlockBook, SHERLOCKHOLMES)
+		assert.equal(bookStr.length, BOOKS.length)
+		assert.equal(bookStr, BOOKS)
 		
 
 	}
