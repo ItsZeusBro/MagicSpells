@@ -1,6 +1,6 @@
 import {Matchic} from "../Matchic.js"
 import {Spell} from "../../Spell.js"
-import { CHAR } from "../Spells/Spells.js"
+import { CHAR, WORD} from "../Spells/Spells.js"
 import * as util from "node:util"
 import * as assert from "node:assert"
 import {BOOKS} from "./Cases/Books/Books.js"
@@ -9,7 +9,7 @@ class Test{
 	constructor(){
 		
 		//this.nextLine()
-		this.nextMatchicCHAR()
+		this.nextMatchicWORD()
 	}
 
 	nextLine(){
@@ -27,9 +27,9 @@ class Test{
 		console.log("nextLine PASSED")
 	}
 
-	nextMatchicCHAR(){
+	nextMatchicWORD(){
 		var opStack = new Spell(BOOKS, {'pageSize':50, 'pageOn': '\n'})
-		.iter('inf', 'nextMatchic', (match, cs, gs)=>{}, {'spells':[CHAR]}).opStack
+		.iter('inf', 'nextMatchic', (match, cs, gs)=>{}, {'spells':[WORD]}).opStack
 		var bookStr=``
 		opStack.forEach((element)=>{
 			if(element['match']){

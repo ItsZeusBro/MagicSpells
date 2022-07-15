@@ -22,7 +22,7 @@ export class Spell{
         Spell.prototype.up=this.up;
         Spell.prototype.iter=this.iter;
         Spell.prototype.init=this.init;
-        Spell.prototype.matchic=this.matchic;
+        Spell.prototype.nextMatchic=this.nextMatchic;
 
         this.opStack = [{'op#':0,'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]}];
 		this.pageNumber=0;
@@ -233,6 +233,7 @@ export class Spell{
             //if there is no match there is no reason to iterate the same function
             if (!this._next(match, cb, 'nextMatchic', tions)){this.ugly_itr=0;}
         })
+        return this;
     }
 
     up(cb){
