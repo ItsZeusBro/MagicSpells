@@ -1,6 +1,6 @@
-import {Matchic} from "./Source/Matchic.js"
+import {Findings} from "./Source/Find.js"
 
-export class Spell{
+export class Sherlock{
     constructor(string, tions){
 		this.pageQueue=[]
 		this.newlines=0;
@@ -22,12 +22,12 @@ export class Spell{
         Spell.prototype.up=this.up;
         Spell.prototype.iter=this.iter;
         Spell.prototype.init=this.init;
-        Spell.prototype.nextMatchic=this.nextMatchic;
+        Spell.prototype.nextFinding=this.nextFinding;
 
         this.opStack = [{'op#':0,'match':undefined, 'op': 'Spell', 'tions':tions, 'page':this.pageQueue[0]}];
 		this.pageNumber=0;
         this.ugly_itr=0;
-        this.Matchic = new Matchic();
+        this.Findings = new Findings();
 
     }
     init(string, tions){
