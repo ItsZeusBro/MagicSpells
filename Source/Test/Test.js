@@ -7,7 +7,6 @@ import {BOOKS} from "./Cases/Books/Books.js"
 
 class Test{
 	constructor(){
-		
 		//this.nextLine()
 		this.nextMatchicWORD()
 	}
