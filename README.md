@@ -1,7 +1,7 @@
 # Sherlock
 
+"Watson! Do you know how hard it is to create this example using merely regex patterns?
+This is our goal, not what we have already achieved... 
+Do I look like a wizard to you? I'm merely a scientist."
 
-<img src="https://github.com/ItsZeusBro/MatchicSpells/blob/e333999759222b9a4290a15a83e3b7a53c790abd/Docs/MatchicSpell.jpg">
-
-
-<img src="https://github.com/ItsZeusBro/MatchicSpells/blob/56b615586974c6962f1fee70928cbd7bf77e9d9e/Docs/NextMatchicOf.jpg"/>
+<img src="https://github.com/ItsZeusBro/Sherlock/blob/266cdf4f6d36a3527d294314a9762d6dcdd56ab4/Docs/SherlockFindings.png"/>
