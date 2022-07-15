@@ -6,16 +6,16 @@ import {
     HTML, XML
 } from "./Spells/Spells.js";
 
-export class Find{
+export class Finding{
     constructor(){
     }
     is(string, regex){
         var reg = new RegExp(regex);
         var finding;
         try{
-            finding = string.find(reg)[0];
+            finding = string.match(reg)[0];
         }catch{
-            console.log("cannot find find ", string, regex)
+            console.log("cannot find ", string, regex)
             return false
         }
         if (finding==string){
@@ -29,7 +29,7 @@ export class Find{
 
     _find(string, regex){
         var reg = new RegExp(regex);
-        return string.find(reg);
+        return string.match(reg);
     }
     next(string, regex){
         if(this._find(string, regex)){
@@ -70,7 +70,7 @@ export class Find{
     nextScientific(string){return this.next(string, SCIENTIFIC)}
 
     isFloat(string){return this.is(string, FLOAT)}
-    findFloats(string){return this._find(string, FLOAT)}
+    findFloat(string){return this._find(string, FLOAT)}
     nextFloat(string){return this.next(string, FLOAT)}
 
     isInteger(string){return this.is(string, INTEGER)}
@@ -99,7 +99,7 @@ export class Find{
     nextWord(string){return this.next(string, WORD)}
 
     isLine(string){return this.is(string, LINE)}
-    findLines(string){return this._find(string, LINE)}
+    findLine(string){return this._find(string, LINE)}
     nextLine(string){return this.next(string, LINE)}
 
     isParagraph(string){return this.is(string, PARAGRAPH)}
