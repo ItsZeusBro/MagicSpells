@@ -20,9 +20,11 @@ class Test{
 			}
 			//console.log(util.inspect(element, false, null, true))
 		})
+		console.log(bookStr.length, BOOKS.length)
 		assert.equal(bookStr.length, BOOKS.length)
+		console.log(bookStr, BOOKS)
 		assert.equal(bookStr, BOOKS)
-		
+		console.log("PASSED")
 
 	}
 }
