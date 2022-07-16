@@ -28,13 +28,13 @@ export class Finding{
     }
 
     _find(string, regex){
-        var reg = new RegExp(regex);
-        return string.match(reg);
+        return string.match(regex)[0];
     }
     next(string, regex){
         if(this._find(string, regex)){
             if(this._find(string, regex).length){
-                return this._find(string, regex)[0]
+                //console.log("FIND from next", this._find(string, regex))
+                return this._find(string, regex)
             }
         }
     }

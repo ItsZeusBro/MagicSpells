@@ -1,8 +1,8 @@
 {
-  "name": "matchicspells",
+  "name": "Sherlock",
   "version": "1.0.0",
   "description": "These are Regex pattern matching spells for very specific tasks that are also pretty general.",
-  "main": "Source/MatchicSpells.js",
+  "main": "Sherlock.js",
   "scripts": {
     "test-verb": "node ./Source/Test/Test.js --verbose",
     "test": "node ./Source/Test/Test.js"

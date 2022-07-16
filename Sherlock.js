@@ -128,6 +128,7 @@ export class Sherlock{
     nextLine(cb, tools){
         //separated by one newline
         var finding = new Finding().nextLine(this.opStack[this.opStack.length-1]['page'])
+
         //if there is no finding there is no reason to iterate the same functino
         if (!this._next(finding, cb, 'nextLine', tools)){this.ugly_itr=0;}
         return this;
