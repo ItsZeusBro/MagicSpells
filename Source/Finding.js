@@ -28,7 +28,10 @@ export class Finding{
     }
 
     _find(string, regex){
-        return string.match(regex);
+        var match = string.match(regex);
+		if(match){
+			return match[0];
+		}
     }
 
 

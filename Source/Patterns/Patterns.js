@@ -12,7 +12,7 @@ export const ALPHA_STRING=""
 export const ALPHA_NUMERIC_STRING=""
 export const SENTANCE=""
 export const PARAGRAPH=""
-export const LINE=/.*(\r\n)|(\n)|(\r\n$)|(\n$)/
+export const LINE=/.*(\r\n)|.*(\n)|.*(\r\n$)|.*(\n$)/
 
 export const JAVAFUNCTION=""
 export const JSFUNCTION=""

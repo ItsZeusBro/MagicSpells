@@ -29,28 +29,21 @@ class Test{
 	}
 
 	_next(){
-		var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':53, 'delimiter': '\n'})
-		//console.log(sherlock.pageQueue[0])
-		console.log(sherlock.pageQueue.length)
+		var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':2, 'delimiter': '\n'})
+		console.log(sherlock.pageQueue[0]);
 
-		var pageStr="";
-		while(true){
-			var next=sherlock._next(/(.*\n)|(.*\r\n)|(.*$)/);
-			//console.log(next)
-			if(next){
-				pageStr+=next
+		var next=sherlock._next(LINE);
+		console.log(next);
+		console.log(sherlock.pageQueue[0]);
 
-			}else{
-				
-				break;
-			}
-		}
-		//console.log(pageStr.length, MOBY_DICK.length)
-		//console.log(sherlock.pageQueue.length)
-		//console.log(sherlock.pageQueue)
-		assert.equal(pageStr.length, HALF_BOOKS.length)
-		//assert.equal(pageStr, HALF_BOOKS)
-		console.log("_next() PASSED")
+		next=sherlock._next(LINE);
+		console.log(next);
+		console.log(sherlock.pageQueue[0]);
+
+		next=sherlock._next(LINE);
+		console.log(next);
+		console.log(sherlock.pageQueue[0]);
+
 		
 	}
 
