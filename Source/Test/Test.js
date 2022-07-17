@@ -7,7 +7,7 @@ import {MOBY_DICK} from "./Cases/Books/IndividualBooks/MobyDick.js"
 
 class Test{
 	constructor(){
-		this._pagination()
+		//this._pagination()
 		this._next()
 		//this.nextLine()
 		//this.nextWord()
@@ -33,14 +33,19 @@ class Test{
 		var sherlock = new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'})
 		var pageStr="";
 		while(true){
-			pageStr+=sherlock._next(LINE);
-			if(!pageStr){
+			var next=sherlock._next(/(.*\n)|(.*\r\n)|(.*$)/);
+			if(next){
+				console.log(next)
+				pageStr+=next
+			}else{
+				assert.equal(pageStr.length, MOBY_DICK.length)
+				assert.equal(pageStr, MOBY_DICK)
+				console.log("_next() PASSED")
 				break;
 			}
 		}
-		assert.equal(pageStr.length, MOBY_DICK.length)
-		assert.equal(pageStr, MOBY_DICK)
-		console.log("_next() PASSED")
+		
+		
 	}
 
 	nextLine(){
