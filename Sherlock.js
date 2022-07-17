@@ -57,6 +57,7 @@ export class Sherlock{
 					pageStr+=string[i];
 				}
         	}
+			//This one is always hidden
 			page.push(pageStr)
 			pageQueue.push(page)
             return pageQueue
@@ -65,16 +66,22 @@ export class Sherlock{
         return
 	}
 
-    subStr(string, finding){
-        //this function should remove everything up until the finding but nothing else
-        return string.replace(finding, '');
+    strip(string, finding){
+		string.replace(finding, '');
     }
-    _next(finding, cb, fn, tools){
 
-    }
 
     nextLine(cb, tools){
-      
+		found=false;
+		pageQueue.forEach((page)=>{
+			page.forEach((string)=>{
+				//if there is a match, found = true
+					//then strip the string with the match and return the match
+				//if found equals false, remove this string from the page
+				pageStr+=string;
+			});
+				//if found equals false, remove page from queue
+		})
     }
 
     nextParagraph(cb, tools){

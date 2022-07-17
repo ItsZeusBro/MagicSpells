@@ -13,7 +13,7 @@ class Test{
 	}
 
 	_pagination(){
-		var pageQueue = new Sherlock(MOBY_DICK, {'pageSize':1, 'delimiter': '\n'}).pageQueue;
+		var pageQueue = new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'}).pageQueue;
 		console.log(pageQueue)
 		var pageStr=""
 		pageQueue.forEach((page)=>{
