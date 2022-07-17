@@ -1,13 +1,13 @@
 import {Finding} from "./Source/Finding.js"
+import { MOBY_DICK } from "./Source/Test/Cases/Books/IndividualBooks/MobyDick.js";
 
 export class Sherlock{
     constructor(string, tools){
 		this.pageQueue=[]
 		this.newlines=0;
 		if(tools['pageSize']&&tools['pageOn']){
-			this.pagination(string, tools['pageSize'], tools['pageOn'])
+			this.pagination(string, tools['pageSize'], tools['pageOn']);
 		}
-        
         Sherlock.prototype.nextLine= this.nextLine;
         Sherlock.prototype.nextParagraph= this.nextParagraph;
         Sherlock.prototype.nextSentance=this.nextSentance;
@@ -59,7 +59,7 @@ export class Sherlock{
 				pageString+=string[i];
 				//pageCounter+=1; //leave this here even though it doesnt matter, because we need to print it out sometimes to check pageCounter
 				//console.log(pageCounter)
-				this.pageQueue.push(pageString);
+				this.pageQueue.push([pageString]);
 				pageString="";
 				pageCounter=0;
 			}else{
@@ -69,7 +69,7 @@ export class Sherlock{
 		}
 
 		//THIS PUSHES THE LAST (HIDDEN) PAGE ON THE QUEUE
-		this.pageQueue.push(pageString);
+		this.pageQueue.push([pageString]);
 
 	}
 
@@ -124,14 +124,16 @@ export class Sherlock{
             return
         }
     }
-    
+    getPageString(n){
+        return this.opStack[n]['page'][0]
+    }
     nextLine(cb, tools){
         //separated by one newline
-        var finding = new Finding().nextLine(this.opStack[this.opStack.length-1]['page'])
-
+        console.log(this.getPageString(0))
+        var finding = new Finding().nextLine(this.getPageString(this.opStack.length-1))
         //if there is no finding there is no reason to iterate the same functino
-        if (!this._next(finding, cb, 'nextLine', tools)){this.ugly_itr=0;}
-        return this;
+        //if (!this._next(finding, cb, 'nextLine', tools)){this.ugly_itr=0;}
+        //return this;
     }
 
     nextParagraph(cb, tools){

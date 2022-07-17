@@ -12,8 +12,8 @@ class Test{
 	}
 
 	nextLine(){
-		var nextLine = new Sherlock(MOBY_DICK, {'pageSize':50, 'pageOn': '\n'}).nextLine().opStack
-		console.log(nextLine)
+		console.log(new Sherlock(MOBY_DICK, {'pageSize':50, 'pageOn': '\n'}).nextLine())
+		
 		//.iter(50, 'nextLine', (match, cs, gs)=>{}, {'patterns':[LINE]}).opStack
 		//var bookStr=``
 		// opStack.forEach((element)=>{
