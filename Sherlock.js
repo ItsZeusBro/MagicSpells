@@ -20,13 +20,11 @@ export class Sherlock{
         Sherlock.prototype.init=this.init;
         Sherlock.prototype.nextFinding=this.nextFinding;
 
+        this.string=string
         //pageQueue can be undefined or an actual queue
         this.pageQueue=this.pagination(string, tools);
-
-
-        this.opStack = [{'op#':0,'finding':undefined, 'op': 'Sherlock', 'tools':tools, 'page':this.pageQueue[0]}];
-		this.pageNumber=0;
-        this.ugly_itr=0;
+        //{'op#':0,'finding':undefined, 'op': 'Sherlock', 'tools':tools, 'page':this.pageQueue[0]}
+        this.opStack = [];
         this.Finding = new Finding();
 
     }
@@ -39,19 +37,42 @@ export class Sherlock{
 	}
 	pagination(string, tools){
         var pageQueue=[]
-        if(('pageSize' in tools)&&('pageOn' in tools)){
+        if(('pageSize' in tools)&&('delimiter' in tools)){
 			//takes the total string and creates a pagination queue
             //iterate through the string
+        
             var pageStr="";
+            var page=[];
+            var pagePushes=1;
             for(var i=0; i<string.length; i++){
-                if(string[i]!=pageOn){
+                if(string[i]!=tools['delimiter']){
+                    //if the char is not a delimiter, just add the char to the pageStr
                     pageStr+=string[i];
                 }else{
-                    pageStr+=string[i];
-                    pageQueue.push(pageStr);
-                    pageStr='';
+                    //if the char is a delimiter, we still need to add it to the pageStr
+                    //but we need to how many times we pushed to the page, before pushing to 
+                    //the page queue
+
+                    if(pagePushes!=tools['pageSize']){
+                        //if pagePushes is not equal to the pageSize
+                        //we push to the page, but not the queue
+                        pageStr+=string[i];
+                        page.push(pageStr);
+                        pageStr='';
+                        pageSize+=1;
+                    }else{
+                        //if pagePushes is equal to the pageSize
+                        //we push to the page, then push page to the pageQueue
+                        pageStr+=string[i];
+                        page.push(pageStr);
+                        pageStr='';
+                        pageSize=0;
+                        pageQueue.push(page)
+                    }
+
                 }
             }
+            return pageQueue
 		}
         //if they don't paginate pageQueue is undefined
         return
@@ -156,4 +177,6 @@ export class Sherlock{
     }
 }
 
-new Sherlock(MOBY_DICK, {'pageSize':1, 'pageOn':"\n"})
+var sherlock = new Sherlock(MOBY_DICK, {'pageSize':3, 'delimiter':"\n"})
+
+console.log(sherlock.pageQueue)
