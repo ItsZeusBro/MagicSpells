@@ -4,7 +4,7 @@ import {CHAR, WORD, LINE} from "../Patterns/Patterns.js"
 import * as util from "node:util"
 import * as assert from "node:assert"
 import {MOBY_DICK} from "./Cases/Books/IndividualBooks/MobyDick.js"
-
+import {THE_ILIAD} from "./Cases/Books/IndividualBooks/TheIliad.js"
 class Test{
 	constructor(){
 		//this._pagination()
@@ -29,7 +29,7 @@ class Test{
 	}
 
 	_next(){
-		var sherlock = new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'})
+		var sherlock = new Sherlock(THE_ILIAD, {'pageSize':50, 'delimiter': '\n'})
 		var pageStr="";
 		while(true){
 			var next=sherlock._next(/(.*\n)|(.*\r\n)|(.*$)/);
@@ -40,9 +40,9 @@ class Test{
 				break;
 			}
 		}
-		console.log(pageStr.length, MOBY_DICK.length)
-		assert.equal(pageStr.length, MOBY_DICK.length)
-		//assert.equal(pageStr, MOBY_DICK)
+		//console.log(pageStr.length, MOBY_DICK.length)
+		assert.equal(pageStr.length, THE_ILIAD.length)
+		//assert.equal(pageStr==THE_ILIAD, true)
 		console.log("_next() PASSED")
 		
 	}
