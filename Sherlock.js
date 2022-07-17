@@ -43,13 +43,13 @@ export class Sherlock{
             var pageStr="";
             var page=[];
             for(var i=0; i<string.length; i++){
-				if(string[i]==tools['delimiter']&&page.length==tools['pageSize']-1){
+				if(string[i]==tools['delimiter']&&page.length==tools['pageSize']+2){
 					pageStr+=string[i];
 					page.push(pageStr);
 					pageQueue.push(page);
 					page=[];
 					pageStr="";
-				}else if(string[i]==tools['delimiter']&&page.length<tools['pageSize']-1){
+				}else if(string[i]==tools['delimiter']&&page.length<tools['pageSize']+2){
 					pageStr+=string[i];
 					page.push(pageStr);
 					pageStr="";
