@@ -31,6 +31,7 @@ export class Finding{
         return string.match(regex);
     }
     next(string, regex){
+		//console.log("FINDING.NEXT",string, regex)
         if(this._find(string, regex)){
             if(this._find(string, regex).length){
                 return this._find(string, regex)[0];
@@ -108,6 +109,4 @@ export class Finding{
     isSentance(string){return this.is(string, SENTANCE)}
     findSentance(string){return this._find(string, SENTANCE)}
     nextSentance(string){return this.next(string, SENTANCE)}
-
-
 }

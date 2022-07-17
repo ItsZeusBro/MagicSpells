@@ -5,51 +5,57 @@ import * as util from "node:util"
 import * as assert from "node:assert"
 // import {MOBY_DICK} from "./Cases/Books/IndividualBooks/MobyDick.js"
 // import {THE_ILIAD} from "./Cases/Books/IndividualBooks/TheIliad.js"
-//import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
-import {BOOKS} from "./Cases/Books/Books.js"
+import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
+//import {BOOKS} from "./Cases/Books/Books.js"
 
 class Test{
 	constructor(){
-		this._pagination()
-		//this._next()
+		//this._pagination()
+		this._next()
 		//this.nextLine()
 		//this.nextWord()
 	}
 
-	_pagination(){
-		var pageQueue = new Sherlock(BOOKS, {'pageSize':1000, 'delimiter': '\n'}).pageQueue;
-		var pageStr=""
-		pageQueue.forEach((page)=>{
-			page.forEach((string)=>{
-				pageStr+=string;
-			});
-		})
-		console.log(pageStr[pageStr.length-1], BOOKS[BOOKS.length-1])
-		console.log(pageStr.length-1, BOOKS.length-1)
+	// _pagination(){
+	// 	var pageQueue = new Sherlock(BOOKS, {'pageSize':1000, 'delimiter': '\n'}).pageQueue;
+	// 	var pageStr=""
+	// 	pageQueue.forEach((page)=>{
+	// 		page.forEach((string)=>{
+	// 			pageStr+=string;
+	// 		});
+	// 	})
+	// 	console.log(pageStr[pageStr.length-1], BOOKS[BOOKS.length-1])
+	// 	console.log(pageStr.length-1, BOOKS.length-1)
 
-		assert.equal(pageStr, BOOKS)
+	// 	assert.equal(pageStr, BOOKS)
 
 
-	}
-
-	// _next(){
-	// 	var sherlock = new Sherlock(THE_ILIAD, {'pageSize':50, 'delimiter': '\n'})
-	// 	var pageStr="";
-	// 	while(true){
-	// 		var next=sherlock._next(/(.*\n)|(.*\r\n)|(.*$)/);
-	// 		if(next){
-	// 			pageStr+=next
-	// 		}else{
-				
-	// 			break;
-	// 		}
-	// 	}
-	// 	//console.log(pageStr.length, MOBY_DICK.length)
-	// 	assert.equal(pageStr.length, THE_ILIAD.length)
-	// 	//assert.equal(pageStr==THE_ILIAD, true)
-	// 	console.log("_next() PASSED")
-		
 	// }
+
+	_next(){
+		var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':2, 'delimiter': '\n'})
+		//console.log(sherlock.pageQueue[0])
+		console.log(sherlock.pageQueue.length-1)
+
+		var pageStr="";
+		while(true){
+			var next=sherlock._next(/(.*\n)|(.*\r\n)|(.*$)/);
+			if(next){
+				pageStr+=next
+
+			}else{
+				
+				break;
+			}
+		}
+		//console.log(pageStr.length, MOBY_DICK.length)
+		//console.log(sherlock.pageQueue.length)
+		//console.log(sherlock.pageQueue)
+		//assert.equal(pageStr.length, HALF_BOOKS.length)
+		//assert.equal(pageStr, HALF_BOOKS)
+		console.log("_next() PASSED")
+		
+	}
 
 	nextLine(){
 		console.log(new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'}).nextLine())
