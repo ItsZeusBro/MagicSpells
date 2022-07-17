@@ -45,22 +45,22 @@ export class Sherlock{
             for(var i=0; i<string.length; i++){
 				if(string[i]==tools['delimiter']&&page.length==tools['pageSize']-1){
 					pageStr+=string[i];
-					page.push(pageStr)
-					pageQueue.push(page)
-					page=[]
-					pageStr=""
+					page.push(pageStr);
+					pageQueue.push(page);
+					page=[];
+					pageStr="";
 				}else if(string[i]==tools['delimiter']&&page.length<tools['pageSize']-1){
 					pageStr+=string[i];
-					page.push(pageStr)
-					pageStr=""
+					page.push(pageStr);
+					pageStr="";
 				}else{
 					pageStr+=string[i];
 				}
         	}
 			//This one is always hidden
-			page.push(pageStr)
-			pageQueue.push(page)
-            return pageQueue
+			page.push(pageStr);
+			pageQueue.push(page);
+            return pageQueue;
 		}
         //if they don't paginate pageQueue is undefined
         return
@@ -70,18 +70,25 @@ export class Sherlock{
 		string.replace(finding, '');
     }
 
+	_next(regex){
+		for(var i = 0; i<this.pageQueue.length; i++){
+			var page = this.pageQueue[i]
+			page.forEach((string)=>{
+				//if there is a match in the page, found = true
+				if(Finding.next(string, regex)){
+					var finding = Finding.next(string, regex)
+					this.strip(string, finding)
+					return finding;
+				}
+				this.pageQueue[i].shift()
+			})
+			this.pageQueue.shift()
+
+		}
+	}
 
     nextLine(cb, tools){
-		found=false;
-		pageQueue.forEach((page)=>{
-			page.forEach((string)=>{
-				//if there is a match, found = true
-					//then strip the string with the match and return the match
-				//if found equals false, remove this string from the page
-				pageStr+=string;
-			});
-				//if found equals false, remove page from queue
-		})
+		
     }
 
     nextParagraph(cb, tools){
