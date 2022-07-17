@@ -7,12 +7,29 @@ import {MOBY_DICK} from "./Cases/Books/IndividualBooks/MobyDick.js"
 
 class Test{
 	constructor(){
-		this.nextLine()
+		this._pagination()
+		//this.nextLine()
 		//this.nextWord()
 	}
 
+	_pagination(){
+		var pageQueue = new Sherlock(MOBY_DICK, {'pageSize':1, 'delimiter': '\n'}).pageQueue;
+		console.log(pageQueue)
+		var pageStr=""
+		pageQueue.forEach((page)=>{
+			page.forEach((string)=>{
+				pageStr+=string;
+			});
+		})
+
+		assert.equal(pageStr.length, MOBY_DICK.length)
+		assert.equal(pageStr, MOBY_DICK)
+		console.log("_pagination PASSED")
+
+	}
+
 	nextLine(){
-		console.log(new Sherlock(MOBY_DICK, {'pageSize':50, 'pageOn': '\n'}).nextLine())
+		console.log(new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'}).nextLine())
 		
 		//.iter(50, 'nextLine', (match, cs, gs)=>{}, {'patterns':[LINE]}).opStack
 		//var bookStr=``

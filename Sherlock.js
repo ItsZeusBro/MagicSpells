@@ -40,21 +40,25 @@ export class Sherlock{
         if(('pageSize' in tools)&&('delimiter' in tools)){
 			//takes the total string and creates a pagination queue
             //iterate through the string
-        
             var pageStr="";
             var page=[];
             for(var i=0; i<string.length; i++){
-				pageStr+=string[i];
 				if(string[i]==tools['delimiter']&&page.length==tools['pageSize']-1){
+					pageStr+=string[i];
 					page.push(pageStr)
 					pageQueue.push(page)
 					page=[]
 					pageStr=""
 				}else if(string[i]==tools['delimiter']&&page.length<tools['pageSize']-1){
+					pageStr+=string[i];
 					page.push(pageStr)
 					pageStr=""
+				}else{
+					pageStr+=string[i];
 				}
         	}
+			page.push(pageStr)
+			pageQueue.push(page)
             return pageQueue
 		}
         //if they don't paginate pageQueue is undefined
@@ -160,6 +164,6 @@ export class Sherlock{
     }
 }
 
-var sherlock = new Sherlock(MOBY_DICK, {'pageSize':3, 'delimiter':"\n"})
+// var sherlock = new Sherlock(MOBY_DICK, {'pageSize':3, 'delimiter':"\n"})
 
-console.log(sherlock.pageQueue)
+// console.log(sherlock.pageQueue)
