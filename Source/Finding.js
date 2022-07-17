@@ -30,14 +30,7 @@ export class Finding{
     _find(string, regex){
         return string.match(regex);
     }
-    next(string, regex){
-		//console.log("FINDING.NEXT",string, regex)
-        if(this._find(string, regex)){
-            if(this._find(string, regex).length){
-                return this._find(string, regex)[0];
-            }
-        }
-    }
+
 
 	//Parsing Code
     _isCodeBlock(string, type){}

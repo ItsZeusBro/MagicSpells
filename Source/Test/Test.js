@@ -10,8 +10,8 @@ import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
 
 class Test{
 	constructor(){
-		this._pagination()
-		//this._next()
+		//this._pagination()
+		this._next()
 		//this.nextLine()
 		//this.nextWord()
 	}
@@ -25,36 +25,34 @@ class Test{
 			});
 		})
 		console.log(pageStr.length, HALF_BOOKS.length)
-
 		assert.equal(pageStr, HALF_BOOKS)
-
-
 	}
 
-	// _next(){
-	// 	var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':53, 'delimiter': '\n'})
-	// 	//console.log(sherlock.pageQueue[0])
-	// 	console.log(sherlock.pageQueue.length-1)
+	_next(){
+		var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':53, 'delimiter': '\n'})
+		//console.log(sherlock.pageQueue[0])
+		console.log(sherlock.pageQueue.length)
 
-	// 	var pageStr="";
-	// 	while(true){
-	// 		var next=sherlock._next(/(.*\n)|(.*\r\n)|(.*$)/);
-	// 		if(next){
-	// 			pageStr+=next
+		var pageStr="";
+		while(true){
+			var next=sherlock._next(/(.*\n)|(.*\r\n)|(.*$)/);
+			//console.log(next)
+			if(next){
+				pageStr+=next
 
-	// 		}else{
+			}else{
 				
-	// 			break;
-	// 		}
-	// 	}
-	// 	//console.log(pageStr.length, MOBY_DICK.length)
-	// 	//console.log(sherlock.pageQueue.length)
-	// 	//console.log(sherlock.pageQueue)
-	// 	assert.equal(pageStr.length, HALF_BOOKS.length)
-	// 	//assert.equal(pageStr, HALF_BOOKS)
-	// 	console.log("_next() PASSED")
+				break;
+			}
+		}
+		//console.log(pageStr.length, MOBY_DICK.length)
+		//console.log(sherlock.pageQueue.length)
+		//console.log(sherlock.pageQueue)
+		assert.equal(pageStr.length, HALF_BOOKS.length)
+		//assert.equal(pageStr, HALF_BOOKS)
+		console.log("_next() PASSED")
 		
-	// }
+	}
 
 	nextLine(){
 		console.log(new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'}).nextLine())
