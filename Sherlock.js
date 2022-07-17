@@ -42,7 +42,8 @@ export class Sherlock{
             //iterate through the string
             var pageStr="";
             var page=[];
-            for(var i=0; i<string.length-1; i++){
+			var lastChar;
+            for(var i=0; i<string.length; i++){
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for the last push to the queue!
 				if(string[i]==tools['delimiter']&&page.length==tools['pageSize']-1){
 					pageStr+=string[i];
@@ -59,7 +60,6 @@ export class Sherlock{
 					pageStr+=string[i];
 				}
 				//LEAVE THIS HERE
-				pageStr+=string[i];
         	}
 			//This one is always hidden
 			page.push(pageStr);
