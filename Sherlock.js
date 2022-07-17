@@ -43,6 +43,7 @@ export class Sherlock{
             var pageStr="";
             var page=[];
 			var lastChar;
+			console.log(string.length)
             for(var i=0; i<string.length; i++){
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for the last push to the queue!
 				if(string[i]==tools['delimiter']&&page.length==tools['pageSize']-1){
@@ -59,7 +60,6 @@ export class Sherlock{
 				}else{
 					pageStr+=string[i];
 				}
-				//LEAVE THIS HERE
         	}
 			//This one is always hidden
 			page.push(pageStr);
@@ -76,21 +76,23 @@ export class Sherlock{
 		var j;
 		var page;
 		var finding;
-		for(i = 0; i<this.pageQueue.length-1; i++){
+		for(i = 0; i<this.pageQueue.length; i++){
 			
-			// page = this.pageQueue[i]
-			// for(j = 0; j<page.length; j++){
-			// 	//if there is a match in the page, found = true
-			// 	if(this.Finding.next(page[j], regex)){
-			// 		finding = this.Finding.next(page[j], regex)
-			// 		this.pageQueue[i][j]=this.pageQueue[i][j].replace(finding, '');
-			// 		return finding;
-			// 	}
-			// 	this.pageQueue[i].shift()
-			// }
-			// this.pageQueue.shift()
+			page = this.pageQueue[i]
+			for(j = 0; j<page.length; j++){
+				// 	//if there is a match in the page, found = true
+				// if(this.Finding.next(page[j], regex)){
+				// 	//console.log(this.Finding.next(page[j], regex))
+				// 	finding = this.Finding.next(page[j], regex)
+				// 	this.pageQueue[i][j]=this.pageQueue[i][j].replace(finding, '');
+				// 	return finding;
+				// }
+				// this.pageQueue[i].shift()
+
+			}
+			//this.pageQueue.shift()
 		}
-		console.log(i)
+		//console.log(i)
 	}
 
     nextLine(cb, tools){
