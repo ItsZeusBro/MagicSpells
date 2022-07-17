@@ -34,8 +34,8 @@ class Test{
 		var pageStr="";
 		while(true){
 			var next=sherlock._next(/(.*\n)|(.*\r\n)|(.*$)/);
+			console.log(next)
 			if(next){
-				console.log(next)
 				pageStr+=next
 			}else{
 				assert.equal(pageStr.length, MOBY_DICK.length)

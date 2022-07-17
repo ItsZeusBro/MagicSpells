@@ -66,23 +66,29 @@ export class Sherlock{
         return
 	}
 
-    strip(string, finding){
-		string.replace(finding, '');
+    strip(i, j, finding){
+		console.log("FINDING", finding, "REPLACEMENT VALUE", this.pageQueue[i][j].replace(finding, ''))
+		this.pageQueue[i][j]=this.pageQueue[i][j].replace(finding, '');
     }
 
 	_next(regex){
 		for(var i = 0; i<this.pageQueue.length; i++){
 			var page = this.pageQueue[i]
-			page.forEach((string)=>{
+			var finding;
+			for(var j = 0; j<page.length; j++){
 				//if there is a match in the page, found = true
-				if(Finding.next(string, regex)){
-					var finding = Finding.next(string, regex)
-					this.strip(string, finding)
+				if(this.Finding.next(page[j], regex)){
+					finding = this.Finding.next(page[j], regex)
+					this.strip(i, j, finding)
 					return finding;
 				}
+				
 				this.pageQueue[i].shift()
-			})
+				
+			}
+
 			this.pageQueue.shift()
+			
 		}
 	}
 

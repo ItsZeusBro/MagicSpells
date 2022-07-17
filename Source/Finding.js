@@ -33,7 +33,6 @@ export class Finding{
     next(string, regex){
         if(this._find(string, regex)){
             if(this._find(string, regex).length){
-                //console.log("FIND from next", this._find(string, regex))
                 return this._find(string, regex)[0];
             }
         }
