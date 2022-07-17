@@ -83,7 +83,6 @@ export class Sherlock{
 				this.pageQueue[i].shift()
 			})
 			this.pageQueue.shift()
-
 		}
 	}
 

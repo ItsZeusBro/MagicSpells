@@ -28,6 +28,20 @@ class Test{
 
 	}
 
+	_next(){
+		var sherlock = new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'})
+		var pageStr="";
+		while(true){
+			pageStr+=sherlock._next();
+			if(!pageStr){
+				break;
+			}
+		}
+		assert.equal(pageStr.length, MOBY_DICK.length)
+		assert.equal(pageStr, MOBY_DICK)
+		console.log("_next() PASSED")
+	}
+
 	nextLine(){
 		console.log(new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'}).nextLine())
 		
