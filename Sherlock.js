@@ -43,35 +43,18 @@ export class Sherlock{
         
             var pageStr="";
             var page=[];
-            var pagePushes=1;
             for(var i=0; i<string.length; i++){
-                if(string[i]!=tools['delimiter']){
-                    //if the char is not a delimiter, just add the char to the pageStr
-                    pageStr+=string[i];
-                }else{
-                    //if the char is a delimiter, we still need to add it to the pageStr
-                    //but we need to how many times we pushed to the page, before pushing to 
-                    //the page queue
-
-                    if(pagePushes!=tools['pageSize']){
-                        //if pagePushes is not equal to the pageSize
-                        //we push to the page, but not the queue
-                        pageStr+=string[i];
-                        page.push(pageStr);
-                        pageStr='';
-                        pageSize+=1;
-                    }else{
-                        //if pagePushes is equal to the pageSize
-                        //we push to the page, then push page to the pageQueue
-                        pageStr+=string[i];
-                        page.push(pageStr);
-                        pageStr='';
-                        pageSize=0;
-                        pageQueue.push(page)
-                    }
-
-                }
-            }
+				pageStr+=string[i];
+				if(string[i]==tools['delimiter']&&page.length==tools['pageSize']-1){
+					page.push(pageStr)
+					pageQueue.push(page)
+					page=[]
+					pageStr=""
+				}else if(string[i]==tools['delimiter']&&page.length<tools['pageSize']-1){
+					page.push(pageStr)
+					pageStr=""
+				}
+        	}
             return pageQueue
 		}
         //if they don't paginate pageQueue is undefined
