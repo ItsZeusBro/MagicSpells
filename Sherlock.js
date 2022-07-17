@@ -58,6 +58,8 @@ export class Sherlock{
 				}else{
 					pageStr+=string[i];
 				}
+				//LEAVE THIS HERE
+				pageStr+=string[i];
         	}
 			//This one is always hidden
 			page.push(pageStr);

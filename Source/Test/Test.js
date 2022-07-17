@@ -22,6 +22,7 @@ class Test{
 				pageStr+=string;
 			});
 		})
+		console.log(pageStr[pageStr.length-1], BOOKS[BOOKS.length-1])
 		assert.equal(pageStr, BOOKS)
 
 
