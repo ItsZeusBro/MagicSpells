@@ -22,8 +22,7 @@ class Test{
 				pageStr+=string;
 			});
 		})
-		console.log(pageQueue.length)
-		console.log(pageQueue[pageQueue.length-2].length)
+		assert.equal(pageStr, BOOKS)
 
 
 	}
