@@ -5,26 +5,26 @@ import * as util from "node:util"
 import * as assert from "node:assert"
 import {MOBY_DICK} from "./Cases/Books/IndividualBooks/MobyDick.js"
 import {THE_ILIAD} from "./Cases/Books/IndividualBooks/TheIliad.js"
+import {BOOKS} from "./Cases/Books/Books.js"
 class Test{
 	constructor(){
-		//this._pagination()
-		this._next()
+		this._pagination()
+		//this._next()
 		//this.nextLine()
 		//this.nextWord()
 	}
 
 	_pagination(){
-		var pageQueue = new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'}).pageQueue;
+		var pageQueue = new Sherlock(BOOKS, {'pageSize':1000, 'delimiter': '\n'}).pageQueue;
 		var pageStr=""
 		pageQueue.forEach((page)=>{
 			page.forEach((string)=>{
 				pageStr+=string;
 			});
 		})
+		console.log(pageQueue.length)
+		console.log(pageQueue[pageQueue.length-2].length)
 
-		assert.equal(pageStr.length, MOBY_DICK.length)
-		assert.equal(pageStr, MOBY_DICK)
-		console.log("_pagination PASSED")
 
 	}
 

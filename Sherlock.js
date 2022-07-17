@@ -42,14 +42,14 @@ export class Sherlock{
             //iterate through the string
             var pageStr="";
             var page=[];
-            for(var i=0; i<string.length; i++){
-				if(string[i]==tools['delimiter']&&page.length==tools['pageSize']){
+            for(var i=0; i<string.length-1; i++){
+				if(string[i]==tools['delimiter']&&page.length==tools['pageSize']-1){
 					pageStr+=string[i];
 					page.push(pageStr);
 					pageQueue.push(page);
 					page=[];
 					pageStr="";
-				}else if(string[i]==tools['delimiter']&&page.length<tools['pageSize']){
+				}else if(string[i]==tools['delimiter']&&page.length<tools['pageSize']-1){
 					pageStr+=string[i];
 					page.push(pageStr);
 					pageStr="";
