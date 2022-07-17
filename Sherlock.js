@@ -67,7 +67,7 @@ export class Sherlock{
 	}
 
     strip(i, j, finding){
-		console.log("FINDING", finding, "REPLACEMENT VALUE", this.pageQueue[i][j].replace(finding, ''))
+		//console.log("FINDING", finding, "REPLACEMENT VALUE", this.pageQueue[i][j].replace(finding, ''))
 		this.pageQueue[i][j]=this.pageQueue[i][j].replace(finding, '');
     }
 
@@ -82,13 +82,9 @@ export class Sherlock{
 					this.strip(i, j, finding)
 					return finding;
 				}
-				
 				this.pageQueue[i].shift()
-				
 			}
-
 			this.pageQueue.shift()
-			
 		}
 	}
 
