@@ -72,26 +72,9 @@ export class Sherlock{
 
 
 	_next(regex){
-		var i;
-		var j;
-		var page;
-		var finding;
-		for(i = 0; i<this.pageQueue.length; i++){
-			page = this.pageQueue[i]
-			for(j = 0; j<page.length; j++){
-				//when we have the page, we need to get the string
-				//page[j] is the string we are working with
-				var finding = this.Finding._find(page[j], regex);
-				if (finding){
-					// when we get the finding, we need to access the string in the pageQueue and do a replacement on it
-					this.pageQueue[i][j]=page[j].replace(finding, "");
-					return finding
-				}else{
-					this.pageQueue[i].shift()
-				}
-			}
-			this.pageQueue.shift()
-		}
+        var finding = this.Finding._find(this.pageQueue[0][0], regex)
+        this.pageQueue[0][0] = this.pageQueue[0][0].replace(finding, "")
+		return finding
 	}
 
     nextLine(cb, tools){
