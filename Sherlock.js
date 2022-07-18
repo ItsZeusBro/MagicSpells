@@ -10,7 +10,6 @@ export class Pages{
 			this.pages = this.paginate(undefined, string, tools)
 
 		}
-		//console.log(this.pages)
 
     }
 	pushDataToPages(pages, data, tools){
@@ -28,7 +27,6 @@ export class Pages{
     }
 
 	pageCount(){
-		console.log(this.pages)
 		return parseInt(this.pages['count'])
 	}
 	_pageCount(page){
@@ -50,6 +48,7 @@ export class Pages{
     }
 	removePagesNtoM(pages, n, m){
 		assert.equal(m>=n, true);
+		console.log("ASSERTION TRUE")
 		for (var j = n; j<=m; j++){
 			this.removePageN(pages, j);
 		}

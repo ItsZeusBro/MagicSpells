@@ -21,7 +21,6 @@ class Test{
 	pages(){
 		var _Pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
 		//console.log(pages)
-		console.log(_Pages.pages)
 		assert.equal(THE_ILIAD, _Pages.aggregatePages(_Pages.pages));
 		_Pages.pushDataToPages(_Pages.pages, THE_ODYSSEY, {'pageCount':100, 'delimiter': '\n'});
 		assert.equal(THE_ILIAD+THE_ODYSSEY, _Pages.aggregatePages(_Pages.pages));
@@ -29,11 +28,12 @@ class Test{
 		//console.log(util.inspect(pages.pages, {showHidden: true, depth: null, colors: true}))
 
 
-		// console.log(pages.pages)
-		// var count = _Pages.pageCount()
-		// pages.removePagesNtoM(10, 20)
-		// assert.equal(count, pages.pageCount())
-		// console.log(pages.pages)
+		var count = _Pages.pageCount()
+		console.log(_Pages.pageCount())
+
+		_Pages.removePagesNtoM(_Pages.pages, 10, 20)
+		assert.equal(count-10, _Pages.pageCount())
+		console.log(_Pages.pages)
 		console.log("PAGINATIONS TEST PASSED")
 
 	}
