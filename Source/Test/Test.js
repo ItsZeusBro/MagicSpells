@@ -70,6 +70,10 @@ class Test{
 
 		console.log(sherlock.pageQueue[0])
 
+		next=sherlock._next(/\*/);
+		console.log(next)
+		
+		console.log(sherlock.pageQueue[0])
 
 		
 	}

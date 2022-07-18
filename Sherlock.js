@@ -83,7 +83,12 @@ export class Sherlock{
             for(j=0;j<this.pageQueue[i].length; j++){
                 var finding = this.Finding._find(this.pageQueue[i][j], regex)
                 if(finding){
-                    this.pageQueue[i][j] = this.pageQueue[i][j].replace(finding, "")
+                    var substrIndex1=this.pageQueue[i][j].indexOf(finding);
+                    var substrIndex2=substrIndex1+this.finding.length-1;
+                    var substr = this.pageQueue.substring(substrIndex1, substrIndex2)
+                    this.pageQueue[i][j] = this.pageQueue[i][j]
+                        .replace(substr, "")
+
                     return finding
                 }
                 //if it was not found in this.pageQueue[i][j], we shift this.pageQueue[i]
