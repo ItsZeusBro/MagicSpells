@@ -29,7 +29,7 @@ class Test{
 	}
 
 	_next(){
-		var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':2, 'delimiter': 'A'})
+		var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':2, 'delimiter': 'A', 'pageLookAhead':true})
 		console.log(sherlock.pageQueue[0])
 
 		var next=sherlock._next(/\*\*\*\*\*\*\*\*\*\*\*\*/);
@@ -72,7 +72,7 @@ class Test{
 
 		next=sherlock._next(/\*/);
 		console.log(next)
-		
+
 		console.log(sherlock.pageQueue[0])
 
 		

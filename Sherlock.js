@@ -90,6 +90,16 @@ export class Sherlock{
             }
         }        
     }
+
+    _findandSweep(qindex, pindex, regex){
+        var finding = this.Finding._find(pageAggregate, regex)
+        if(finding){
+            //sweep and return finding
+            this._sweep(finding, qindex, pindex)
+            return finding
+        }
+    }
+
     _sweep(finding, qindex, pindex){
         var substrIndex1=this.pageQueue[qindex][pindex].indexOf(finding);
         var substrIndex2=substrIndex1+this.finding.length-1;
@@ -104,8 +114,12 @@ export class Sherlock{
         var j;
         for(i=0; i<this.pageQueue.length; i++){
             for(j=0;j<this.pageQueue[i].length; j++){
-
-                var finding = this._pageLookAheadFindandSweep(i, this.pageQueue[i], j, regex)
+                var finding;
+                if(this.tools['pageLookAhead']){
+                    finding = this._pageLookAheadFindandSweep(i, this.pageQueue[i], j, regex)
+                }else{
+                    finding = this._findandSweep(i, j, regex)
+                }
                 if (finding){
                     return finding;
                 }
