@@ -42,6 +42,15 @@ export class Pages{
     setPageSize(n){
         this.page['size']=n.toString()
     }
+    aggregate(){
+        var aggregate=""
+        for (const [pageNumber, page] of Object.entries(this.pages['pages'])) {
+            for (const [lineNumber, line] of Object.entries(page['lines'])){
+                aggregate+=line
+            }
+        }    
+        return aggregate
+    }
     paginate(string, tools){
         if(('pageSize' in tools)&&('delimiter' in tools)){
             var pageStr="";
@@ -64,6 +73,7 @@ export class Pages{
 				}
         	}
 			//THIS IS ALWAYS HIDDEN
+            this.pushString(pageStr)
 			this.pushPage(this.page);
             this.page=this.pages['pages']['1']
 		}
@@ -97,7 +107,6 @@ export class Pages{
     }
 
     _sweep(finding, qindex, pindex){
-        console.log(finding)
         var substrIndex1=this.pageQueue[qindex][pindex].indexOf(finding);
         var substrIndex2=substrIndex1+finding.length;
         var substr = this.pageQueue[qindex][pindex].substring(substrIndex1, substrIndex2)
