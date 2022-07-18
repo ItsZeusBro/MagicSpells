@@ -24,10 +24,13 @@ export class Pages{
         delete this.pages['pages'][this.pages['size']]; 
         this.pages['size']=(parseInt(this.pages['size'])-1).toString();
     }
-
+    nextPage(){
+        return 
+    }
     pushString(string){
         this.page['lines'][(parseInt(this.page['size'])+1).toString()]=string
         this.page['size']=(parseInt(this.page['size'])+1).toString();
+        console.log(string, this.page['lines'])
 
     }
     popString(){
@@ -37,21 +40,23 @@ export class Pages{
     pageSize(){
         return parseInt(this.page['size']);
     }
+    setPageSize(n){
+        this.page['size']=n.toString()
+    }
     paginate(string, tools){
         if(('pageSize' in tools)&&('delimiter' in tools)){
-
             var pageStr="";
-
             for(var i=0; i<string.length; i++){
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for the last push to the queue!
-				if(string[i]==tools['delimiter'] && this.pageSize()==tools['pageSize']-1){
+				if(string[i]==tools['delimiter'] && this.pageSize()==tools['pageSize']){
 					pageStr+=string[i];
 					this.pushString(pageStr);
-					this.pushPage(page);
+					this.pushPage(this.page);
 					this.page={};
+                    this.setPageSize(0)
 					pageStr="";
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
-				}else if(string[i]==tools['delimiter']&& this.pageSize()<tools['pageSize']-1){
+				}else if(string[i]==tools['delimiter']&& this.pageSize()<=tools['pageSize']){
 					pageStr+=string[i];
                     this.pushString(pageStr);
 					pageStr="";
@@ -60,9 +65,8 @@ export class Pages{
 				}
         	}
 			//THIS IS ALWAYS HIDDEN
-			this.pushString(pageStr);
-			this.pushPage(page);
-            this.page={};
+			this.pushPage(this.page);
+            this.page=this.nextPage();
 		}
 	}
     _pageLookAheadFindandSweep(qindex, page, pindex, regex){
