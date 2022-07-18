@@ -19,8 +19,8 @@ export class Sherlock{
         Sherlock.prototype.iter=this.iter;
         Sherlock.prototype.init=this.init;
         Sherlock.prototype.nextFinding=this.nextFinding;
-
-        this.string=string
+        this.tools=tools;
+        this.string=string;
         //pageQueue can be undefined or an actual queue
         this.pageQueue=this.pagination(string, tools);
         //{'op#':0,'finding':undefined, 'op': 'Sherlock', 'tools':tools, 'page':this.pageQueue[0]}
@@ -78,7 +78,7 @@ export class Sherlock{
         //and page index +1, etc 
 
         //get the number of strings in the page
-        var pageAggregate=page[i]
+        var pageAggregate=page[pindex]
         for (var i = 0; i<page.length; i++){
             var finding = this.Finding._find(pageAggregate, regex)
             if(!finding){
@@ -91,8 +91,8 @@ export class Sherlock{
         }        
     }
 
-    _findandSweep(qindex, pindex, regex){
-        var finding = this.Finding._find(pageAggregate, regex)
+    _findandSweep(qindex, page, pindex, regex){
+        var finding = this.Finding._find(page, regex)
         if(finding){
             //sweep and return finding
             this._sweep(finding, qindex, pindex)
@@ -102,10 +102,11 @@ export class Sherlock{
 
     _sweep(finding, qindex, pindex){
         var substrIndex1=this.pageQueue[qindex][pindex].indexOf(finding);
-        var substrIndex2=substrIndex1+this.finding.length-1;
-        var substr = this.pageQueue.substring(substrIndex1, substrIndex2)
+        var substrIndex2=substrIndex1+finding.length-1;
+        var substr = this.pageQueue[qindex][pindex].substring(substrIndex1, substrIndex2)
         this.pageQueue[qindex][pindex] = this.pageQueue[qindex][pindex].replace(substr, "")
     }
+
 	_next(regex){
         //There is another edge case!!!
         //what happens when a match is not found in the page, but extends over 
@@ -118,7 +119,7 @@ export class Sherlock{
                 if(this.tools['pageLookAhead']){
                     finding = this._pageLookAheadFindandSweep(i, this.pageQueue[i], j, regex)
                 }else{
-                    finding = this._findandSweep(i, j, regex)
+                    finding = this._findandSweep(i, this.pageQueue[i], j, regex)
                 }
                 if (finding){
                     return finding;
