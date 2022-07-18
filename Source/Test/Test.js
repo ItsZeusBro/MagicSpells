@@ -17,6 +17,7 @@ class Pages{
 		this.aggregatePages()
 		this.pushDataToPages()
 		this.removePagesNtoM()
+
 	}
 	printPages(){
 		var _Pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
@@ -43,8 +44,78 @@ class Pages{
 	}
 
 	pagesCount(){
+		var _Pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
+		//assert.equal(THE_ILIAD.length/100, _Pages.pagesCount())
+	}
+
+	pageCount(){
+		//create a page and pass it
+	}
+
+	popNPages(){
 
 	}
+
+	pushPage(){
+
+	}
+
+	popPage(){
+
+	}
+
+	removePageN(){
+
+	}
+
+	nextPage(){
+
+	}
+
+	matchOnNLines(n){
+
+	}
+
+	pushLine(){
+
+	}
+
+	popLine(){
+
+	}
+
+	nextLine(){
+
+	}
+
+	emptyPage(){
+
+	}
+
+	emptyPages(){
+
+	}
+
+	paginate(){
+
+	}
+
+	_pageLookAheadFindandSweep(){
+
+	}
+
+	_findAndSweep(){
+
+	}
+
+	_sweep(){
+
+	}
+
+	_next(){
+		
+	}
+
 
 
 }

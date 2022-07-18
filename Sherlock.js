@@ -8,9 +8,7 @@ export class Pages{
 		this.pages;
 		if(string&&tools){
 			this.pages = this.paginate(undefined, string, tools)
-
 		}
-
     }
 	printPages(){
 		console.log(util.inspect(this.pages, {showHidden: true, depth: null, colors: true}))
@@ -73,7 +71,7 @@ export class Pages{
     }
 
 
-	matchLines(n){
+	matchOnNLines(n){
 		//matches on n number of lines from the starting page
 	}
 
