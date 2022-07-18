@@ -72,9 +72,29 @@ export class Sherlock{
 
 
 	_next(regex){
-        var finding = this.Finding._find(this.pageQueue[0][0], regex)
-        this.pageQueue[0][0] = this.pageQueue[0][0].replace(finding, "")
-		return finding
+        //we need to shift if there is no match in this.pageQueue[i][j]
+        //that means this.pageQueue[i].shift()
+        //if there is a match, we need to do a string replace
+        //if we are at the end of this.pageQueue and there is no
+        //match then we need to shift this.pageQueue.shift()
+        var i;
+        var j;
+        for(i=0; i<this.pageQueue.length; i++){
+            for(j=0;j<this.pageQueue[i].length; j++){
+                var finding = this.Finding._find(this.pageQueue[i][j], regex)
+                if(finding){
+                    this.pageQueue[i][j] = this.pageQueue[i][j].replace(finding, "")
+                    return finding
+                }
+                //if it was not found in this.pageQueue[i][j], we shift this.pageQueue[i]
+                this.pageQueue[i].shift()
+                //because we removed something from this.pageQueue[i], j index is now one ahead
+                //of where it needs to be, so we need this.
+                j--;
+            }
+            this.pageQueue.shift()
+            i--;
+        }
 	}
 
     nextLine(cb, tools){
