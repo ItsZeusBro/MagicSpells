@@ -4,78 +4,80 @@ import { MOBY_DICK } from "./Source/Test/Cases/Books/IndividualBooks/MobyDick.js
 export class Pages{
     constructor(string, tools){
         this.string=string;
-        this.currentPage=0;
-        this.page={'size':undefined,'lines':{}};
-        this.setPageSize(0);
-        this.pages={
-            'size':'0',
-            'pages':{}
-        }
-        this.paginate(string, tools)
+        this.pages = this.paginate(string, tools)
 
         //this will take a string, and paginate it and expose an api
     }
-    pushPage(){
-        this.pages['pages'][(parseInt(this.pages['size'])+1).toString()]=this.page
-        this.pages['size']=(parseInt(this.pages['size'])+1).toString();
+	push(){
+		//push data to new pages
+	}
+    pushPage(pages, page){
+        pages['pages'][(parseInt(pages['size'])+1).toString()]=page
+        pages['size']=(parseInt(pages['size'])+1).toString();
     }
-    popPage(){
-        delete this.pages['pages'][this.pages['size']]; 
-        this.pages['size']=(parseInt(this.pages['size'])-1).toString();
+    popPage(pages){
+        delete pages['pages'][pages['size']]; 
+        pages['size']=(parseInt(pages['size'])-1).toString();
     }
 
     nextPage(){
         return 
     }
-    pushString(string){
-        this.page['lines'][(parseInt(this.page['size'])+1).toString()]=string
-        this.page['size']=(parseInt(this.page['size'])+1).toString();
+    pushString(page, string){
+        page['lines'][(parseInt(page['size'])+1).toString()]=string
+        page['size']=(parseInt(page['size'])+1).toString();
 
     }
-    popString(){
-        delete this.page['lines'][this.page['size']]; 
-        this.page['size']=(parseInt(this.page['size'])-1).toString();
+    popString(page){
+        delete page['lines'][page['size']]; 
+        page['size']=(parseInt(page['size'])-1).toString();
     }
-    pageSize(){
-        return parseInt(this.page['size']);
+    pageSize(page){
+        return parseInt(page['size']);
     }
-    setPageSize(n){
-        this.page['size']=n.toString()
-    }
-    aggregate(){
+
+    aggregate(pages){
         var aggregate=""
-        for (const [pageNumber, page] of Object.entries(this.pages['pages'])) {
+        for (const [pageNumber, page] of Object.entries(pages['pages'])) {
             for (const [lineNumber, line] of Object.entries(page['lines'])){
                 aggregate+=line
             }
         }    
         return aggregate
     }
+	emptyPage(){
+		return {'size':'0','lines':{}}
+	}
+	emptyPages(){
+		return {'size':'0','pages':{}}
+	}
     paginate(string, tools){
+		var pages=this.emptyPages();
+		var page=this.emptyPage();
+
         if(('pageSize' in tools)&&('delimiter' in tools)){
             var pageStr="";
             for(var i=0; i<string.length; i++){
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for the last push to the queue!
-				if(string[i]==tools['delimiter'] && this.pageSize()==tools['pageSize']-1){
-					pageStr+=string[i];
-					this.pushString(pageStr);
-					this.pushPage();
-					this.page={'size':undefined,'lines':{}};
-                    this.setPageSize(0)
+				if(string[i]==tools['delimiter'] && this.pageSize(page)==tools['pageSize']){
+					pageStr+=string[i];	//adds the delimiter to the string
+					this.pushString(page, pageStr);
+					this.pushPage(pages, page);
+					page=this.emptyPage();
 					pageStr="";
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
-				}else if(string[i]==tools['delimiter']&& this.pageSize()<tools['pageSize']){
-					pageStr+=string[i];
-                    this.pushString(pageStr);
+				}else if(string[i]==tools['delimiter'] && this.pageSize(page)<tools['pageSize']){
+					pageStr+=string[i];	//adds the delimiter to the string
+                    this.pushString(page, pageStr);
 					pageStr="";
 				}else{
 					pageStr+=string[i];
 				}
         	}
 			//THIS IS ALWAYS HIDDEN
-            this.pushString(pageStr)
-			this.pushPage(this.page);
-            this.page=this.pages['pages']['1']
+            this.pushString(page, pageStr)
+			this.pushPage(pages, page);
+			return pages
 		}
 	}
     _pageLookAheadFindandSweep(qindex, page, pindex, regex){
