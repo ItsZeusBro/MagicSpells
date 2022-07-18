@@ -1,5 +1,6 @@
 import {Finding} from "./Source/Finding.js"
 import { MOBY_DICK } from "./Source/Test/Cases/Books/IndividualBooks/MobyDick.js";
+import * as assert from "node:assert"
 
 export class Pages{
     constructor(string, tools){
@@ -8,7 +9,6 @@ export class Pages{
 		if(string){
 			this.pages = this.paginate(string, tools)
 		}
-
     }
 	pushDataToPages(data, tools){
 		this.pages=this.paginate(data, tools, this.pages)
@@ -32,6 +32,7 @@ export class Pages{
 			this.popPage()
 		}
 	}
+	
     pushPage(pages, page){
         pages['pages'][(parseInt(pages['count'])+1).toString()]=page
         pages['count']=(parseInt(pages['count'])+1).toString();
@@ -40,9 +41,18 @@ export class Pages{
         delete pages['pages'][pages['count']]; 
         pages['count']=(parseInt(pages['count'])-1).toString();
     }
-	removePageN(n){
-		//delicate operation
-		delete this.pages['pages'][n.toString()];
+	removePagesNtoM(n, m){
+		assert.equal(m>=n, true)
+		//remove the page at n, and shift everything after it
+		var i=1;
+		for (var j = n; j<=m; j++){
+			delete this.pages['pages'][j.toString()];
+			var tmp = this.pages['pages'][(m+i).toString()];
+			delete this.pages['pages'][(m+i).toString()];
+			this.pages['pages'][j.toString()]=tmp;
+			pages['count']=(this.pageCount()-1).toString()
+			i++;
+		}
 	}
 
     nextPage(){
