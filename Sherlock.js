@@ -4,12 +4,14 @@ import { MOBY_DICK } from "./Source/Test/Cases/Books/IndividualBooks/MobyDick.js
 export class Pages{
     constructor(string, tools){
         this.string=string;
-        this.pages = this.paginate(string, tools)
+		this.pages;
+		if(string){
+			this.pages = this.paginate(string, tools)
+		}
 
-        //this will take a string, and paginate it and expose an api
     }
-	push(){
-		//push data to new pages
+	push(data, tools){
+		this.pages=this.paginate(data, tools, this.pages)
 	}
     pushPage(pages, page){
         pages['pages'][(parseInt(pages['size'])+1).toString()]=page
@@ -51,9 +53,16 @@ export class Pages{
 	emptyPages(){
 		return {'size':'0','pages':{}}
 	}
-    paginate(string, tools){
-		var pages=this.emptyPages();
-		var page=this.emptyPage();
+    paginate(string, tools, pages, page){
+		if(!(string&&tools)){
+			throw Error("paginate needs a string and tool config")
+		}
+		if(!pages){
+			pages=this.emptyPages();
+		}
+		if(!page){
+			page=this.emptyPage();
+		}
 
         if(('pageSize' in tools)&&('delimiter' in tools)){
             var pageStr="";

@@ -20,11 +20,15 @@ class Test{
 
 	pages(){
 		var pages = new Pages(THE_ILIAD, {'pageSize':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
-		console.log(util.inspect(pages.pages, {showHidden: true, depth: null, colors: true}))
 		
-		//assert.equal(THE_ILIAD, pages.aggregate(pages.pages))
-		console.log("pagination passed")
-		// pages.push(THE_ODYSSEY);
+		assert.equal(THE_ILIAD, pages.aggregate(pages.pages))
+		pages.push(THE_ODYSSEY, {'pageSize':100, 'delimiter': '\n'});
+		assert.equal(THE_ILIAD+THE_ODYSSEY, pages.aggregate(pages.pages))
+		
+		//console.log(util.inspect(pages.pages, {showHidden: true, depth: null, colors: true}))
+
+		console.log("PAGINATIONS PASSED")
+
 		// console.log(pages.pages)
 		// pages.pop()
 		// console.log(pages.pages)
