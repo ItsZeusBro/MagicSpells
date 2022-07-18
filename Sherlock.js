@@ -70,7 +70,17 @@ export class Sherlock{
         return
 	}
 
-
+    _findOrLookaheadFind_AndSweep(finding, i, j){
+        //we need to remove everything up to the match and including the match
+        //this requires voodoo
+        var finding = this.Finding._find(this.pageQueue[i][j], regex)
+        if(finding){
+            var substrIndex1=this.pageQueue[i][j].indexOf(finding);
+            var substrIndex2=substrIndex1+this.finding.length-1;
+            var substr = this.pageQueue.substring(substrIndex1, substrIndex2)
+            this.pageQueue[i][j] = this.pageQueue[i][j].replace(substr, "")
+        }
+    }
 	_next(regex){
         //There is another edge case!!!
         //what happens when a match is not found in the page, but extends over 
@@ -79,15 +89,10 @@ export class Sherlock{
         var j;
         for(i=0; i<this.pageQueue.length; i++){
             for(j=0;j<this.pageQueue[i].length; j++){
-                var finding = this.Finding._find(this.pageQueue[i][j], regex)
-                if(finding){
-                    //we need to remove everything up to the match and including the match
-                    //this requires voodoo
-                    var substrIndex1=this.pageQueue[i][j].indexOf(finding);
-                    var substrIndex2=substrIndex1+this.finding.length-1;
-                    var substr = this.pageQueue.substring(substrIndex1, substrIndex2)
-                    this.pageQueue[i][j] = this.pageQueue[i][j].replace(substr, "")
-                    return finding
+
+                var finding = this._findAndSweep()
+                if (finding){
+                    return finding;
                 }
                 //if it was not found in this.pageQueue[i][j], we shift this.pageQueue[i]
                 this.pageQueue[i].shift()
