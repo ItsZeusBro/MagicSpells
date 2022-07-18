@@ -70,16 +70,31 @@ export class Sherlock{
         return
 	}
 
-    _findOrLookaheadFind_AndSweep(finding, i, j){
-        //we need to remove everything up to the match and including the match
-        //this requires voodoo
-        var finding = this.Finding._find(this.pageQueue[i][j], regex)
-        if(finding){
-            var substrIndex1=this.pageQueue[i][j].indexOf(finding);
-            var substrIndex2=substrIndex1+this.finding.length-1;
-            var substr = this.pageQueue.substring(substrIndex1, substrIndex2)
-            this.pageQueue[i][j] = this.pageQueue[i][j].replace(substr, "")
-        }
+
+
+    _pageLookAheadFindandSweep(qindex, page, pindex, regex){
+        //this tries to find a match in the page index first,
+        //then tries to find a match in the aggregation of the page index
+        //and page index +1, etc 
+
+        //get the number of strings in the page
+        var pageAggregate=page[i]
+        for (var i = 0; i<page.length; i++){
+            var finding = this.Finding._find(pageAggregate, regex)
+            if(!finding){
+                pageAggregate+=page[i]
+            }else{
+                //sweep and return finding
+                this._sweep(finding, qindex, pindex)
+                return finding
+            }
+        }        
+    }
+    _sweep(finding, qindex, pindex){
+        var substrIndex1=this.pageQueue[qindex][pindex].indexOf(finding);
+        var substrIndex2=substrIndex1+this.finding.length-1;
+        var substr = this.pageQueue.substring(substrIndex1, substrIndex2)
+        this.pageQueue[qindex][pindex] = this.pageQueue[qindex][pindex].replace(substr, "")
     }
 	_next(regex){
         //There is another edge case!!!
@@ -90,7 +105,7 @@ export class Sherlock{
         for(i=0; i<this.pageQueue.length; i++){
             for(j=0;j<this.pageQueue[i].length; j++){
 
-                var finding = this._findAndSweep()
+                var finding = this._pageLookAheadFindandSweep(i, this.pageQueue[i], j, regex)
                 if (finding){
                     return finding;
                 }
@@ -198,6 +213,6 @@ export class Sherlock{
 //page lookAhead means that if there is not a match in the delmited string, it will
 //aggregate the next delimited string with the previous and search again. It will do this
 //until pageLookAhead is met
-// var sherlock = new Sherlock(MOBY_DICK, {'pageSize':3, 'delimiter':"\n", "pageLookAhead":3})
+// var sherlock = new Sherlock(MOBY_DICK, {'pageSize':3, 'delimiter':"\n", "pageLookAhead":true})
 
 // console.log(sherlock.pageQueue)
