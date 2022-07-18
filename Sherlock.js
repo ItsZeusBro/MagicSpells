@@ -10,35 +10,11 @@ export class Pages{
 		}
 
     }
-	push(data, tools){
+	pushDataToPages(data, tools){
 		this.pages=this.paginate(data, tools, this.pages)
 	}
-    pushPage(pages, page){
-        pages['pages'][(parseInt(pages['size'])+1).toString()]=page
-        pages['size']=(parseInt(pages['size'])+1).toString();
-    }
-    popPage(pages){
-        delete pages['pages'][pages['size']]; 
-        pages['size']=(parseInt(pages['size'])-1).toString();
-    }
 
-    nextPage(){
-        return 
-    }
-    pushString(page, string){
-        page['lines'][(parseInt(page['size'])+1).toString()]=string
-        page['size']=(parseInt(page['size'])+1).toString();
-
-    }
-    popString(page){
-        delete page['lines'][page['size']]; 
-        page['size']=(parseInt(page['size'])-1).toString();
-    }
-    pageSize(page){
-        return parseInt(page['size']);
-    }
-
-    aggregate(pages){
+	aggregatePages(pages){
         var aggregate=""
         for (const [pageNumber, page] of Object.entries(pages['pages'])) {
             for (const [lineNumber, line] of Object.entries(page['lines'])){
@@ -47,11 +23,60 @@ export class Pages{
         }    
         return aggregate
     }
+
+	pageCount(page){
+        return parseInt(page['count']);
+    }
+	popNPages(n){
+		for(var i = 0; i<n; i++){
+			this.popPage()
+		}
+	}
+    pushPage(pages, page){
+        pages['pages'][(parseInt(pages['count'])+1).toString()]=page
+        pages['count']=(parseInt(pages['count'])+1).toString();
+    }
+    popPage(pages){
+        delete pages['pages'][pages['count']]; 
+        pages['count']=(parseInt(pages['count'])-1).toString();
+    }
+	removePageN(n){
+		//delicate operation
+		delete this.pages['pages'][n.toString()];
+	}
+
+    nextPage(){
+		//returns the next page from the begining, class keeps an iterator,
+		//but does not remove the page, just gives you the next one
+        return 
+    }
+
+
+	matchLines(n){
+		//matches on n number of lines from the starting page
+	}
+
+
+    pushLine(page, string){
+        page['lines'][(parseInt(page['count'])+1).toString()]=string
+        page['count']=(parseInt(page['count'])+1).toString();
+
+    }
+    popLine(page){
+        delete page['lines'][page['count']]; 
+        page['count']=(parseInt(page['count'])-1).toString();
+    }
+
+	nextLine(){
+
+	}
+
+    
 	emptyPage(){
-		return {'size':'0','lines':{}}
+		return {'count':'0','lines':{}}
 	}
 	emptyPages(){
-		return {'size':'0','pages':{}}
+		return {'count':'0','pages':{}}
 	}
     paginate(string, tools, pages, page){
 		if(!(string&&tools)){
@@ -70,21 +95,21 @@ export class Pages{
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for the last push to the queue!
 				if(string[i]==tools['delimiter'] && this.pageSize(page)==tools['pageSize']){
 					pageStr+=string[i];	//adds the delimiter to the string
-					this.pushString(page, pageStr);
+					this.pushLine(page, pageStr);
 					this.pushPage(pages, page);
 					page=this.emptyPage();
 					pageStr="";
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
 				}else if(string[i]==tools['delimiter'] && this.pageSize(page)<tools['pageSize']){
 					pageStr+=string[i];	//adds the delimiter to the string
-                    this.pushString(page, pageStr);
+                    this.pushLine(page, pageStr);
 					pageStr="";
 				}else{
 					pageStr+=string[i];
 				}
         	}
 			//THIS IS ALWAYS HIDDEN
-            this.pushString(page, pageStr)
+            this.pushLine(page, pageStr)
 			this.pushPage(pages, page);
 			return pages
 		}
