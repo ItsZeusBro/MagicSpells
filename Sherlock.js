@@ -152,62 +152,21 @@ export class Book{
         //then tries to find a match in the aggregation of the page index
         //and page index +1, etc 
 
-        //get the number of strings in the page
-        var pageAggregate=page[pindex]
-        for (var i = 0; i<page.length; i++){
-            var finding = this.Finding._find(pageAggregate, regex)
-            if(!finding){
-                pageAggregate+=page[i]
-            }else{
-                //sweep and return finding
-                this._sweep(finding, qindex, pindex)
-                return finding
-            }
-        }        
     }
 
     _findandSweep(qindex, page, pindex, regex){
-        var finding = this.Finding._find(page, regex)
-        if(finding){
-            //sweep and return finding
-            this._sweep(finding, qindex, pindex)
-            return finding
-        }
+
     }
 
     _sweep(finding, qindex, pindex){
-        var substrIndex1=this.pageQueue[qindex][pindex].indexOf(finding);
-        var substrIndex2=substrIndex1+finding.length;
-        var substr = this.pageQueue[qindex][pindex].substring(substrIndex1, substrIndex2)
-        this.pageQueue[qindex][pindex] = this.pageQueue[qindex][pindex].replace(substr, "")
+       
     }
 
     _next(regex){
         //There is another edge case!!!
         //what happens when a match is not found in the page, but extends over 
         //n number of pages? How many pages do we look ahead?
-        var i;
-        var j;
-        for(i=0; i<this.pageQueue.length; i++){
-            for(j=0;j<this.pageQueue[i].length; j++){
-                var finding;
-                if(this.tools['pageLookAhead']){
-                    finding = this._pageLookAheadFindandSweep(i, this.pageQueue[i], j, regex)
-                }else{
-                    finding = this._findandSweep(i, this.pageQueue[i], j, regex)
-                }
-                if (finding){
-                    return finding;
-                }
-                //if it was not found in this.pageQueue[i][j], we shift this.pageQueue[i]
-                this.pageQueue[i].shift()
-                //because we removed something from this.pageQueue[i], j index is now one ahead
-                //of where it needs to be, so we need this.
-                j--;
-            }
-            this.pageQueue.shift()
-            i--;
-        }
+       
 	}
 }
 
