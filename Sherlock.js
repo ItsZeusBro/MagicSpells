@@ -1,41 +1,27 @@
 import {Finding} from "./Source/Finding.js"
 import { MOBY_DICK } from "./Source/Test/Cases/Books/IndividualBooks/MobyDick.js";
 
-export class Sherlock{
+export class Pages{
     constructor(string, tools){
-
-        Sherlock.prototype.nextLine= this.nextLine;
-        Sherlock.prototype.nextParagraph= this.nextParagraph;
-        Sherlock.prototype.nextSentance=this.nextSentance;
-        Sherlock.prototype.nextInteger=this.nextInteger;
-        Sherlock.prototype.nextFloat=this.nextFloat;
-        Sherlock.prototype.nextScientific=this.nextScientific;
-        Sherlock.prototype.nextOctet=this.nextOctet;
-        Sherlock.prototype.nextHex=this.nextHex;
-        Sherlock.prototype.nextCodeBlock=this.nextCodeBlock;
-        Sherlock.prototype.nextFunction=this.nextFunction;
-        Sherlock.prototype.nextHTML = this.nextHTML;
-        Sherlock.prototype.up=this.up;
-        Sherlock.prototype.iter=this.iter;
-        Sherlock.prototype.init=this.init;
-        Sherlock.prototype.nextFinding=this.nextFinding;
-        this.tools=tools;
         this.string=string;
-        //pageQueue can be undefined or an actual queue
-        this.pageQueue=this.pagination(string, tools);
-        //{'op#':0,'finding':undefined, 'op': 'Sherlock', 'tools':tools, 'page':this.pageQueue[0]}
-        this.opStack = [];
-        this.Finding = new Finding();
-
+        this.pages={
+            'size':0,
+            'pages':undefined,
+        }
+        this.pages['pages']=this.paginate(string, tools)
+        
+        //this will take a string, and paginate it and expose an api
     }
-    init(string, tools){
-
-        return this;
+    push(data){
+        this.pages['pages'][this.pages['pages']['size']+1]=data
+        this.pages['pages']['size']+=1;
     }
-	nextPage(){
-        return this;
-	}
-	pagination(string, tools){
+    pop(){
+        delete this.pages['pages'][this.pages['size']]; 
+        this.pages['pages']['size']-=1;
+    }
+
+    paginate(string, tools){
         var pageQueue=[]
         if(('pageSize' in tools)&&('delimiter' in tools)){
 			//takes the total string and creates a pagination queue
@@ -69,9 +55,6 @@ export class Sherlock{
         //if they don't paginate pageQueue is undefined
         return
 	}
-
-
-
     _pageLookAheadFindandSweep(qindex, page, pindex, regex){
         //this tries to find a match in the page index first,
         //then tries to find a match in the aggregation of the page index
@@ -101,13 +84,14 @@ export class Sherlock{
     }
 
     _sweep(finding, qindex, pindex){
+        console.log(finding)
         var substrIndex1=this.pageQueue[qindex][pindex].indexOf(finding);
-        var substrIndex2=substrIndex1+finding.length-1;
+        var substrIndex2=substrIndex1+finding.length;
         var substr = this.pageQueue[qindex][pindex].substring(substrIndex1, substrIndex2)
         this.pageQueue[qindex][pindex] = this.pageQueue[qindex][pindex].replace(substr, "")
     }
 
-	_next(regex){
+    _next(regex){
         //There is another edge case!!!
         //what happens when a match is not found in the page, but extends over 
         //n number of pages? How many pages do we look ahead?
@@ -133,6 +117,42 @@ export class Sherlock{
             this.pageQueue.shift()
             i--;
         }
+	}
+}
+
+
+export class Sherlock{
+    constructor(string, tools){
+        Sherlock.prototype.nextLine= this.nextLine;
+        Sherlock.prototype.nextParagraph= this.nextParagraph;
+        Sherlock.prototype.nextSentance=this.nextSentance;
+        Sherlock.prototype.nextInteger=this.nextInteger;
+        Sherlock.prototype.nextFloat=this.nextFloat;
+        Sherlock.prototype.nextScientific=this.nextScientific;
+        Sherlock.prototype.nextOctet=this.nextOctet;
+        Sherlock.prototype.nextHex=this.nextHex;
+        Sherlock.prototype.nextCodeBlock=this.nextCodeBlock;
+        Sherlock.prototype.nextFunction=this.nextFunction;
+        Sherlock.prototype.nextHTML = this.nextHTML;
+        Sherlock.prototype.up=this.up;
+        Sherlock.prototype.iter=this.iter;
+        Sherlock.prototype.init=this.init;
+        Sherlock.prototype.nextFinding=this.nextFinding;
+        this.tools=tools;
+        this.string=string;
+        //pageQueue can be undefined or an actual queue
+        this.pageQueue=this.pagination(string, tools);
+        //{'op#':0,'finding':undefined, 'op': 'Sherlock', 'tools':tools, 'page':this.pageQueue[0]}
+        this.opStack = [];
+        this.Finding = new Finding();
+
+    }
+    init(string, tools){
+
+        return this;
+    }
+	nextPage(){
+        return this;
 	}
 
     nextLine(cb, tools){

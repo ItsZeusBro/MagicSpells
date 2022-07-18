@@ -1,46 +1,61 @@
 import {Finding} from "../Finding.js"
-import {Sherlock} from "../../Sherlock.js"
+import {Sherlock, Pages} from "../../Sherlock.js"
 import {CHAR, WORD, LINE} from "../Patterns/Patterns.js"
 import * as util from "node:util"
 import * as assert from "node:assert"
 // import {MOBY_DICK} from "./Cases/Books/IndividualBooks/MobyDick.js"
 // import {THE_ILIAD} from "./Cases/Books/IndividualBooks/TheIliad.js"
+import {THE_ODYSSEY} from "./Cases/Books/IndividualBooks/TheOdyssey.js"
+
 import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
 //import {BOOKS} from "./Cases/Books/Books.js"
 
 class Test{
 	constructor(){
 		//this._pagination()
-		this._next()
+		this.pages()
 		//this.nextLine()
 		//this.nextWord()
 	}
 
-	_pagination(){
-		var pageQueue = new Sherlock(HALF_BOOKS, {'pageSize':4000, 'delimiter': '\n'}).pageQueue;
-		var pageStr=""
-		pageQueue.forEach((page)=>{
-			page.forEach((string)=>{
-				pageStr+=string;
-			});
-		})
-		console.log(pageStr.length, HALF_BOOKS.length)
-		assert.equal(pageStr, HALF_BOOKS)
+	pages(){
+		var pages = new Pages(THE_ILIAD, {'pageSize':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
+		console.log(pages.pages)
+		// pages.push(THE_ODYSSEY);
+		// console.log(pages.pages)
+		// pages.pop()
+		// console.log(pages.pages)
 	}
 
-	_next(){
-		var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':2, 'delimiter': 'A', 'pageLookAhead':true})
-		console.log(sherlock.pageQueue[0])
+	// _pagination(){
+	// 	var pageQueue = new Sherlock(HALF_BOOKS, {'pageSize':4000, 'delimiter': '\n'}).pageQueue;
+	// 	var pageStr=""
+	// 	pageQueue.forEach((page)=>{
+	// 		page.forEach((string)=>{
+	// 			pageStr+=string;
+	// 		});
+	// 	})
+	// 	console.log(pageStr.length, HALF_BOOKS.length)
+	// 	assert.equal(pageStr, HALF_BOOKS)
+	// }
 
-		var next=sherlock._next(/\*\*\*\*\*\*\*\*\*\*\*\*/);
-		console.log(next);
-		console.log(sherlock.pageQueue[0]);
+	// _next(){
+	// 	var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':2, 'delimiter': 'A', 'pageLookAhead':true})
+	// 	console.log(sherlock.pageQueue[0])
+
+	// 	var next=sherlock._next(/====/);
+	// 	console.log(next);
+	// 	console.log(sherlock.pageQueue[0]);
 		
-		next = sherlock._next(/\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*/);
-		console.log(next);
-		console.log(sherlock.pageQueue[0]);	
+	// 	next = sherlock._next(/>/);
+	// 	console.log(next);
+	// 	console.log(sherlock.pageQueue[0]);	
 
-	}
+	// 	next = sherlock._next(/====/);
+	// 	console.log(next);
+	// 	console.log(sherlock.pageQueue[0]);	
+
+	// }
 
 	nextLine(){
 		console.log(new Sherlock(MOBY_DICK, {'pageSize':50, 'delimiter': '\n'}).nextLine())
