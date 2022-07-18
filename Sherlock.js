@@ -10,7 +10,7 @@ export class Pages{
 			this.pages = this.paginate(undefined, string, tools)
 
 		}
-		console.log(this.pages)
+		//console.log(this.pages)
 
     }
 	pushDataToPages(pages, data, tools){
@@ -27,7 +27,11 @@ export class Pages{
         return aggregate
     }
 
-	pageCount(page){
+	pageCount(){
+		console.log(this.pages)
+		return parseInt(this.pages['count'])
+	}
+	_pageCount(page){
         return parseInt(page['count']);
     }
 	popNPages(n){
@@ -99,21 +103,20 @@ export class Pages{
 		if(!page){
 			page=this.emptyPage();
 		}
-
         if(('pageCount' in tools)&&('delimiter' in tools)){
 
             var pageStr="";
 
             for(var i=0; i<string.length; i++){
 				//LEAVE THIS -1 after tools['pageCount'] because we are looking for the last push to the queue!
-				if(string[i]==tools['delimiter'] && this.pageCount(page)==tools['pageCount']-1){
+				if(string[i]==tools['delimiter'] && this._pageCount(page)==tools['pageCount']-1){
 					pageStr+=string[i];	//adds the delimiter to the string
 					this.pushLine(page, pageStr);
 					this.pushPage(pages, page);
 					page=this.emptyPage();
 					pageStr="";
 				//LEAVE THIS -1 after tools['pageCount'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
-				}else if(string[i]==tools['delimiter'] && this.pageCount(page)<tools['pageCount']-1){
+				}else if(string[i]==tools['delimiter'] && this._pageCount(page)<tools['pageCount']-1){
 					pageStr+=string[i];	//adds the delimiter to the string
                     this.pushLine(page, pageStr);
 					pageStr="";
