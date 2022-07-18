@@ -55,24 +55,34 @@ export class Book{
 
 	}
 	pushStringToBook(string, book, tools){
-		pages=this.bookify(string, book, tools)
+        if(!string && !book){
+            throw Error("you need to provide a string and a book");
+        }
+        if(!tools){
+            tools=this.tools
+        }
+		book=this.bookify(string, book, tools)
+        return book
 	}
 
-	aggregatePages(pages){
-        var aggregate=""
-        for (const [pageNumber, page] of Object.entries(pages['pages'])) {
+	stringifyBook(book){
+        if(!book){
+
+        }
+        var string=""
+        for (const [pageNumber, page] of Object.entries(book['pages'])) {
             for (const [lineNumber, line] of Object.entries(page['lines'])){
-                aggregate+=line
+                string+=line
             }
         }    
-        return aggregate
+        return string
     }
 
-	pagesCount(){
-		return parseInt(this.pages['count'])
+	pageCount(){
+		return parseInt(this.book['pageCount'])
 	}
 	lineCount(page){
-        return parseInt(page['count']);
+        return parseInt(page['lineCount']);
     }
 	popNPages(n){
 		for(var i = 0; i<n; i++){
@@ -81,27 +91,27 @@ export class Book{
 	}
 	
     pushPageToBook(page, book){
-        book['pages'][(parseInt(book['count'])+1).toString()]=page
-        book['count']=(parseInt(book['count'])+1).toString();
+        book['pages'][(parseInt(book['pageCount'])+1).toString()]=page
+        book['pageCount']=(parseInt(book['pageCount'])+1).toString();
     }
     popPageFromBook(book){
-        delete book['pages'][book['count']]; 
-        book['count']=(parseInt(book['count'])-1).toString();
+        delete book['pages'][book['pageCount']]; 
+        book['pageCount']=(parseInt(book['pageCount'])-1).toString();
     }
-	removePagesNtoM(pages, n, m){
+	removePagesNtoM(book, n, m){
 		assert.equal(m>=n, true);
 		console.log("ASSERTION TRUE")
 		for (var j = n; j<=m; j++){
-			this.removePageN(pages, j);
+			this.removePageN(book, j);
 		}
 	}
 
-	removePageN(pages, n){
-		delete pages['pages'][n.toString()];
-		var tmp = pages['pages'][(n+1).toString()];
-		delete pages['pages'][(n+1).toString()];
-		pages['pages'][n.toString()]=tmp;
-		pages['count']=(parseInt(pages['count'])-1).toString();
+	removePageN(book, n){
+		delete book['pages'][n.toString()];
+		var tmp = book['pages'][(n+1).toString()];
+		delete book['pages'][(n+1).toString()];
+		book['pages'][n.toString()]=tmp;
+		book['pageCount']=(parseInt(book['pageCount'])-1).toString();
 	}
 
     nextPage(){
@@ -117,12 +127,12 @@ export class Book{
 
 
     pushLineToPage(line, page){
-        page['lines'][(parseInt(page['count'])+1).toString()]=line
-        page['count']=(parseInt(page['count'])+1).toString();
+        page['lines'][(parseInt(page['lineCount'])+1).toString()]=line
+        page['lineCount']=(parseInt(page['lineCount'])+1).toString();
     }
     popLineFromPage(page){
-        delete page['lines'][page['count']]; 
-        page['count']=(parseInt(page['count'])-1).toString();
+        delete page['lines'][page['lineCount']]; 
+        page['lineCount']=(parseInt(page['lineCount'])-1).toString();
     }
 
 	nextLine(){
@@ -131,10 +141,10 @@ export class Book{
 
     
 	emptyPage(){
-		return {'count':'0','lines':{}}
+		return {'lineCount':'0','lines':{}}
 	}
 	emptyBook(){
-		return {'count':'0','pages':{}}
+		return {'pageCount':'0','pages':{}}
 	}
     
     _pageLookAheadFindandSweep(qindex, page, pindex, regex){
