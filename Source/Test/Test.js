@@ -20,7 +20,7 @@ class Test{
 
 	pages(){
 		var pages = new Pages(THE_ILIAD, {'pageSize':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
-		//console.log(pages.pages)
+		console.log(pages.pages)
 		// pages.push(THE_ODYSSEY);
 		// console.log(pages.pages)
 		// pages.pop()

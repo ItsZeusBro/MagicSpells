@@ -4,33 +4,32 @@ import { MOBY_DICK } from "./Source/Test/Cases/Books/IndividualBooks/MobyDick.js
 export class Pages{
     constructor(string, tools){
         this.string=string;
-        this.page={
-            'size':0,
-            'lines':{},
-        }
+        this.currentPage=0;
+        this.page={'size':undefined,'lines':{}};
+        this.setPageSize(0);
         this.pages={
             'size':'0',
-            'pages':{},
+            'pages':{}
         }
         this.paginate(string, tools)
 
         //this will take a string, and paginate it and expose an api
     }
-    pushPage(page){
-        this.pages['pages'][(parseInt(this.pages['size'])+1).toString()]=page
+    pushPage(){
+        this.pages['pages'][(parseInt(this.pages['size'])+1).toString()]=this.page
         this.pages['size']=(parseInt(this.pages['size'])+1).toString();
     }
     popPage(){
         delete this.pages['pages'][this.pages['size']]; 
         this.pages['size']=(parseInt(this.pages['size'])-1).toString();
     }
+
     nextPage(){
         return 
     }
     pushString(string){
         this.page['lines'][(parseInt(this.page['size'])+1).toString()]=string
         this.page['size']=(parseInt(this.page['size'])+1).toString();
-        console.log(string, this.page['lines'])
 
     }
     popString(){
@@ -48,15 +47,15 @@ export class Pages{
             var pageStr="";
             for(var i=0; i<string.length; i++){
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for the last push to the queue!
-				if(string[i]==tools['delimiter'] && this.pageSize()==tools['pageSize']){
+				if(string[i]==tools['delimiter'] && this.pageSize()==tools['pageSize']-1){
 					pageStr+=string[i];
 					this.pushString(pageStr);
-					this.pushPage(this.page);
-					this.page={};
+					this.pushPage();
+					this.page={'size':undefined,'lines':{}};
                     this.setPageSize(0)
 					pageStr="";
 				//LEAVE THIS -1 after tools['pageSize'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
-				}else if(string[i]==tools['delimiter']&& this.pageSize()<=tools['pageSize']){
+				}else if(string[i]==tools['delimiter']&& this.pageSize()<tools['pageSize']){
 					pageStr+=string[i];
                     this.pushString(pageStr);
 					pageStr="";
@@ -66,7 +65,7 @@ export class Pages{
         	}
 			//THIS IS ALWAYS HIDDEN
 			this.pushPage(this.page);
-            this.page=this.nextPage();
+            this.page=this.pages['pages']['1']
 		}
 	}
     _pageLookAheadFindandSweep(qindex, page, pindex, regex){
