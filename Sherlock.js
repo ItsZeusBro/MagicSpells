@@ -12,6 +12,10 @@ export class Pages{
 		}
 
     }
+	printPages(){
+		console.log(util.inspect(this.pages, {showHidden: true, depth: null, colors: true}))
+
+	}
 	pushDataToPages(pages, data, tools){
 		pages=this.paginate(pages, data, tools)
 	}
@@ -26,10 +30,10 @@ export class Pages{
         return aggregate
     }
 
-	pageCount(){
+	pagesCount(){
 		return parseInt(this.pages['count'])
 	}
-	_pageCount(page){
+	pageCount(page){
         return parseInt(page['count']);
     }
 	popNPages(n){
@@ -53,11 +57,13 @@ export class Pages{
 			this.removePageN(pages, j);
 		}
 	}
+
 	removePageN(pages, n){
 		delete pages['pages'][n.toString()];
 		var tmp = pages['pages'][(n+1).toString()];
 		delete pages['pages'][(n+1).toString()];
 		pages['pages'][n.toString()]=tmp;
+		pages['count']=(parseInt(pages['count'])-1).toString();
 	}
 
     nextPage(){
@@ -102,20 +108,20 @@ export class Pages{
 		if(!page){
 			page=this.emptyPage();
 		}
-        if(('pageCount' in tools)&&('delimiter' in tools)){
+        if(('pagesCount' in tools)&&('delimiter' in tools)){
 
             var pageStr="";
 
             for(var i=0; i<string.length; i++){
-				//LEAVE THIS -1 after tools['pageCount'] because we are looking for the last push to the queue!
-				if(string[i]==tools['delimiter'] && this._pageCount(page)==tools['pageCount']-1){
+				//LEAVE THIS -1 after tools['pagesCount'] because we are looking for the last push to the queue!
+				if(string[i]==tools['delimiter'] && this.pageCount(page)==tools['pagesCount']-1){
 					pageStr+=string[i];	//adds the delimiter to the string
 					this.pushLine(page, pageStr);
 					this.pushPage(pages, page);
 					page=this.emptyPage();
 					pageStr="";
-				//LEAVE THIS -1 after tools['pageCount'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
-				}else if(string[i]==tools['delimiter'] && this._pageCount(page)<tools['pageCount']-1){
+				//LEAVE THIS -1 after tools['pagesCount'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
+				}else if(string[i]==tools['delimiter'] && this.pageCount(page)<tools['pagesCount']-1){
 					pageStr+=string[i];	//adds the delimiter to the string
                     this.pushLine(page, pageStr);
 					pageStr="";
@@ -321,6 +327,6 @@ export class Sherlock{
 //page lookAhead means that if there is not a match in the delmited string, it will
 //aggregate the next delimited string with the previous and search again. It will do this
 //until pageLookAhead is met
-// var sherlock = new Sherlock(MOBY_DICK, {'pageCount':3, 'delimiter':"\n", "pageLookAhead":true})
+// var sherlock = new Sherlock(MOBY_DICK, {'pagesCount':3, 'delimiter':"\n", "pageLookAhead":true})
 
 // console.log(sherlock.pageQueue)

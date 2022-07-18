@@ -10,33 +10,54 @@ import {THE_ODYSSEY} from "./Cases/Books/IndividualBooks/TheOdyssey.js"
 import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
 //import {BOOKS} from "./Cases/Books/Books.js"
 
-class Test{
+
+class Pages{
+	constructor(){
+		this.printPages()
+		this.aggregatePages()
+		this.pushDataToPages()
+		this.removePagesNtoM()
+	}
+	printPages(){
+		var _Pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
+		_Pages.printPages()
+	}
+
+	aggregatePages(){
+		var _Pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
+		assert.equal(THE_ILIAD, _Pages.aggregatePages(_Pages.pages));
+		
+	}
+
+	pushDataToPages(){
+		var _Pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
+		_Pages.pushDataToPages(_Pages.pages, THE_ODYSSEY, {'pageCount':100, 'delimiter': '\n'});
+		assert.equal(THE_ILIAD+THE_ODYSSEY, _Pages.aggregatePages(_Pages.pages));
+	}
+
+	removePagesNtoM(){
+		var _Pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
+		var count = _Pages.pageCount()
+		_Pages.removePagesNtoM(_Pages.pages, 10, 20)
+		assert.equal(count-11, _Pages.pageCount())
+	}
+
+	pagesCount(){
+
+	}
+
+
+}
+
+
+class Sherlock{
 	constructor(){
 		//this._pagination()
-		this.pages()
 		//this.nextLine()
 		//this.nextWord()
 	}
 
-	pages(){
-		var _Pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
-		//console.log(pages)
-		assert.equal(THE_ILIAD, _Pages.aggregatePages(_Pages.pages));
-		_Pages.pushDataToPages(_Pages.pages, THE_ODYSSEY, {'pageCount':100, 'delimiter': '\n'});
-		assert.equal(THE_ILIAD+THE_ODYSSEY, _Pages.aggregatePages(_Pages.pages));
-		
-		//console.log(util.inspect(pages.pages, {showHidden: true, depth: null, colors: true}))
-
-
-		var count = _Pages.pageCount()
-		console.log(_Pages.pageCount())
-
-		_Pages.removePagesNtoM(_Pages.pages, 10, 20)
-		assert.equal(count-10, _Pages.pageCount())
-		console.log(_Pages.pages)
-		console.log("PAGINATIONS TEST PASSED")
-
-	}
+	
 
 	// _pagination(){
 	// 	var pageQueue = new Sherlock(HALF_BOOKS, {'pageSize':4000, 'delimiter': '\n'}).pageQueue;
