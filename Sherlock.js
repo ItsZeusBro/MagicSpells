@@ -6,18 +6,20 @@ export class Pages{
     constructor(string, tools){
         this.string=string;
 		this.pages;
-		if(string){
-			this.pages = this.paginate(string, tools)
+		if(string&&tools){
+			this.pages = this.paginate(undefined, string, tools)
+
 		}
+		console.log(this.pages)
+
     }
 	pushDataToPages(pages, data, tools){
-		pages=this.paginate(data, tools, pages)
+		pages=this.paginate(pages, data, tools)
 	}
 
 	aggregatePages(pages){
         var aggregate=""
-		console.log(pages)
-        for (const [pageNumber, page] of Object.entries(pages)) {
+        for (const [pageNumber, page] of Object.entries(pages['pages'])) {
             for (const [lineNumber, line] of Object.entries(page['lines'])){
                 aggregate+=line
             }
@@ -87,7 +89,7 @@ export class Pages{
 	emptyPages(){
 		return {'count':'0','pages':{}}
 	}
-    paginate(string, tools, pages, page){
+    paginate(pages, string, tools, page){
 		if(!(string&&tools)){
 			throw Error("paginate needs a string and tool config")
 		}
@@ -99,7 +101,6 @@ export class Pages{
 		}
 
         if(('pageCount' in tools)&&('delimiter' in tools)){
-			//console.log("HERE AGAIN!!!")
 
             var pageStr="";
 
@@ -123,7 +124,6 @@ export class Pages{
 			//THIS IS ALWAYS HIDDEN
             this.pushLine(page, pageStr)
 			this.pushPage(pages, page);
-			console.log("THIS SHOULD NOT BE UNDEFINED",pages)
 			return pages
 		}
 	}

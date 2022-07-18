@@ -19,17 +19,18 @@ class Test{
 	}
 
 	pages(){
-		var pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
+		var _Pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
 		//console.log(pages)
-		assert.equal(THE_ILIAD, pages.aggregatePages(pages.pages))
-		pages.push(THE_ODYSSEY, {'pageCount':100, 'delimiter': '\n'});
-		assert.equal(THE_ILIAD+THE_ODYSSEY, pages.aggregatePages(pages.pages))
+		console.log(_Pages.pages)
+		assert.equal(THE_ILIAD, _Pages.aggregatePages(_Pages.pages));
+		_Pages.pushDataToPages(_Pages.pages, THE_ODYSSEY, {'pageCount':100, 'delimiter': '\n'});
+		assert.equal(THE_ILIAD+THE_ODYSSEY, _Pages.aggregatePages(_Pages.pages));
 		
 		//console.log(util.inspect(pages.pages, {showHidden: true, depth: null, colors: true}))
 
 
 		// console.log(pages.pages)
-		var count = pages.pageCount()
+		var count = _Pages.pageCount()
 		pages.removePagesNtoM(10, 20)
 		assert.equal(count, pages.pageCount())
 		// console.log(pages.pages)
