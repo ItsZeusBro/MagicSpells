@@ -21,7 +21,9 @@ class Test{
 	pages(){
 		var pages = new Pages(THE_ILIAD, {'pageSize':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
 		//console.log(util.inspect(pages.pages, {showHidden: true, depth: null, colors: true}))
-		//assert.equal(THE_ILIAD, pages.aggregate())
+		
+		assert.equal(THE_ILIAD, pages.aggregate())
+		console.log("pagination passed")
 		// pages.push(THE_ODYSSEY);
 		// console.log(pages.pages)
 		// pages.pop()
