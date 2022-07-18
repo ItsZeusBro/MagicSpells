@@ -12,7 +12,8 @@ export const ALPHA_STRING=""
 export const ALPHA_NUMERIC_STRING=""
 export const SENTANCE=""
 export const PARAGRAPH=""
-export const LINE=/.*(\r\n)|.*(\n)|.*(\r\n$)|.*(\n$)/
+//an end of line can have a carriage return, or linefeed character(newline), or end of string
+export const LINE=/.*(\r)|.*(\n)|.*(\r\n)|.*(\r\n)|.*($)/
 
 export const JAVAFUNCTION=""
 export const JSFUNCTION=""
