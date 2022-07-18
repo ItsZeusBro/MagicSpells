@@ -2,20 +2,60 @@ import {Finding} from "./Source/Finding.js"
 import { MOBY_DICK } from "./Source/Test/Cases/Books/IndividualBooks/MobyDick.js";
 import * as assert from "node:assert"
 
-export class Pages{
+export class Book{
     constructor(string, tools){
         this.string=string;
+        this.tools=tools
 		this.pages;
-		if(string&&tools){
-			this.pages = this.paginate(undefined, string, tools)
-		}
+		this.book = this.bookify(undefined, string, tools)
     }
-	printPages(){
-		console.log(util.inspect(this.pages, {showHidden: true, depth: null, colors: true}))
+    //takes an existing book, or creates a new one
+    //takes a string and produces book
+    //takes tools object or uses global tools
+    bookify(string, book, tools){
+		if(!(string&&tools)){
+			tools = this.tools
+		}
+		if(!book){
+			book=this.emptyBook();
+		}
+		
+		var page=this.emptyPage();
+
+        if(('lineCount' in tools)&&('delimiter' in tools)){
+
+            var line="";
+
+            for(var i=0; i<string.length; i++){
+				//LEAVE THIS -1 after tools['lineCount'] because we are looking for the last push to the queue!
+				if(string[i]==tools['delimiter'] && this.lineCount(page)==tools['lineCount']-1){
+					line+=string[i];	//adds the delimiter to the string
+					this.pushLineToPage(line, page);
+					this.pushPageToBook(page, book);
+					page=this.emptyPage();
+					line="";
+				//LEAVE THIS -1 after tools['lineCount'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
+				}else if(string[i]==tools['delimiter'] && this.lineCount(page)<tools['lineCount']-1){
+					line+=string[i];	//adds the delimiter to the string
+                    this.pushLineToPage(line, page);
+					line="";
+				}else{
+					line+=string[i];
+				}
+        	}
+			//THIS IS ALWAYS HIDDEN
+            this.pushLineToPage(line, page)
+			this.pushPageToBook(page, book);
+			return book
+		}
+	}
+
+	printBook(){
+		console.log(util.inspect(this.book, {showHidden: true, depth: null, colors: true}))
 
 	}
-	pushDataToPages(pages, data, tools){
-		pages=this.paginate(pages, data, tools)
+	pushStringToBook(string, book, tools){
+		pages=this.bookify(string, book, tools)
 	}
 
 	aggregatePages(pages){
@@ -31,22 +71,22 @@ export class Pages{
 	pagesCount(){
 		return parseInt(this.pages['count'])
 	}
-	pageCount(page){
+	lineCount(page){
         return parseInt(page['count']);
     }
 	popNPages(n){
 		for(var i = 0; i<n; i++){
-			this.popPage()
+			this.popPageFromBook()
 		}
 	}
 	
-    pushPage(pages, page){
-        pages['pages'][(parseInt(pages['count'])+1).toString()]=page
-        pages['count']=(parseInt(pages['count'])+1).toString();
+    pushPageToBook(page, book){
+        book['pages'][(parseInt(book['count'])+1).toString()]=page
+        book['count']=(parseInt(book['count'])+1).toString();
     }
-    popPage(pages){
-        delete pages['pages'][pages['count']]; 
-        pages['count']=(parseInt(pages['count'])-1).toString();
+    popPageFromBook(book){
+        delete book['pages'][book['count']]; 
+        book['count']=(parseInt(book['count'])-1).toString();
     }
 	removePagesNtoM(pages, n, m){
 		assert.equal(m>=n, true);
@@ -76,11 +116,11 @@ export class Pages{
 	}
 
 
-    pushLine(page, string){
-        page['lines'][(parseInt(page['count'])+1).toString()]=string
+    pushLineToPage(line, page){
+        page['lines'][(parseInt(page['count'])+1).toString()]=line
         page['count']=(parseInt(page['count'])+1).toString();
     }
-    popLine(page){
+    popLineFromPage(page){
         delete page['lines'][page['count']]; 
         page['count']=(parseInt(page['count'])-1).toString();
     }
@@ -93,46 +133,10 @@ export class Pages{
 	emptyPage(){
 		return {'count':'0','lines':{}}
 	}
-	emptyPages(){
+	emptyBook(){
 		return {'count':'0','pages':{}}
 	}
-    paginate(pages, string, tools, page){
-		if(!(string&&tools)){
-			throw Error("paginate needs a string and tool config")
-		}
-		if(!pages){
-			pages=this.emptyPages();
-		}
-		if(!page){
-			page=this.emptyPage();
-		}
-        if(('pagesCount' in tools)&&('delimiter' in tools)){
-
-            var pageStr="";
-
-            for(var i=0; i<string.length; i++){
-				//LEAVE THIS -1 after tools['pagesCount'] because we are looking for the last push to the queue!
-				if(string[i]==tools['delimiter'] && this.pageCount(page)==tools['pagesCount']-1){
-					pageStr+=string[i];	//adds the delimiter to the string
-					this.pushLine(page, pageStr);
-					this.pushPage(pages, page);
-					page=this.emptyPage();
-					pageStr="";
-				//LEAVE THIS -1 after tools['pagesCount'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
-				}else if(string[i]==tools['delimiter'] && this.pageCount(page)<tools['pagesCount']-1){
-					pageStr+=string[i];	//adds the delimiter to the string
-                    this.pushLine(page, pageStr);
-					pageStr="";
-				}else{
-					pageStr+=string[i];
-				}
-        	}
-			//THIS IS ALWAYS HIDDEN
-            this.pushLine(page, pageStr)
-			this.pushPage(pages, page);
-			return pages
-		}
-	}
+    
     _pageLookAheadFindandSweep(qindex, page, pindex, regex){
         //this tries to find a match in the page index first,
         //then tries to find a match in the aggregation of the page index
@@ -325,6 +329,6 @@ export class Sherlock{
 //page lookAhead means that if there is not a match in the delmited string, it will
 //aggregate the next delimited string with the previous and search again. It will do this
 //until pageLookAhead is met
-// var sherlock = new Sherlock(MOBY_DICK, {'pagesCount':3, 'delimiter':"\n", "pageLookAhead":true})
+// var sherlock = new Sherlock(MOBY_DICK, {'lineCount':3, 'delimiter':"\n", "pageLookAhead":true})
 
 // console.log(sherlock.pageQueue)
