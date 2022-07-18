@@ -72,23 +72,21 @@ export class Sherlock{
 
 
 	_next(regex){
-        //we need to shift if there is no match in this.pageQueue[i][j]
-        //that means this.pageQueue[i].shift()
-        //if there is a match, we need to do a string replace
-        //if we are at the end of this.pageQueue and there is no
-        //match then we need to shift this.pageQueue.shift()
+        //There is another edge case!!!
+        //what happens when a match is not found in the page, but extends over 
+        //n number of pages? How many pages do we look ahead?
         var i;
         var j;
         for(i=0; i<this.pageQueue.length; i++){
             for(j=0;j<this.pageQueue[i].length; j++){
                 var finding = this.Finding._find(this.pageQueue[i][j], regex)
                 if(finding){
+                    //we need to remove everything up to the match and including the match
+                    //this requires voodoo
                     var substrIndex1=this.pageQueue[i][j].indexOf(finding);
                     var substrIndex2=substrIndex1+this.finding.length-1;
                     var substr = this.pageQueue.substring(substrIndex1, substrIndex2)
-                    this.pageQueue[i][j] = this.pageQueue[i][j]
-                        .replace(substr, "")
-
+                    this.pageQueue[i][j] = this.pageQueue[i][j].replace(substr, "")
                     return finding
                 }
                 //if it was not found in this.pageQueue[i][j], we shift this.pageQueue[i]
@@ -192,7 +190,9 @@ export class Sherlock{
         return this;
     }
 }
-
-// var sherlock = new Sherlock(MOBY_DICK, {'pageSize':3, 'delimiter':"\n"})
+//page lookAhead means that if there is not a match in the delmited string, it will
+//aggregate the next delimited string with the previous and search again. It will do this
+//until pageLookAhead is met
+// var sherlock = new Sherlock(MOBY_DICK, {'pageSize':3, 'delimiter':"\n", "pageLookAhead":3})
 
 // console.log(sherlock.pageQueue)
