@@ -10,13 +10,14 @@ export class Pages{
 			this.pages = this.paginate(string, tools)
 		}
     }
-	pushDataToPages(data, tools){
-		this.pages=this.paginate(data, tools, this.pages)
+	pushDataToPages(pages, data, tools){
+		pages=this.paginate(data, tools, pages)
 	}
 
 	aggregatePages(pages){
         var aggregate=""
-        for (const [pageNumber, page] of Object.entries(pages['pages'])) {
+		console.log(pages)
+        for (const [pageNumber, page] of Object.entries(pages)) {
             for (const [lineNumber, line] of Object.entries(page['lines'])){
                 aggregate+=line
             }
@@ -41,18 +42,17 @@ export class Pages{
         delete pages['pages'][pages['count']]; 
         pages['count']=(parseInt(pages['count'])-1).toString();
     }
-	removePagesNtoM(n, m){
-		assert.equal(m>=n, true)
-		//remove the page at n, and shift everything after it
-		var i=1;
+	removePagesNtoM(pages, n, m){
+		assert.equal(m>=n, true);
 		for (var j = n; j<=m; j++){
-			delete this.pages['pages'][j.toString()];
-			var tmp = this.pages['pages'][(m+i).toString()];
-			delete this.pages['pages'][(m+i).toString()];
-			this.pages['pages'][j.toString()]=tmp;
-			pages['count']=(this.pageCount()-1).toString()
-			i++;
+			this.removePageN(pages, j);
 		}
+	}
+	removePageN(pages, n){
+		delete pages['pages'][n.toString()];
+		var tmp = pages['pages'][(n+1).toString()];
+		delete pages['pages'][(n+1).toString()];
+		pages['pages'][n.toString()]=tmp;
 	}
 
     nextPage(){
@@ -70,7 +70,6 @@ export class Pages{
     pushLine(page, string){
         page['lines'][(parseInt(page['count'])+1).toString()]=string
         page['count']=(parseInt(page['count'])+1).toString();
-
     }
     popLine(page){
         delete page['lines'][page['count']]; 
@@ -99,18 +98,21 @@ export class Pages{
 			page=this.emptyPage();
 		}
 
-        if(('pageSize' in tools)&&('delimiter' in tools)){
+        if(('pageCount' in tools)&&('delimiter' in tools)){
+			//console.log("HERE AGAIN!!!")
+
             var pageStr="";
+
             for(var i=0; i<string.length; i++){
-				//LEAVE THIS -1 after tools['pageSize'] because we are looking for the last push to the queue!
-				if(string[i]==tools['delimiter'] && this.pageSize(page)==tools['pageSize']){
+				//LEAVE THIS -1 after tools['pageCount'] because we are looking for the last push to the queue!
+				if(string[i]==tools['delimiter'] && this.pageCount(page)==tools['pageCount']-1){
 					pageStr+=string[i];	//adds the delimiter to the string
 					this.pushLine(page, pageStr);
 					this.pushPage(pages, page);
 					page=this.emptyPage();
 					pageStr="";
-				//LEAVE THIS -1 after tools['pageSize'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
-				}else if(string[i]==tools['delimiter'] && this.pageSize(page)<tools['pageSize']){
+				//LEAVE THIS -1 after tools['pageCount'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
+				}else if(string[i]==tools['delimiter'] && this.pageCount(page)<tools['pageCount']-1){
 					pageStr+=string[i];	//adds the delimiter to the string
                     this.pushLine(page, pageStr);
 					pageStr="";
@@ -121,6 +123,7 @@ export class Pages{
 			//THIS IS ALWAYS HIDDEN
             this.pushLine(page, pageStr)
 			this.pushPage(pages, page);
+			console.log("THIS SHOULD NOT BE UNDEFINED",pages)
 			return pages
 		}
 	}
@@ -316,6 +319,6 @@ export class Sherlock{
 //page lookAhead means that if there is not a match in the delmited string, it will
 //aggregate the next delimited string with the previous and search again. It will do this
 //until pageLookAhead is met
-// var sherlock = new Sherlock(MOBY_DICK, {'pageSize':3, 'delimiter':"\n", "pageLookAhead":true})
+// var sherlock = new Sherlock(MOBY_DICK, {'pageCount':3, 'delimiter':"\n", "pageLookAhead":true})
 
 // console.log(sherlock.pageQueue)

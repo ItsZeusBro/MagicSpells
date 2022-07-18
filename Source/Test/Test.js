@@ -19,19 +19,22 @@ class Test{
 	}
 
 	pages(){
-		var pages = new Pages(THE_ILIAD, {'pageSize':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
-		
+		var pages = new Pages(THE_ILIAD, {'pageCount':100, 'delimiter': '\n'})//, 'pageLookAhead':true});
+		//console.log(pages)
 		assert.equal(THE_ILIAD, pages.aggregatePages(pages.pages))
-		pages.push(THE_ODYSSEY, {'pageSize':100, 'delimiter': '\n'});
+		pages.push(THE_ODYSSEY, {'pageCount':100, 'delimiter': '\n'});
 		assert.equal(THE_ILIAD+THE_ODYSSEY, pages.aggregatePages(pages.pages))
 		
 		//console.log(util.inspect(pages.pages, {showHidden: true, depth: null, colors: true}))
 
-		console.log("PAGINATIONS PASSED")
 
 		// console.log(pages.pages)
-		pages.pop(10)
+		var count = pages.pageCount()
+		pages.removePagesNtoM(10, 20)
+		assert.equal(count, pages.pageCount())
 		// console.log(pages.pages)
+		console.log("PAGINATIONS TEST PASSED")
+
 	}
 
 	// _pagination(){
