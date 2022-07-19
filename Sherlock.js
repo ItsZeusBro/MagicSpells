@@ -1,82 +1,94 @@
 import {Finding} from "./Source/Finding.js"
 import { MOBY_DICK } from "./Source/Test/Cases/Books/IndividualBooks/MobyDick.js";
 import * as assert from "node:assert"
+import * as util from "node:util"
 
 export class Book{
     constructor(string, tools){
         this.string=string;
         this.tools=tools
 		this.pages;
-		this.book = this.bookify(undefined, string, tools)
+        this.book;
+		this.bookify(string, this, tools)
     }
-    //takes an existing book, or creates a new one
-    //takes a string and produces book
-    //takes tools object or uses global tools
-    bookify(string, book, tools){
+
+    bookify(string, _Book, tools){
 		if(!(string&&tools)){
 			tools = this.tools
 		}
-		if(!book){
-			book=this.emptyBook();
+		if(!_Book.book){
+			_Book.book=this._emptyBook();
 		}
 		
-		var page=this.emptyPage();
+		var page=this._emptyPage();
 
-        if(('lineCount' in tools)&&('delimiter' in tools)){
-
+        if(('lineCount' in tools)&&('anchor' in tools)){
             var line="";
-
             for(var i=0; i<string.length; i++){
 				//LEAVE THIS -1 after tools['lineCount'] because we are looking for the last push to the queue!
-				if(string[i]==tools['delimiter'] && this.lineCount(page)==tools['lineCount']-1){
-					line+=string[i];	//adds the delimiter to the string
-					this.pushLineToPage(line, page);
-					this.pushPageToBook(page, book);
-					page=this.emptyPage();
+				if(string[i]==tools['anchor'] && this.lineCount(page)==tools['lineCount']-1){
+					line+=string[i];	//adds the anchor to the string
+					this._pushLineToPage(line, page);
+					this._pushPageToBook(page, _Book);
+					page=this._emptyPage();
 					line="";
 				//LEAVE THIS -1 after tools['lineCount'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
-				}else if(string[i]==tools['delimiter'] && this.lineCount(page)<tools['lineCount']-1){
-					line+=string[i];	//adds the delimiter to the string
-                    this.pushLineToPage(line, page);
+				}else if(string[i]==tools['anchor'] && this.lineCount(page)<tools['lineCount']-1){
+					line+=string[i];	//adds the anchor to the string
+                    this._pushLineToPage(line, page);
 					line="";
 				}else{
 					line+=string[i];
 				}
         	}
 			//THIS IS ALWAYS HIDDEN
-            this.pushLineToPage(line, page)
-			this.pushPageToBook(page, book);
-			return book
+            page = this._pushLineToPage(line, page)
+			this._pushPageToBook(page, _Book);
 		}
 	}
+    _pushPageToBook(page, _Book){
+        _Book.book['pages'][(parseInt(_Book.book['pageCount'])+1).toString()]=page
+        _Book.book['pageCount']=(parseInt(_Book.book['pageCount'])+1).toString();
+    }
+    _pushLineToPage(line, page){
+        page['lines'][(parseInt(page['lineCount'])+1).toString()]=line
+        page['lineCount']=(parseInt(page['lineCount'])+1).toString();
+    }
 
-	printBook(){
-		console.log(util.inspect(this.book, {showHidden: true, depth: null, colors: true}))
-
+    _emptyPage(){
+		return {'lineCount':'0','lines':{}}
 	}
-	pushStringToBook(string, book, tools){
-        if(!string && !book){
-            throw Error("you need to provide a string and a book");
-        }
-        if(!tools){
-            tools=this.tools
-        }
-		book=this.bookify(string, book, tools)
-        return book
+	_emptyBook(){
+		return {'pageCount':'0','pages':{}}
 	}
-
-	stringifyBook(book){
-        if(!book){
+    stringify(_Book){
+        if(!_Book.book){
 
         }
         var string=""
-        for (const [pageNumber, page] of Object.entries(book['pages'])) {
+        for (const [pageNumber, page] of Object.entries(_Book.book['pages'])) {
             for (const [lineNumber, line] of Object.entries(page['lines'])){
                 string+=line
             }
         }    
         return string
     }
+
+
+	printBook(_Book){
+		console.log(util.inspect(_Book.book, {showHidden: true, depth: null, colors: true}))
+
+	}
+	pushStringToBook(string, _Book, tools){
+        if(!string && !_Book.book){
+            throw Error("you need to provide a string and a book");
+        }
+        if(!tools){
+            tools=this.tools
+        }
+		this.bookify(string, _Book, tools)
+	}
+
 
 	pageCount(){
 		return parseInt(this.book['pageCount'])
@@ -90,10 +102,7 @@ export class Book{
 		}
 	}
 	
-    pushPageToBook(page, book){
-        book['pages'][(parseInt(book['pageCount'])+1).toString()]=page
-        book['pageCount']=(parseInt(book['pageCount'])+1).toString();
-    }
+   
     popPageFromBook(book){
         delete book['pages'][book['pageCount']]; 
         book['pageCount']=(parseInt(book['pageCount'])-1).toString();
@@ -126,10 +135,7 @@ export class Book{
 	}
 
 
-    pushLineToPage(line, page){
-        page['lines'][(parseInt(page['lineCount'])+1).toString()]=line
-        page['lineCount']=(parseInt(page['lineCount'])+1).toString();
-    }
+
     popLineFromPage(page){
         delete page['lines'][page['lineCount']]; 
         page['lineCount']=(parseInt(page['lineCount'])-1).toString();
@@ -140,12 +146,7 @@ export class Book{
 	}
 
     
-	emptyPage(){
-		return {'lineCount':'0','lines':{}}
-	}
-	emptyBook(){
-		return {'pageCount':'0','pages':{}}
-	}
+	
     
     _pageLookAheadFindandSweep(qindex, page, pindex, regex){
         //this tries to find a match in the page index first,
@@ -298,6 +299,6 @@ export class Sherlock{
 //page lookAhead means that if there is not a match in the delmited string, it will
 //aggregate the next delimited string with the previous and search again. It will do this
 //until pageLookAhead is met
-// var sherlock = new Sherlock(MOBY_DICK, {'lineCount':3, 'delimiter':"\n", "pageLookAhead":true})
+// var sherlock = new Sherlock(MOBY_DICK, {'lineCount':3, 'anchor':"\n", "pageLookAhead":true})
 
 // console.log(sherlock.pageQueue)

@@ -14,9 +14,9 @@ import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
 class TestBook{
 	constructor(){
 		this.printBook()
-		this.stringifyBook()
-		// this.aggregatePages()
-		// this.pushDataToPages()
+		this.stringify()
+		this.pushStringToBook()
+
 		// this.removePagesNtoM()
 
 	}
@@ -25,16 +25,16 @@ class TestBook{
 		_Book.printBook(_Book)
 	}
 
-	stringifyBook(){
+	stringify(){
 		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
-		assert.equal(THE_ILIAD, _Book.stringifyBook(_Book.book));
+		assert.equal(THE_ILIAD, _Book.stringify(_Book));
 		
 	}
 
-	pushDataToPages(){
-		// var _Book = new Pages(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
-		// _Book.pushDataToPages(_Book.pages, THE_ODYSSEY, {'lineCount':100, 'anchor': '\n'});
-		// assert.equal(THE_ILIAD+THE_ODYSSEY, _Book.aggregatePages(_Book.pages));
+	pushStringToBook(){
+		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
+		_Book.pushStringToBook(_Book, THE_ODYSSEY, {'lineCount':100, 'anchor': '\n'});
+		assert.equal(THE_ILIAD+THE_ODYSSEY, _Book.stringify(_Book));
 	}
 
 	removePagesNtoM(){
