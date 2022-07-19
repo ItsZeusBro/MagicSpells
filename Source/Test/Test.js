@@ -48,11 +48,11 @@ class TestBook{
 	}
 
 	//probabalistic token match (specify how many pages to search through)
-	// nextToken(i){
-	// 	//specify number of lines, that will determine the number of pages searched on
-	// 	var _Book = new Book(THE_ILIAD, {'lineCount':i, 'anchor': '\n'})
+	nextToken(i){
+		//specify number of lines, that will determine the number of pages searched on
+		var _Book = new Book(THE_ILIAD, {'lineCount':i, 'anchor': '\n'})
 
-	// }
+	}
 
 	pageCount(i){
 		//every string has n number of newlines

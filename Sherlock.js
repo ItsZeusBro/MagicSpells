@@ -11,7 +11,7 @@ export class Book{
         this.book;
 		this.bookify(string, this, tools)
     }
-
+    
     bookify(string, _Book, tools){
 		if(!(string&&tools)){
 			tools = this.tools
@@ -19,7 +19,6 @@ export class Book{
 		if(!_Book.book){
 			_Book.book=this._emptyBook();
 		}
-		
 		var page=this._emptyPage();
 
         if(('lineCount' in tools)&&('anchor' in tools)){
@@ -46,6 +45,42 @@ export class Book{
 			this._pushPageToBook(page, _Book);
 		}
 	}
+    //if you need to stringify large ranges, your pages are too small
+    stringify(_Book, pageN, pageM){
+        if(!_Book.book){
+            throw Error("Book is needed for stringify to work")
+        }
+
+        if(pageN && pageM){
+            //if pageN or pageM
+            return _Book._stringifyNtoM(_Book, pageN, pageM)
+        }else if(pageN){
+            return _Book._stringifyNtoM(_Book, pageN, _Book.pageCount(_Book))
+        }else if(pageM){
+            return _Book._stringifyNtoM(_Book, 0, pageM)
+        }else{
+            var string=""
+            for (const [pageNumber, page] of Object.entries(_Book.book['pages'])) {
+                for (const [lineNumber, line] of Object.entries(page['lines'])){
+                    string+=line
+                }
+            }    
+            return string
+        }
+    }
+    //O(n^2) where n is the number of pages n to m, pagination should be balanced
+    //to avoid performance issues
+    _stringifyNtoM(_Book, pageN, pageM){
+        var string="";
+        for (var i = pageN; i<=pageM; i++){
+            var page = _Book.book['pages'][i.toString()];
+            for(const [lineNumber, line] of Object.entries(page['lines'])){
+                string+=line;
+            }
+        }
+        return string;
+    }
+
     _removePagesNtoM(_Book, n, m){
 		assert.equal(m>=n, true);
 		for (var j = n; j<=m; j++){
@@ -104,32 +139,17 @@ export class Book{
 	_emptyBook(){
 		return {'pageCount':'0','pages':{}}
 	}
-    stringify(_Book){
-        if(!_Book.book){
-            throw Error("Book is needed for stringify to work")
-        }
-        var string=""
-        for (const [pageNumber, page] of Object.entries(_Book.book['pages'])) {
-            
-            for (const [lineNumber, line] of Object.entries(page['lines'])){
-                string+=line
-            }
-        }    
-        return string
-    }
+    
 
 
 	printBook(_Book){
 		console.log(util.inspect(_Book.book, {showHidden: true, depth: null, colors: true}))
-
 	}
 
     _getPageN(n){
 
     }
-	
 }
-
 
 export class Sherlock{
     constructor(string, tools){
