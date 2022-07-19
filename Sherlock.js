@@ -42,7 +42,7 @@ export class Book{
 				}
         	}
 			//THIS IS ALWAYS HIDDEN
-            page = this._pushLineToPage(line, page)
+            this._pushLineToPage(line, page)
 			this._pushPageToBook(page, _Book);
 		}
 	}
@@ -63,10 +63,12 @@ export class Book{
 	}
     stringify(_Book){
         if(!_Book.book){
-
+            throw Error("Book is needed for stringify to work")
         }
         var string=""
+        console.log(_Book.book)
         for (const [pageNumber, page] of Object.entries(_Book.book['pages'])) {
+            
             for (const [lineNumber, line] of Object.entries(page['lines'])){
                 string+=line
             }
@@ -109,7 +111,6 @@ export class Book{
     }
 	removePagesNtoM(book, n, m){
 		assert.equal(m>=n, true);
-		console.log("ASSERTION TRUE")
 		for (var j = n; j<=m; j++){
 			this.removePageN(book, j);
 		}

@@ -13,9 +13,9 @@ import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
 
 class TestBook{
 	constructor(){
-		this.printBook()
-		this.stringify()
-		this.pushStringToBook()
+		//this.printBook()
+		//this.stringify()
+		//this.pushStringToBook()
 
 		// this.removePagesNtoM()
 
@@ -27,6 +27,7 @@ class TestBook{
 
 	stringify(){
 		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
+		console.log(_Book.book['pageCount'])
 		assert.equal(THE_ILIAD, _Book.stringify(_Book));
 		
 	}
