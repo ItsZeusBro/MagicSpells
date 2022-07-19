@@ -18,6 +18,7 @@ class TestBook{
 		this.pushStringToBook()
 		this.removePagesNtoM()
 		this.pageCount()
+		this.lineCount()
 	}
 
 	printBook(){
@@ -54,19 +55,33 @@ class TestBook{
 			}
 		}
 		var expectedPageCount=count/100;
-		if(this.isFloat(expectedPageCount)){
+		if(this._isFloat(expectedPageCount)){
 			expectedPageCount=Math.trunc(expectedPageCount)+1
 		}
 		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
 		assert.equal(expectedPageCount, _Book.pageCount(_Book))
 	}
 
-	isFloat(n){
+	_isFloat(n){
 		return Number(n) === n && n % 1 !== 0;
 	}
 
 	lineCount(){
-		//create a page and pass it
+		var count=0
+		for(var i = 0; i<THE_ILIAD.length; i++){
+			if(THE_ILIAD[i]=='\n'){
+				//its paginating on '\n' meaning there is an extra string in the buffer
+				//represented by end of string that we are pushing
+				count+=1;
+			}
+		}
+		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
+		//we need to check the first and last page
+		//expected 100 for first page
+		assert.equal(100, _Book.lineCount(_Book.book['pages']['1']))
+		_Book.printBook(_Book)
+		assert.equal((count%100)+1, _Book.lineCount(_Book.book['pages'][_Book.pageCount(_Book).toString()]))
+
 	}
 
 	popNPages(){
