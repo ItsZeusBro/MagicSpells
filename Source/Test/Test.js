@@ -14,10 +14,9 @@ import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
 class TestBook{
 	constructor(){
 		//this.printBook()
-		//this.stringify()
-		//this.pushStringToBook()
-
-		// this.removePagesNtoM()
+		this.stringify()
+		this.pushStringToBook()
+		this.removePagesNtoM()
 
 	}
 	printBook(){
@@ -27,7 +26,6 @@ class TestBook{
 
 	stringify(){
 		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
-		console.log(_Book.book['pageCount'])
 		assert.equal(THE_ILIAD, _Book.stringify(_Book));
 		
 	}
@@ -39,10 +37,10 @@ class TestBook{
 	}
 
 	removePagesNtoM(){
-		// var _Book = new Pages(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
-		// var count = _Book.lineCount()
-		// _Book.removePagesNtoM(_Book.pages, 10, 20)
-		// assert.equal(count-11, _Book.lineCount())
+		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
+		var pageCount = _Book.pageCount(_Book)
+		_Book.removePagesNtoM(_Book, 10, 20)
+		assert.equal(pageCount-11, _Book.pageCount(_Book))
 	}
 
 	pagesCount(){
@@ -117,87 +115,8 @@ class TestBook{
 	_next(){
 		
 	}
-
-
-
 }
 
-
-// class Sherlock{
-// 	constructor(){
-// 		//this._pagination()
-// 		//this.nextLine()
-// 		//this.nextWord()
-// 	}
-
-	
-
-// 	// _pagination(){
-// 	// 	var pageQueue = new Sherlock(HALF_BOOKS, {'pageSize':4000, 'anchor': '\n'}).pageQueue;
-// 	// 	var pageStr=""
-// 	// 	pageQueue.forEach((page)=>{
-// 	// 		page.forEach((string)=>{
-// 	// 			pageStr+=string;
-// 	// 		});
-// 	// 	})
-// 	// 	console.log(pageStr.length, HALF_BOOKS.length)
-// 	// 	assert.equal(pageStr, HALF_BOOKS)
-// 	// }
-
-// 	// _next(){
-// 	// 	var sherlock = new Sherlock(HALF_BOOKS, {'pageSize':2, 'anchor': 'A', 'pageLookAhead':true})
-// 	// 	console.log(sherlock.pageQueue[0])
-
-// 	// 	var next=sherlock._next(/====/);
-// 	// 	console.log(next);
-// 	// 	console.log(sherlock.pageQueue[0]);
-		
-// 	// 	next = sherlock._next(/>/);
-// 	// 	console.log(next);
-// 	// 	console.log(sherlock.pageQueue[0]);	
-
-// 	// 	next = sherlock._next(/====/);
-// 	// 	console.log(next);
-// 	// 	console.log(sherlock.pageQueue[0]);	
-
-// 	// }
-
-// 	// nextLine(){
-// 	// 	console.log(new Sherlock(MOBY_DICK, {'pageSize':50, 'anchor': '\n'}).nextLine())
-		
-// 		//.iter(50, 'nextLine', (match, cs, gs)=>{}, {'patterns':[LINE]}).opStack
-// 		//var bookStr=``
-// 		// opStack.forEach((element)=>{
-// 		// 	if(element['finding']){
-// 		// 		bookStr+=element['finding']
-// 		// 		console.log(element)
-// 		// 	}
-// 		// 	//console.log(util.inspect(element, false, null, true))
-// 		// })
-// 		//console.log(bookStr)
-// 		// assert.equal(bookStr.length, MOBY_DICK.length)
-// 		// assert.equal(bookStr, MOBY_DICK)
-// 		// console.log("nextLine PASSED")
-
-// 	}
-
-	// nextWord(){
-	// 	var opStack = new Sherlock(MOBY_DICK, {'pageSize':50, 'pageOn': '\n'})
-	// 	.iter('inf', 'nextFinding', (match, cs, gs)=>{}, {'patterns':[WORD]}).opStack
-	// 	var bookStr=``
-	// 	opStack.forEach((element)=>{
-	// 		if(element['finding']){
-	// 			bookStr+=element['finding']
-	// 			console.log(element)
-	// 		}
-	// 		//console.log(util.inspect(element, false, null, true))
-	// 	})
-	// 	assert.equal(bookStr.length, MOBY_DICK.length)
-	// 	assert.equal(bookStr, MOBY_DICK)
-	// 	console.log("nextLine PASSED")
-
-	// }
-//}
 
 new TestBook()
 // var regex=/.*((\r\n)|(\n)|(\r\n$))/ //((\r\n)|(\n)|(\r\n$))/

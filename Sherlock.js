@@ -46,6 +46,39 @@ export class Book{
 			this._pushPageToBook(page, _Book);
 		}
 	}
+    removePagesNtoM(_Book, n, m){
+		assert.equal(m>=n, true);
+		for (var j = n; j<=m; j++){
+			this.removePageN(_Book, j);
+		}
+	}
+
+	removePageN(_Book, n){
+		delete _Book.book['pages'][n.toString()];
+		var tmp = _Book.book['pages'][(n+1).toString()];
+		delete _Book.book['pages'][(n+1).toString()];
+		_Book.book['pages'][n.toString()]=tmp;
+		_Book.book['pageCount']=(parseInt(_Book.book['pageCount'])-1).toString();
+	}
+
+    pageCount(_Book){
+		return parseInt(_Book.book['pageCount'])
+	}
+	lineCount(page){
+        return parseInt(page['lineCount']);
+    }
+
+    popNPages(n, _Book){
+		for(var i = 0; i<n; i++){
+			this.popPageFromBook(_Book)
+		}
+	}
+	
+    popPageFromBook(_Book){
+        delete _Book.book['pages'][_Book.book['pageCount']]; 
+        _Book.book['pageCount']=(parseInt(_Book.book['pageCount'])-1).toString();
+    }
+
     pushStringToBook(string, _Book, tools){
         if(!string && !_Book.book){
             throw Error("you need to provide a string and a book");
@@ -75,7 +108,6 @@ export class Book{
             throw Error("Book is needed for stringify to work")
         }
         var string=""
-        console.log(_Book.book)
         for (const [pageNumber, page] of Object.entries(_Book.book['pages'])) {
             
             for (const [lineNumber, line] of Object.entries(page['lines'])){
@@ -93,37 +125,9 @@ export class Book{
 	
 
 
-	pageCount(){
-		return parseInt(this.book['pageCount'])
-	}
-	lineCount(page){
-        return parseInt(page['lineCount']);
-    }
-	popNPages(n){
-		for(var i = 0; i<n; i++){
-			this.popPageFromBook()
-		}
-	}
-	
-   
-    popPageFromBook(book){
-        delete book['pages'][book['pageCount']]; 
-        book['pageCount']=(parseInt(book['pageCount'])-1).toString();
-    }
-	removePagesNtoM(book, n, m){
-		assert.equal(m>=n, true);
-		for (var j = n; j<=m; j++){
-			this.removePageN(book, j);
-		}
-	}
 
-	removePageN(book, n){
-		delete book['pages'][n.toString()];
-		var tmp = book['pages'][(n+1).toString()];
-		delete book['pages'][(n+1).toString()];
-		book['pages'][n.toString()]=tmp;
-		book['pageCount']=(parseInt(book['pageCount'])-1).toString();
-	}
+
+
 
     nextPage(){
 		//returns the next page from the begining, class keeps an iterator,
@@ -302,5 +306,3 @@ export class Sherlock{
 //aggregate the next delimited string with the previous and search again. It will do this
 //until pageLookAhead is met
 // var sherlock = new Sherlock(MOBY_DICK, {'lineCount':3, 'anchor':"\n", "pageLookAhead":true})
-
-// console.log(sherlock.pageQueue)
