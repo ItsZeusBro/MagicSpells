@@ -68,7 +68,7 @@ export class Book{
         return parseInt(page['lineCount']);
     }
 
-    popNPages(n, _Book){
+    popNPagesFrom(n, _Book){
 		for(var i = 0; i<n; i++){
 			this.popPageFromBook(_Book)
 		}

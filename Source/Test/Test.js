@@ -14,11 +14,14 @@ import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
 class TestBook{
 	constructor(){
 		//this.printBook()
-		this.stringify()
-		this.pushStringToBook()
-		this.removePagesNtoM()
-		this.pageCount()
-		this.lineCount()
+		// this.stringify()
+		// this.pushStringToBook()
+		// this.removePagesNtoM()
+		// this.pageCount()
+		// this.lineCount()
+
+		this.popNPagesFrom()
+
 	}
 
 	printBook(){
@@ -84,8 +87,12 @@ class TestBook{
 
 	}
 
-	popNPages(){
-
+	popNPagesFrom(){
+		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
+		var originalPageCount = _Book.pageCount(_Book)
+		_Book.popNPagesFrom(10, _Book)
+		assert.equal(_Book.pageCount(_Book), originalPageCount-10) //this is just a pop operation
+		//not a range operation, so there is no inclusive case we need to worry about 
 	}
 
 	pushPage(){
