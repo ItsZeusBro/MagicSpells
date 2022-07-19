@@ -11,6 +11,27 @@ export class Book{
         this.book;
 		this.bookify(string, this, tools)
     }
+    getLine(_Book, pageN, lineN){
+        return this.getPageN(_Book, pageN)['lines'][lineN.toString]
+    }
+
+    getPageN(_Book, pageN){
+        return _Book.book['pages'][pageN.toString()];
+    }
+
+    getPageCount(_Book){
+		return parseInt(_Book.book['pageCount'])
+	}
+	getLineCount(page){
+        return parseInt(page['lineCount']);
+    }
+
+    _getEmptyPage(){
+		return {'lineCount':'0','lines':{}}
+	}
+	_getEmptyBook(){
+		return {'pageCount':'0','pages':{}}
+	}
     
     bookify(string, _Book, tools){
 		if(!(string&&tools)){
