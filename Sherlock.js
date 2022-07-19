@@ -46,6 +46,15 @@ export class Book{
 			this._pushPageToBook(page, _Book);
 		}
 	}
+    pushStringToBook(string, _Book, tools){
+        if(!string && !_Book.book){
+            throw Error("you need to provide a string and a book");
+        }
+        if(!tools){
+            tools=this.tools
+        }
+		this.bookify(string, _Book, tools)
+	}
     _pushPageToBook(page, _Book){
         _Book.book['pages'][(parseInt(_Book.book['pageCount'])+1).toString()]=page
         _Book.book['pageCount']=(parseInt(_Book.book['pageCount'])+1).toString();
@@ -81,15 +90,7 @@ export class Book{
 		console.log(util.inspect(_Book.book, {showHidden: true, depth: null, colors: true}))
 
 	}
-	pushStringToBook(string, _Book, tools){
-        if(!string && !_Book.book){
-            throw Error("you need to provide a string and a book");
-        }
-        if(!tools){
-            tools=this.tools
-        }
-		this.bookify(string, _Book, tools)
-	}
+	
 
 
 	pageCount(){

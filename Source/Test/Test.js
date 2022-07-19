@@ -34,7 +34,7 @@ class TestBook{
 
 	pushStringToBook(){
 		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
-		_Book.pushStringToBook(_Book, THE_ODYSSEY, {'lineCount':100, 'anchor': '\n'});
+		_Book.pushStringToBook(THE_ODYSSEY, _Book, {'lineCount':100, 'anchor': '\n'});
 		assert.equal(THE_ILIAD+THE_ODYSSEY, _Book.stringify(_Book));
 	}
 
