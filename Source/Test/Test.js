@@ -39,6 +39,7 @@ class TestBook{
 		var _Book = new Book(THE_ILIAD, {'lineCount':i, 'anchor': '\n'})//, 'pageLookAhead':true});
 		assert.equal(THE_ILIAD, _Book.stringify(_Book));
 		
+		assert.equal(THE_ILIAD, _Book.stringify(_Book));
 	}
 
 	pushStringToBook(i){

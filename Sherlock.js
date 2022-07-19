@@ -17,22 +17,22 @@ export class Book{
 			tools = this.tools
 		}
 		if(!_Book.book){
-			_Book.book=this._emptyBook();
+			_Book.book=this._getEmptyBook();
 		}
-		var page=this._emptyPage();
+		var page=this._getEmptyPage();
 
         if(('lineCount' in tools)&&('anchor' in tools)){
             var line="";
             for(var i=0; i<string.length; i++){
 				//LEAVE THIS -1 after tools['lineCount'] because we are looking for the last push to the queue!
-				if(string[i]==tools['anchor'] && this.lineCount(page)==tools['lineCount']-1){
+				if(string[i]==tools['anchor'] && this.getLineCount(page)==tools['lineCount']-1){
 					line+=string[i];	//adds the anchor to the string
 					this._pushLineToPage(line, page);
 					this._pushPageToBook(page, _Book);
-					page=this._emptyPage();
+					page=this._getEmptyPage();
 					line="";
 				//LEAVE THIS -1 after tools['lineCount'] because we are looking for anything BEFORE THE LAST PUSH TO THE QUEUE!
-				}else if(string[i]==tools['anchor'] && this.lineCount(page)<tools['lineCount']-1){
+				}else if(string[i]==tools['anchor'] && this.getLineCount(page)<tools['lineCount']-1){
 					line+=string[i];	//adds the anchor to the string
                     this._pushLineToPage(line, page);
 					line="";
@@ -45,17 +45,20 @@ export class Book{
 			this._pushPageToBook(page, _Book);
 		}
 	}
+
+    stringifyBook(_Book){
+
+    }
     //if you need to stringify large ranges, your pages are too small
-    stringify(_Book, pageN, pageM){
+    stringifyPagesNtoM(_Book, pageN, pageM){
         if(!_Book.book){
             throw Error("Book is needed for stringify to work")
         }
-
         if(pageN && pageM){
             //if pageN or pageM
             return _Book._stringifyNtoM(_Book, pageN, pageM)
         }else if(pageN){
-            return _Book._stringifyNtoM(_Book, pageN, _Book.pageCount(_Book))
+            return _Book._stringifyNtoM(_Book, pageN, _Book.getPageCount(_Book))
         }else if(pageM){
             return _Book._stringifyNtoM(_Book, 0, pageM)
         }else{
@@ -70,7 +73,7 @@ export class Book{
     }
     //O(n^2) where n is the number of pages n to m, pagination should be balanced
     //to avoid performance issues
-    _stringifyNtoM(_Book, pageN, pageM){
+    _stringifyPagesNtoM(_Book, pageN, pageM){
         var string="";
         for (var i = pageN; i<=pageM; i++){
             var page = _Book.book['pages'][i.toString()];
@@ -80,6 +83,11 @@ export class Book{
         }
         return string;
     }
+
+    stringifyPageN(_Book, pageN){
+        return this._stringifyNtoM(_Book, pageN, pageN)
+    }
+
 
     _removePagesNtoM(_Book, n, m){
 		assert.equal(m>=n, true);
@@ -96,13 +104,8 @@ export class Book{
 		_Book.book['pageCount']=(parseInt(_Book.book['pageCount'])-1).toString();
 	}
 
-    pageCount(_Book){
-		return parseInt(_Book.book['pageCount'])
-	}
-	lineCount(page){
-        return parseInt(page['lineCount']);
-    }
 
+    
     //this should be tested when its actually used, leave it here for now.
     _popNPagesFrom(n, _Book){
 		for(var i = 0; i<n; i++){
@@ -133,22 +136,13 @@ export class Book{
         page['lineCount']=(parseInt(page['lineCount'])+1).toString();
     }
 
-    _emptyPage(){
-		return {'lineCount':'0','lines':{}}
-	}
-	_emptyBook(){
-		return {'pageCount':'0','pages':{}}
-	}
-    
+
 
 
 	printBook(_Book){
 		console.log(util.inspect(_Book.book, {showHidden: true, depth: null, colors: true}))
 	}
 
-    _getPageN(n){
-
-    }
 }
 
 export class Sherlock{
