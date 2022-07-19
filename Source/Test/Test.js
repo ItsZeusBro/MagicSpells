@@ -13,15 +13,18 @@ import {HALF_BOOKS} from "./Cases/Books/HalfBooks.js"
 
 class TestBook{
 	constructor(){
-		//this.printBook()
-		// this.stringify()
-		// this.pushStringToBook()
-		// this.removePagesNtoM()
-		// this.pageCount()
-		// this.lineCount()
+		this.printBook()
+		this.stringify()
+		this.pushStringToBook()
+		this.pageCount()
+		this.lineCount()
 
-		this.popNPagesFrom()
+		//TEMPORARY CLEAR BOX TEST UNTIL WE USE IT
+		this._popNPagesFrom()
+		this._removePagesNtoM()
 
+
+		
 	}
 
 	printBook(){
@@ -41,11 +44,10 @@ class TestBook{
 		assert.equal(THE_ILIAD+THE_ODYSSEY, _Book.stringify(_Book));
 	}
 
-	removePagesNtoM(){
-		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
-		var pageCount = _Book.pageCount(_Book)
-		_Book.removePagesNtoM(_Book, 10, 20)
-		assert.equal(pageCount-11, _Book.pageCount(_Book))
+	//probabalistic token match (specify how many pages to search through)
+	nextToken(){
+		//specify number of lines, that will determine the number of pages searched on
+
 	}
 
 	pageCount(){
@@ -87,73 +89,23 @@ class TestBook{
 
 	}
 
-	popNPagesFrom(){
+	//TEMPORARY Clear Box test until we use it
+	_popNPagesFrom(){
 		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
 		var originalPageCount = _Book.pageCount(_Book)
-		_Book.popNPagesFrom(10, _Book)
+		_Book._popNPagesFrom(10, _Book)
 		assert.equal(_Book.pageCount(_Book), originalPageCount-10) //this is just a pop operation
 		//not a range operation, so there is no inclusive case we need to worry about 
 	}
-
-	pushPage(){
-
+	_removePagesNtoM(){
+		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
+		var pageCount = _Book.pageCount(_Book)
+		_Book._removePagesNtoM(_Book, 10, 20)
+		assert.equal(pageCount-11, _Book.pageCount(_Book))
 	}
 
-	popPage(){
 
-	}
 
-	removePageN(){
-
-	}
-
-	nextPage(){
-
-	}
-
-	matchOnNLines(n){
-
-	}
-
-	pushLine(){
-
-	}
-
-	popLine(){
-
-	}
-
-	nextLine(){
-
-	}
-
-	emptyPage(){
-
-	}
-
-	emptyPages(){
-
-	}
-
-	paginate(){
-
-	}
-
-	_pageLookAheadFindandSweep(){
-
-	}
-
-	_findAndSweep(){
-
-	}
-
-	_sweep(){
-
-	}
-
-	_next(){
-		
-	}
 }
 
 

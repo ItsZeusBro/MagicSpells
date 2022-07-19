@@ -46,14 +46,14 @@ export class Book{
 			this._pushPageToBook(page, _Book);
 		}
 	}
-    removePagesNtoM(_Book, n, m){
+    _removePagesNtoM(_Book, n, m){
 		assert.equal(m>=n, true);
 		for (var j = n; j<=m; j++){
-			this.removePageN(_Book, j);
+			this._removePageN(_Book, j);
 		}
 	}
 
-	removePageN(_Book, n){
+	_removePageN(_Book, n){
 		delete _Book.book['pages'][n.toString()];
 		var tmp = _Book.book['pages'][(n+1).toString()];
 		delete _Book.book['pages'][(n+1).toString()];
@@ -68,13 +68,14 @@ export class Book{
         return parseInt(page['lineCount']);
     }
 
-    popNPagesFrom(n, _Book){
+    //this should be tested when its actually used, leave it here for now.
+    _popNPagesFrom(n, _Book){
 		for(var i = 0; i<n; i++){
-			this.popPageFromBook(_Book)
+			this._popPageFromBook(_Book)
 		}
 	}
 	
-    popPageFromBook(_Book){
+    _popPageFromBook(_Book){
         delete _Book.book['pages'][_Book.book['pageCount']]; 
         _Book.book['pageCount']=(parseInt(_Book.book['pageCount'])-1).toString();
     }
@@ -122,59 +123,11 @@ export class Book{
 		console.log(util.inspect(_Book.book, {showHidden: true, depth: null, colors: true}))
 
 	}
+
+    _getPageN(n){
+
+    }
 	
-
-
-
-
-
-
-    nextPage(){
-		//returns the next page from the begining, class keeps an iterator,
-		//but does not remove the page, just gives you the next one
-        return 
-    }
-
-
-	matchOnNLines(n){
-		//matches on n number of lines from the starting page
-	}
-
-
-
-    popLineFromPage(page){
-        delete page['lines'][page['lineCount']]; 
-        page['lineCount']=(parseInt(page['lineCount'])-1).toString();
-    }
-
-	nextLine(){
-
-	}
-
-    
-	
-    
-    _pageLookAheadFindandSweep(qindex, page, pindex, regex){
-        //this tries to find a match in the page index first,
-        //then tries to find a match in the aggregation of the page index
-        //and page index +1, etc 
-
-    }
-
-    _findandSweep(qindex, page, pindex, regex){
-
-    }
-
-    _sweep(finding, qindex, pindex){
-       
-    }
-
-    _next(regex){
-        //There is another edge case!!!
-        //what happens when a match is not found in the page, but extends over 
-        //n number of pages? How many pages do we look ahead?
-       
-	}
 }
 
 
