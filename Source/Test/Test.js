@@ -17,8 +17,9 @@ class TestBook{
 		this.stringify()
 		this.pushStringToBook()
 		this.removePagesNtoM()
-
+		this.pageCount()
 	}
+
 	printBook(){
 		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
 		_Book.printBook(_Book)
@@ -43,9 +44,25 @@ class TestBook{
 		assert.equal(pageCount-11, _Book.pageCount(_Book))
 	}
 
-	pagesCount(){
-		// var _Book = new Pages(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
-		// //assert.equal(THE_ILIAD.length/100, _Book.pagesCount())
+	pageCount(){
+		//every string has n number of newlines
+		//we can divide that by 100 here, to get the number of pages
+		var count=0
+		for(var i = 0; i<THE_ILIAD.length; i++){
+			if(THE_ILIAD[i]=='\n'){
+				count+=1;
+			}
+		}
+		var expectedPageCount=count/100;
+		if(this.isFloat(expectedPageCount)){
+			expectedPageCount=Math.trunc(expectedPageCount)+1
+		}
+		var _Book = new Book(THE_ILIAD, {'lineCount':100, 'anchor': '\n'})//, 'pageLookAhead':true});
+		assert.equal(expectedPageCount, _Book.pageCount(_Book))
+	}
+
+	isFloat(n){
+		return Number(n) === n && n % 1 !== 0;
 	}
 
 	lineCount(){
